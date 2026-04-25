@@ -36,7 +36,7 @@ export default function Events() {
   const { upcoming, past } = useMemo(() => {
     const sorted = [...EVENTS].sort((a, b) => a.dateISO.localeCompare(b.dateISO));
     return {
-      upcoming: sorted.find(e => e.dateISO >= today) || null,
+      upcoming: sorted.find(e => e.dateISO >= today && !e.hidden) || null,
       past: sorted.filter(e => e.dateISO < today).reverse(),
     };
   }, [today]);
@@ -57,7 +57,20 @@ export default function Events() {
         <p className="section-sub">The next chapter — and a look back at the moments we've already lived.</p>
       </motion.div>
 
-      {upcoming && <UpcomingFeature event={upcoming} />}
+      {upcoming ? (
+        <UpcomingFeature event={upcoming} />
+      ) : (
+        <motion.div
+          className="no-upcoming"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <span className="no-upcoming-icon">📅</span>
+          <p>No upcoming events yet — check back soon.</p>
+        </motion.div>
+      )}
 
       {past.length > 0 && (
         <div className="past-events-wrap">

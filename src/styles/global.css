@@ -1270,6 +1270,30 @@ nav.scrolled {
 }
 .fe-cta-link:hover { opacity: 1; transform: translateX(2px); }
 
+/* ── No upcoming placeholder ────────────────────────────────────────────── */
+.no-upcoming {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 72px 24px;
+  border-radius: 24px;
+  border: 2px dashed rgba(13,38,96,0.14);
+  background: rgba(13,38,96,0.03);
+  text-align: center;
+}
+.no-upcoming-icon { font-size: 2.8rem; }
+.no-upcoming p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: rgba(13,38,96,0.45);
+  margin: 0;
+}
+
 /* ── PAST EVENTS GRID ────────────────────────────────────────────────────── */
 .past-events-wrap {
   max-width: 1180px;
