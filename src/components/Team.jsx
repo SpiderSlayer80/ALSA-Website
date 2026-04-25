@@ -1,9 +1,16 @@
-// Team — committee member grid. Each card shows the member's initials in a gradient
-// avatar, name, and role. Cards are wrapped in TiltCard for a 3D hover effect and
-// stagger-animate into view as the section scrolls in.
 import { motion } from 'framer-motion';
 import { TEAM } from '../data/site';
 import TiltCard from './TiltCard';
+
+// Load exec photos as plain URLs — `as: 'url'` prevents Vite from trying to
+// parse image files as JS modules (fixes uppercase .JPG / .HEIC errors).
+const photos = import.meta.glob('../exec photos/*', { eager: true, as: 'url' });
+
+function getPhoto(filename) {
+  if (!filename) return null;
+  const key = `../exec photos/${filename}`;
+  return photos[key] ?? null;
+}
 
 const container = {
   hidden: {},
@@ -37,20 +44,33 @@ export default function Team() {
         whileInView="show"
         viewport={{ once: true, margin: '-60px' }}
       >
-        {TEAM.map(m => (
-          <motion.div key={m.name} variants={item}>
-            <TiltCard className="team-card" intensity={8}>
-              <div
-                className="team-avatar"
-                style={{ background: `linear-gradient(135deg, ${m.accent}, ${m.accent}aa)` }}
-              >
-                {m.initial}
-              </div>
-              <div className="team-name">{m.name}</div>
-              <div className="team-role">{m.role}</div>
-            </TiltCard>
-          </motion.div>
-        ))}
+        {TEAM.map(m => {
+          const photoSrc = getPhoto(m.photo);
+          return (
+            <motion.div key={m.name} variants={item}>
+              <TiltCard className="team-card" intensity={8}>
+                <div
+                  className="team-avatar"
+                  style={{
+                    background: photoSrc
+                      ? 'transparent'
+                      : `linear-gradient(135deg, ${m.accent}, ${m.accent}aa)`,
+                    boxShadow: `0 8px 24px ${m.accent}44`,
+                    border: `3px solid ${m.accent}66`,
+                  }}
+                >
+                  {photoSrc ? (
+                    <img src={photoSrc} alt={m.name} />
+                  ) : (
+                    m.name.split(' ').map(w => w[0]).join('').slice(0, 2)
+                  )}
+                </div>
+                <div className="team-name">{m.name}</div>
+                <div className="team-role">{m.role}</div>
+              </TiltCard>
+            </motion.div>
+          );
+        })}
       </motion.div>
     </section>
   );
