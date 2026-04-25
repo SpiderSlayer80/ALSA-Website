@@ -1,0 +1,177 @@
+import { useEffect, useState, useRef } from 'react';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { SITE, HERO_STATS, HERO_WORDS } from '../data/site';
+import AnimatedNumber from './AnimatedNumber';
+import logoFull from '../Logos/logo full lion.png';
+import logoText from '../Logos/logo text.png';
+import photo1 from '../Photos/20250313_131748.jpg';
+import photo2 from '../Photos/IMG_0278.jpeg';
+import photo3 from '../Photos/Post.jpg';
+
+export default function Hero() {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start start', 'end start'],
+  });
+
+  // Fewer scroll transforms = less JS work per frame
+  const yContent       = useTransform(scrollYProgress, [0, 1], [0, 80]);
+  const yOrb1          = useTransform(scrollYProgress, [0, 1], [0, -80]);
+  const yOrb2          = useTransform(scrollYProgress, [0, 1], [0, 80]);
+  const opacityContent = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+
+  const [wordIndex, setWordIndex] = useState(0);
+
+  useEffect(() => {
+    const t = setInterval(() => setWordIndex(i => (i + 1) % HERO_WORDS.length), 2400);
+    return () => clearInterval(t);
+  }, []);
+
+  // 8 particles instead of 18 — same visual effect, less JS overhead
+  const particles = Array.from({ length: 8 }, (_, i) => i);
+
+  return (
+    <section id="home" ref={ref}>
+      <div className="hero-canvas">
+        {/* Photos are static — no per-photo parallax to keep scroll smooth */}
+        <div className="hero-photos">
+          <div className="hero-photo hp1"><img src={photo1} alt="" /></div>
+          <div className="hero-photo hp2"><img src={photo2} alt="" /></div>
+          <div className="hero-photo hp3"><img src={photo3} alt="" /></div>
+        </div>
+
+        <div className="hero-photo-overlay" />
+
+        {/* Only 2 orbs still parallax — orb3 is static */}
+        <motion.div className="hero-orb orb1" style={{ y: yOrb1 }} />
+        <motion.div className="hero-orb orb2" style={{ y: yOrb2 }} />
+        <div className="hero-orb orb3" />
+        <div className="hero-grid" />
+        <div className="hero-stripe" />
+
+        <div className="hero-particles">
+          {particles.map(i => (
+            <motion.span
+              key={i}
+              className="particle"
+              style={{
+                left: `${(i * 12.5) % 100}%`,
+                top:  `${(i * 23)   % 100}%`,
+              }}
+              animate={{ y: [0, -28, 0], opacity: [0, 0.65, 0] }}
+              transition={{
+                duration: 4 + (i % 3),
+                repeat: Infinity,
+                delay: i * 0.5,
+                ease: 'easeInOut',
+              }}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Decorative watermark lion */}
+      <div className="hero-lion-mark">
+        <img src={logoFull} alt="" />
+      </div>
+
+      <motion.div className="hero-content" style={{ y: yContent, opacity: opacityContent }}>
+
+        <motion.img
+          src={logoFull}
+          className="hero-logo-full"
+          alt=""
+          initial={{ opacity: 0, scale: 0.85, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        />
+
+        <motion.h1
+          className="hero-h1"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.12 }}
+        >
+          <img src={logoText} className="hero-logo-text" alt="ALSA" />
+          <span className="hero-rotator">
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={HERO_WORDS[wordIndex]}
+                className="outline"
+                initial={{ y: '110%', opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: '-110%', opacity: 0 }}
+                transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+              >
+                {HERO_WORDS[wordIndex]}
+              </motion.span>
+            </AnimatePresence>
+          </span>
+        </motion.h1>
+
+        <motion.p
+          className="hero-fullname"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.28 }}
+        >
+          {SITE.fullName}
+        </motion.p>
+
+        <motion.p
+          className="hero-desc"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.38 }}
+        >
+          {SITE.description}
+        </motion.p>
+
+        <motion.div
+          className="hero-btns"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.48 }}
+        >
+          <motion.a href="#join" className="btn-g" whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
+            Become a Member <span className="btn-arrow">→</span>
+          </motion.a>
+          <motion.a href="#about" className="btn-o" whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
+            Our Story <span className="btn-arrow">↓</span>
+          </motion.a>
+        </motion.div>
+
+        <motion.div
+          className="hero-stats"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.58 }}
+        >
+          {HERO_STATS.map(stat => (
+            <div key={stat.label} className="hst">
+              <span className="hst-n">
+                <AnimatedNumber to={stat.number} suffix={stat.suffix} />
+              </span>
+              <span className="hst-l">{stat.label}</span>
+            </div>
+          ))}
+        </motion.div>
+      </motion.div>
+
+      <motion.div
+        className="scroll-cue"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2, duration: 0.6 }}
+      >
+        <span>Scroll</span>
+        <motion.div
+          className="scroll-cue-line"
+          animate={{ scaleY: [0, 1, 0], originY: [0, 0, 1] }}
+          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+        />
+      </motion.div>
+    </section>
+  );
+}

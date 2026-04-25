@@ -1,0 +1,21 @@
+{
+  "name": "alsa-website",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "framer-motion": "^11.11.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "sharp": "^0.34.5",
+    "vite": "^5.4.2",
+    "vite-plugin-image-optimizer": "^2.0.3"
+  }
+}
