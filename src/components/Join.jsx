@@ -108,22 +108,32 @@ export default function Join({ onSuccess }) {
       } catch (_) {}
     }
 
-    // Persist to localStorage so the committee can export member data without a backend.
+    // Send to Google Sheets via Apps Script web app (fire-and-forget, no-cors)
+    if (SITE.sheetsUrl) {
+      try {
+        await fetch(SITE.sheetsUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+      } catch (_) {}
+    }
+
+    // Keep localStorage as a local backup
     const members = JSON.parse(localStorage.getItem('alsaMembers2026') || '[]');
     members.push(data);
     localStorage.setItem('alsaMembers2026', JSON.stringify(members));
 
-    setTimeout(() => {
-      setSubmitting(false);
-      const payNote = selMem === 'full'
-        ? 'Your NZD $10 payment is being processed via Stripe. A receipt will be emailed to you.'
-        : 'Social membership is free — welcome aboard!';
-      onSuccess(data.email, payNote);
-      setStep(1);
-      setSelMem('full');
-      setForm({ firstName: '', lastName: '', email: '', phone: '', university: '', year: '', field: '' });
-      cardMountedRef.current = false;
-    }, 900);
+    setSubmitting(false);
+    const payNote = selMem === 'full'
+      ? 'Your NZD $10 payment is being processed via Stripe. A receipt will be emailed to you.'
+      : 'Social membership is free — welcome aboard!';
+    onSuccess(data.email, payNote);
+    setStep(1);
+    setSelMem('full');
+    setForm({ firstName: '', lastName: '', email: '', phone: '', university: '', year: '', field: '' });
+    cardMountedRef.current = false;
   }
 
   const isSocial = selMem === 'social';

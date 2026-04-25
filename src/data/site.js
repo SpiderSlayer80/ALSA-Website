@@ -15,6 +15,8 @@ export const SITE = {
   year: '2026',
   // Replace with your Stripe publishable key from Stripe Dashboard → Developers → API Keys
   stripeKey: 'pk_test_YOUR_KEY_HERE',
+  // Paste your Google Apps Script web app URL here after deploying (see README / setup instructions)
+  sheetsUrl: '',
 };
 
 // ─── Navigation ──────────────────────────────────────────────────────────────
@@ -412,7 +414,7 @@ export const FIELDS_OF_STUDY = [
 export const CONTACT_INFO = [
   { icon: 'email',     label: 'Email',     value: 'uoa.alsa2020@gmail.com',                        href: 'mailto:uoa.alsa2020@gmail.com',      external: false },
   { icon: 'instagram', label: 'Instagram', value: '@uoa.alsa',                                     href: 'https://instagram.com/uoa.alsa',     external: true  },
-  { icon: 'facebook',  label: 'Facebook',  value: 'Auckland Lankan Students Association — ALSA',   href: 'https://facebook.com/alsanz',        external: true  },
+  { icon: 'facebook',  label: 'Facebook',  value: 'Auckland Lankan Students Association — ALSA',   href: 'https://facebook.com/alsa.uoa',        external: true  },
 ];
 
 // ─── Footer navigation ────────────────────────────────────────────────────────
