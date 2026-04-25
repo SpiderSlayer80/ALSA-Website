@@ -1319,9 +1319,15 @@ nav.scrolled {
 }
 .past-poster-wrap {
   position: relative;
-  aspect-ratio: 16 / 9;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 default */
+  height: 0;
   background: #0a1628;
   overflow: hidden;
+  transition: padding-bottom 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.past-card:hover .past-poster-wrap {
+  padding-bottom: 125%; /* 4:5 on hover */
 }
 .past-poster {
   position: absolute;
