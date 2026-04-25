@@ -78,7 +78,7 @@ export const EVENTS = [
     tag: 'Social',
     description: 'A casual evening to meet the ALSA 2026 committee and connect with fellow Sri Lankan students across Auckland.',
     color: 'blue',
-    poster: '',          // e.g. 'meetgreet.jpg' inside src/event posters/
+    poster: 'Meet & Greet Event poster 2026.jpg',
     eventbriteUrl: '',
   },
   {
@@ -90,7 +90,7 @@ export const EVENTS = [
     tag: 'Flagship',
     description: 'Traditional games, rabaan drumming, milk rice and a kiribath feast. Celebrating the Sri Lankan New Year together right here in Auckland.',
     color: 'gold',
-    poster: '',          // e.g. 'avurudu.jpg' inside src/event posters/
+    poster: 'New Years Poster 2026.jpg',
     eventbriteUrl: '',
   },
   {
