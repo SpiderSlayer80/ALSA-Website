@@ -134,22 +134,22 @@ export const TESTIMONIALS = [
 
 // ─── Team / Committee ─────────────────────────────────────────────────────────
 export const TEAM = [
-  { name: 'Binuk Silva',              role: 'Co-President',          photo: 'Binuk.jpg',     accent: '#F5B800' },
-  { name: 'Hariene Prabaharan',       role: 'Co-President',          photo: 'Hariene.jpg',   accent: '#F5B800' },
-  { name: 'Kalishika Karunatilaka',   role: 'Vice President',        photo: 'Kalshika.JPG',  accent: '#F5B800' },
-  { name: 'Thisas Gamage',            role: 'Secretary',             photo: 'Thisas.jpg',    accent: '#F5B800' },
-  { name: 'Shazana Sharker',          role: 'Events Manager',        photo: 'Shazana.jpeg',  accent: '#F5B800' },
-  { name: 'Mahimi Nadungoda',         role: 'Events Co-ordinator',   photo: 'Mahimi.JPG',    accent: '#2255cc' },
-  { name: 'Ravindu Jayawardane',      role: 'Events Co-ordinator',   photo: 'Ravindu.jpeg',  accent: '#2255cc' },
-  { name: 'Lakindu Balasooriya',      role: 'Marketing Manager',     photo: 'Lakindu.jpg',   accent: '#F5B800' },
-  { name: 'Misha Kumarr',             role: 'Graphic Designer',      photo: 'Misha.jpg',     accent: '#2255cc' },
-  { name: 'Sharon Fernando',          role: 'Graphic Designer',      photo: 'Sharon.jpeg',   accent: '#2255cc' },
-  { name: 'Dinith de Alwis',          role: 'Finance Manager',       photo: 'Dinith.jpeg',   accent: '#F5B800' },
-  { name: 'Riveen Kariyawasam',       role: 'Treasurer',             photo: 'Riveen.JPG',    accent: '#2255cc' },
-  { name: 'Shakeel Shamaail',         role: 'Treasurer',             photo: 'Shakeel.jpeg',  accent: '#2255cc' },
-  { name: 'Shenan Rajasekara',        role: 'Junior Representative', photo: 'Shenan.jpg',    accent: '#2255cc' },
-  { name: 'Navik Alwis',              role: 'Junior Representative', photo: 'Navik.jpg',     accent: '#2255cc' },
-  { name: 'Chethani Wilegoda Gamage', role: 'Junior Representative', photo: 'Chethani.jpg',  accent: '#2255cc' },
+  { name: 'Binuk',     role: 'Co-President',          photo: 'Binuk.jpg',     accent: '#F5B800' },
+  { name: 'Hariene',   role: 'Co-President',          photo: 'Hariene.jpg',   accent: '#F5B800' },
+  { name: 'Kalishika', role: 'Vice President',        photo: 'Kalshika.JPG',  accent: '#F5B800' },
+  { name: 'Thisas',    role: 'Secretary',             photo: 'Thisas.jpg',    accent: '#F5B800' },
+  { name: 'Shazana',   role: 'Events Manager',        photo: 'Shazana.jpeg',  accent: '#F5B800' },
+  { name: 'Mahimi',    role: 'Events Co-ordinator',   photo: 'Mahimi.JPG',    accent: '#2255cc' },
+  { name: 'Ravindu',   role: 'Events Co-ordinator',   photo: 'Ravindu.jpeg',  accent: '#2255cc' },
+  { name: 'Lakindu',   role: 'Marketing Manager',     photo: 'Lakindu.jpg',   accent: '#F5B800' },
+  { name: 'Misha',     role: 'Graphic Designer',      photo: 'Misha.jpg',     accent: '#2255cc' },
+  { name: 'Sharon',    role: 'Graphic Designer',      photo: 'Sharon.jpeg',   accent: '#2255cc' },
+  { name: 'Dinith',    role: 'Finance Manager',       photo: 'Dinith.jpeg',   accent: '#F5B800' },
+  { name: 'Riveen',    role: 'Treasurer',             photo: 'Riveen.JPG',    accent: '#2255cc' },
+  { name: 'Shakeel',   role: 'Treasurer',             photo: 'Shakeel.jpeg',  accent: '#2255cc' },
+  { name: 'Shenan',    role: 'Junior Representative', photo: 'Shenan.jpg',    accent: '#2255cc' },
+  { name: 'Navik',     role: 'Junior Representative', photo: 'Navik.jpg',     accent: '#2255cc' },
+  { name: 'Chethani',  role: 'Junior Representative', photo: 'Chethani.jpg',  accent: '#2255cc' },
 ];
 
 // ─── FAQ ──────────────────────────────────────────────────────────────────────
