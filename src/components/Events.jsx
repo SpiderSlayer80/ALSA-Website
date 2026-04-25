@@ -56,6 +56,16 @@ export default function Events() {
                 <span>🕒 {ev.time}</span>
                 <span>📍 {ev.location}</span>
               </div>
+              {ev.eventbriteUrl && (
+                <a
+                  href={ev.eventbriteUrl}
+                  className={`event-ticket-btn event-ticket-${ev.color}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  🎟 Buy Tickets →
+                </a>
+              )}
             </div>
             <div className="event-spark" />
           </motion.article>

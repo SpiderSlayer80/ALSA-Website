@@ -24,7 +24,6 @@ export const NAV_LINKS = [
   { label: 'Events', href: '#events' },
   { label: 'Gallery', href: '#gallery' },
   { label: 'Team', href: '#team' },
-  { label: 'Join', href: '#join' },
   { label: 'Contact', href: '#contact' },
 ];
 
@@ -63,6 +62,8 @@ export const PILLARS = [
 ];
 
 // ─── Upcoming events ──────────────────────────────────────────────────────────
+// eventbriteUrl: paste the Eventbrite link when tickets go live — button appears automatically.
+// Leave as '' for free/no-ticket events — only the description will show.
 export const EVENTS = [
   {
     date: '14 APR',
@@ -72,6 +73,7 @@ export const EVENTS = [
     tag: 'Flagship',
     description: 'Traditional games, rabaan drumming, milk rice and a kiribath feast. Bring family and friends.',
     color: 'gold',
+    eventbriteUrl: '',
   },
   {
     date: '08 MAY',
@@ -81,6 +83,7 @@ export const EVENTS = [
     tag: 'Headliner',
     description: 'A showcase of Lankan dance, music and fashion performed by Auckland students.',
     color: 'blue',
+    eventbriteUrl: '',
   },
   {
     date: '22 JUN',
@@ -90,6 +93,7 @@ export const EVENTS = [
     tag: 'Sport',
     description: 'Inter-university cricket tournament. Teams of 8, casual day format.',
     color: 'gold',
+    eventbriteUrl: '',
   },
   {
     date: '19 SEP',
@@ -99,6 +103,7 @@ export const EVENTS = [
     tag: 'Community',
     description: 'Kottu, hoppers, string hoppers and more — open to the public, tickets at door.',
     color: 'blue',
+    eventbriteUrl: '',
   },
 ];
 
@@ -138,7 +143,7 @@ export const TEAM = [
   { name: 'Lakindu Balasooriya',      role: 'Marketing Manager',     photo: 'Lakindu.jpg',   accent: '#2255cc' },
   { name: 'Misha Kumarr',             role: 'Graphic Designer',      photo: 'Misha.jpg',     accent: '#2255cc' },
   { name: 'Sharon Fernando',          role: 'Graphic Designer',      photo: 'Sharon.jpeg',   accent: '#2255cc' },
-  { name: 'Dinith de Alwis',          role: 'Finance Manager',       photo: 'Dinith.jpg',   accent: '#F5B800' },
+  { name: 'Dinith de Alwis',          role: 'Finance Manager',       photo: 'Dinith.jpeg',   accent: '#F5B800' },
   { name: 'Riveen Kariyawasam',       role: 'Treasurer',             photo: 'Riveen.JPG',    accent: '#F5B800' },
   { name: 'Shakeel Shamaail',         role: 'Treasurer',             photo: 'Shakeel.jpeg',  accent: '#F5B800' },
   { name: 'Shenan Rajasekara',        role: 'Junior Representative', photo: 'Shenan.jpg',    accent: '#2255cc' },
@@ -182,14 +187,52 @@ export const SPONSORS = [
   { name: 'Tea & Toddy Bar', tier: 'Bronze' },
 ];
 
-// ─── Gallery placeholders ─────────────────────────────────────────────────────
-export const GALLERY_PLACEHOLDERS = [
-  { icon: '📸', label: 'Avurudu 2025' },
-  { icon: '🎊', label: 'Welcome Night' },
-  { icon: '🌟', label: 'Cultural Night' },
-  { icon: '🏏', label: 'Cricket Day' },
-  { icon: '🍛', label: 'Food Festival' },
-  { icon: '🎓', label: 'Grad Celebration' },
+// ─── Gallery events ───────────────────────────────────────────────────────────
+// photo: paste the Google Drive direct image URL for the cover photo.
+//   How to get it: right-click file in Drive → Share → Anyone with link → copy link.
+//   Then change the URL from:
+//     https://drive.google.com/file/d/FILE_ID/view
+//   to:
+//     https://drive.google.com/uc?export=view&id=FILE_ID
+// albumUrl: link to the full Google Drive/Photos folder for this event.
+// The first entry is displayed larger as the featured/most recent event.
+export const GALLERY_EVENTS = [
+  {
+    title: 'Avurudu 2025',
+    date: 'APR 2025',
+    photo: '',   // paste Google Drive direct image URL
+    albumUrl: '', // paste Google Drive folder link
+  },
+  {
+    title: 'Cultural Night — Raaga',
+    date: 'MAY 2025',
+    photo: '',
+    albumUrl: '',
+  },
+  {
+    title: 'Winter Cricket Cup',
+    date: 'JUN 2025',
+    photo: '',
+    albumUrl: '',
+  },
+  {
+    title: 'Food Festival',
+    date: 'SEP 2025',
+    photo: '',
+    albumUrl: '',
+  },
+  {
+    title: 'Welcome Night',
+    date: 'FEB 2025',
+    photo: '',
+    albumUrl: '',
+  },
+  {
+    title: 'Grad Celebration',
+    date: 'NOV 2024',
+    photo: '',
+    albumUrl: '',
+  },
 ];
 
 // ─── Membership tiers ────────────────────────────────────────────────────────
