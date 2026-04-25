@@ -23,7 +23,13 @@ export default function Join({ onSuccess }) {
   const [selMem, setSelMem] = useState('full');
   const [form, setForm] = useState({
     firstName: '', lastName: '', email: '', phone: '',
-    university: '', year: '', field: '',
+    atUoA: '',           // 'Yes' | 'No'
+    upi: '',             // UoA only
+    universityId: '',
+    university: '',      // non-UoA only
+    field: '',
+    year: '',
+    continuing2027: '',  // 'Yes' | 'No'
   });
   const [cardError, setCardError] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -72,7 +78,12 @@ export default function Join({ onSuccess }) {
 
   function goToStep(n) {
     if (n > 1) {
-      if (!form.firstName || !form.lastName || !form.email || !form.university) {
+      const isUoA = form.atUoA === 'Yes';
+      const missing =
+        !form.firstName || !form.lastName || !form.email || !form.atUoA ||
+        (isUoA && !form.upi) ||
+        (!isUoA && !form.university);
+      if (missing) {
         toast.error('Please fill in all required fields (*) before continuing.');
         return;
       }
@@ -82,13 +93,31 @@ export default function Join({ onSuccess }) {
 
   async function handleSubmit() {
     setSubmitting(true);
+    const isUoA = form.atUoA === 'Yes';
+    const paid = selMem === 'full' ? 'Yes — via website' : 'Social (Free)';
     const data = {
-      timestamp: new Date().toISOString(),
-      ...form,
-      membership: selMem === 'full' ? 'Full Member' : 'Social Member',
-      amount: selMem === 'full' ? 10 : 0,
-      paymentStatus: selMem === 'social' ? 'N/A' : 'Pending',
-      dateJoined: new Date().toLocaleDateString('en-NZ'),
+      // ── Sheet columns (match "Form responses 1" exactly) ──────────────────
+      timestamp:      new Date().toLocaleString('en-NZ'),
+      firstName:      form.firstName,
+      lastName:       form.lastName,
+      email:          form.email,
+      atUoA:          form.atUoA,
+      // UoA-specific columns (cols 6-11)
+      upi:            isUoA ? form.upi           : '',
+      universityId:   isUoA ? form.universityId  : '',
+      fieldUoA:       isUoA ? form.field         : '',
+      yearUoA:        isUoA ? form.year          : '',
+      continuing2027: isUoA ? form.continuing2027 : '',
+      paidUoA:        isUoA ? paid               : '',
+      // Non-UoA columns (cols 12-16)
+      universityOther: !isUoA ? form.university  : '',
+      universityIdOther: !isUoA ? form.universityId : '',
+      fieldOther:     !isUoA ? form.field        : '',
+      yearOther:      !isUoA ? form.year         : '',
+      paidOther:      !isUoA ? paid              : '',
+      // Extra
+      phone:          form.phone,
+      membership:     selMem === 'full' ? 'Full Member' : 'Social Member',
     };
 
     if (selMem === 'full' && stripeRef.current && cardElRef.current) {
@@ -132,7 +161,7 @@ export default function Join({ onSuccess }) {
     onSuccess(data.email, payNote);
     setStep(1);
     setSelMem('full');
-    setForm({ firstName: '', lastName: '', email: '', phone: '', university: '', year: '', field: '' });
+    setForm({ firstName: '', lastName: '', email: '', phone: '', atUoA: '', upi: '', universityId: '', university: '', field: '', year: '', continuing2027: '' });
     cardMountedRef.current = false;
   }
 
@@ -197,27 +226,66 @@ export default function Join({ onSuccess }) {
                       <label>Phone Number</label>
                       <input type="tel" placeholder="+64 21 000 0000" value={form.phone} onChange={e => setField('phone', e.target.value)} />
                     </div>
-                    <div className="fg">
-                      <label>University *</label>
-                      <select value={form.university} onChange={e => setField('university', e.target.value)}>
-                        <option value="">Select your university</option>
-                        {UNIVERSITIES.map(u => <option key={u}>{u}</option>)}
-                      </select>
-                    </div>
-                    <div className="fg">
-                      <label>Year of Study</label>
-                      <select value={form.year} onChange={e => setField('year', e.target.value)}>
-                        <option value="">Select year</option>
-                        {STUDY_YEARS.map(y => <option key={y}>{y}</option>)}
-                      </select>
-                    </div>
                     <div className="fg full">
-                      <label>Field of Study</label>
-                      <select value={form.field} onChange={e => setField('field', e.target.value)}>
-                        <option value="">Select field</option>
-                        {FIELDS_OF_STUDY.map(f => <option key={f}>{f}</option>)}
+                      <label>Are you currently studying at the University of Auckland? *</label>
+                      <select value={form.atUoA} onChange={e => setField('atUoA', e.target.value)}>
+                        <option value="">Select an option</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
                       </select>
                     </div>
+
+                    {form.atUoA === 'Yes' && <>
+                      <div className="fg">
+                        <label>UPI *<span className="fg-hint"> e.g. lbal981</span></label>
+                        <input type="text" placeholder="e.g. lbal981" value={form.upi} onChange={e => setField('upi', e.target.value)} />
+                      </div>
+                      <div className="fg">
+                        <label>Student ID</label>
+                        <input type="text" placeholder="e.g. 123456789" value={form.universityId} onChange={e => setField('universityId', e.target.value)} />
+                      </div>
+                    </>}
+
+                    {form.atUoA === 'No' && <>
+                      <div className="fg">
+                        <label>Your University *</label>
+                        <select value={form.university} onChange={e => setField('university', e.target.value)}>
+                          <option value="">Select your university</option>
+                          {UNIVERSITIES.filter(u => !u.includes('UoA')).map(u => <option key={u}>{u}</option>)}
+                        </select>
+                      </div>
+                      <div className="fg">
+                        <label>Student ID</label>
+                        <input type="text" placeholder="Student ID number" value={form.universityId} onChange={e => setField('universityId', e.target.value)} />
+                      </div>
+                    </>}
+
+                    {form.atUoA && <>
+                      <div className="fg">
+                        <label>What are you studying?</label>
+                        <select value={form.field} onChange={e => setField('field', e.target.value)}>
+                          <option value="">Select field</option>
+                          {FIELDS_OF_STUDY.map(f => <option key={f}>{f}</option>)}
+                        </select>
+                      </div>
+                      <div className="fg">
+                        <label>Year of Study in 2026</label>
+                        <select value={form.year} onChange={e => setField('year', e.target.value)}>
+                          <option value="">Select year</option>
+                          {STUDY_YEARS.map(y => <option key={y}>{y}</option>)}
+                        </select>
+                      </div>
+                      {form.atUoA === 'Yes' && (
+                        <div className="fg full">
+                          <label>Will you still be a student in 2027?</label>
+                          <select value={form.continuing2027} onChange={e => setField('continuing2027', e.target.value)}>
+                            <option value="">Select an option</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                          </select>
+                        </div>
+                      )}
+                    </>}
                   </div>
                   <div className="form-nav">
                     <div className="step-dots">
