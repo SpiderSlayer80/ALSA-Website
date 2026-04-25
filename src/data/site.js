@@ -186,48 +186,167 @@ export const SPONSORS = [
 ];
 
 // ─── Gallery events ───────────────────────────────────────────────────────────
-// photo: paste the Google Drive direct image URL for the cover photo.
+// photo:    paste the Google Drive direct image URL for the cover photo.
 //   How to get it: right-click file in Drive → Share → Anyone with link → copy link.
 //   Then change the URL from:
 //     https://drive.google.com/file/d/FILE_ID/view
 //   to:
 //     https://drive.google.com/uc?export=view&id=FILE_ID
 // albumUrl: link to the full Google Drive/Photos folder for this event.
+// year:     used for the year-filter browser below the main grid.
 // The first entry is displayed larger as the featured/most recent event.
 export const GALLERY_EVENTS = [
+  // ── 2026 ──────────────────────────────────────────────────────────────────
+  {
+    title: 'Avurudu 2026',
+    date: 'APR 2026',
+    year: 2026,
+    photo: '',
+    albumUrl: '',
+  },
+  {
+    title: 'Meet and Greet 2026',
+    date: 'MAR 2026',
+    year: 2026,
+    photo: '',
+    albumUrl: '',
+  },
+  // ── 2025 ──────────────────────────────────────────────────────────────────
   {
     title: 'Avurudu 2025',
     date: 'APR 2025',
-    photo: '',   // paste Google Drive direct image URL
-    albumUrl: '', // paste Google Drive folder link
+    year: 2025,
+    photo: '',
+    albumUrl: '',
   },
   {
     title: 'Cultural Night — Raaga',
     date: 'MAY 2025',
+    year: 2025,
     photo: '',
     albumUrl: '',
   },
   {
     title: 'Winter Cricket Cup',
     date: 'JUN 2025',
+    year: 2025,
     photo: '',
     albumUrl: '',
   },
   {
-    title: 'Food Festival',
+    title: 'Food Festival 2025',
     date: 'SEP 2025',
+    year: 2025,
     photo: '',
     albumUrl: '',
   },
   {
-    title: 'Welcome Night',
+    title: 'Welcome Night 2025',
     date: 'FEB 2025',
+    year: 2025,
+    photo: '',
+    albumUrl: '',
+  },
+  // ── 2024 ──────────────────────────────────────────────────────────────────
+  {
+    title: 'Avurudu 2024',
+    date: 'APR 2024',
+    year: 2024,
     photo: '',
     albumUrl: '',
   },
   {
-    title: 'Grad Celebration',
+    title: 'Cultural Night 2024',
+    date: 'MAY 2024',
+    year: 2024,
+    photo: '',
+    albumUrl: '',
+  },
+  {
+    title: 'Food Festival 2024',
+    date: 'SEP 2024',
+    year: 2024,
+    photo: '',
+    albumUrl: '',
+  },
+  {
+    title: 'Grad Celebration 2024',
     date: 'NOV 2024',
+    year: 2024,
+    photo: '',
+    albumUrl: '',
+  },
+  // ── 2023 ──────────────────────────────────────────────────────────────────
+  {
+    title: 'Avurudu 2023',
+    date: 'APR 2023',
+    year: 2023,
+    photo: '',
+    albumUrl: '',
+  },
+  {
+    title: 'Cultural Night 2023',
+    date: 'MAY 2023',
+    year: 2023,
+    photo: '',
+    albumUrl: '',
+  },
+  {
+    title: 'Food Festival 2023',
+    date: 'SEP 2023',
+    year: 2023,
+    photo: '',
+    albumUrl: '',
+  },
+  // ── 2022 ──────────────────────────────────────────────────────────────────
+  {
+    title: 'Avurudu 2022',
+    date: 'APR 2022',
+    year: 2022,
+    photo: '',
+    albumUrl: '',
+  },
+  {
+    title: 'Welcome Night 2022',
+    date: 'FEB 2022',
+    year: 2022,
+    photo: '',
+    albumUrl: '',
+  },
+  {
+    title: 'Cricket Cup 2022',
+    date: 'JUL 2022',
+    year: 2022,
+    photo: '',
+    albumUrl: '',
+  },
+  // ── 2021 ──────────────────────────────────────────────────────────────────
+  {
+    title: 'Avurudu 2021',
+    date: 'APR 2021',
+    year: 2021,
+    photo: '',
+    albumUrl: '',
+  },
+  {
+    title: 'Virtual Social Night',
+    date: 'JUN 2021',
+    year: 2021,
+    photo: '',
+    albumUrl: '',
+  },
+  // ── 2020 ──────────────────────────────────────────────────────────────────
+  {
+    title: 'Avurudu 2020',
+    date: 'APR 2020',
+    year: 2020,
+    photo: '',
+    albumUrl: '',
+  },
+  {
+    title: 'Welcome Night 2020',
+    date: 'FEB 2020',
+    year: 2020,
     photo: '',
     albumUrl: '',
   },
