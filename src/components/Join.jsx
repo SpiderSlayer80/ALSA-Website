@@ -94,7 +94,7 @@ export default function Join({ onSuccess }) {
   async function handleSubmit() {
     setSubmitting(true);
     const isUoA = form.atUoA === 'Yes';
-    const paid = selMem === 'full' ? 'Yes — via website' : 'Social (Free)';
+    const paid = selMem === 'full' ? 'Yes (via website)' : 'Social (Free)';
     const data = {
       // ── Sheet columns (match "Form responses 1" exactly) ──────────────────
       timestamp:      new Date().toLocaleString('en-NZ'),
@@ -157,7 +157,7 @@ export default function Join({ onSuccess }) {
     setSubmitting(false);
     const payNote = selMem === 'full'
       ? 'Your NZD $10 payment is being processed via Stripe. A receipt will be emailed to you.'
-      : 'Social membership is free — welcome aboard!';
+      : 'Social Membership is free. Welcome aboard!';
     onSuccess(data.email, payNote);
     setStep(1);
     setSelMem('full');
@@ -185,7 +185,7 @@ export default function Join({ onSuccess }) {
             Become a Member
           </div>
           <h2 className="sec-h">Join the ALSA Family</h2>
-          <p>Sign up in 3 easy steps and gain access to all events, member discounts, and our community.</p>
+          <p>Sign up in three quick steps to access all events, exclusive member discounts and the wider ALSA community.</p>
         </motion.div>
 
         <motion.div
@@ -355,7 +355,7 @@ export default function Join({ onSuccess }) {
                     <>
                       <div className="order-box">
                         <div>
-                          <div className="olabel">ALSA Full Membership — 2026</div>
+                          <div className="olabel">ALSA Full Membership 2026</div>
                           <div className="osub">All events, discounts &amp; voting rights</div>
                         </div>
                         <div className="order-amt">NZD $10</div>

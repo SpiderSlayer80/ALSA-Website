@@ -54,7 +54,7 @@ export default function Events() {
       >
         <div className="sec-eyebrow" style={{ justifyContent: 'center' }}>What's On</div>
         <h2 className="sec-h" style={{ color: 'var(--blue)' }}>Events</h2>
-        <p className="section-sub">The next chapter — and a look back at the moments we've already lived.</p>
+        <p className="section-sub">A look at what's coming up next, alongside the moments we've already shared.</p>
       </motion.div>
 
       {upcoming ? (
@@ -68,7 +68,7 @@ export default function Events() {
           transition={{ duration: 0.6 }}
         >
           <span className="no-upcoming-icon">📅</span>
-          <p>No upcoming events yet — check back soon.</p>
+          <p>No upcoming events just yet. Check back soon.</p>
         </motion.div>
       )}
 
@@ -174,7 +174,7 @@ function UpcomingFeature({ event }) {
             <li><span className="fe-meta-icon">📍</span><span>{event.location}</span></li>
             <li>
               <span className="fe-meta-icon">🎟</span>
-              <span>{ticketed ? 'Ticketed via Eventbrite' : 'Free entry — no tickets required'}</span>
+              <span>{ticketed ? 'Ticketed via Eventbrite' : 'Free entry, no tickets required'}</span>
             </li>
           </ul>
 

@@ -33,7 +33,7 @@ export default function Footer() {
         >
           <div>
             <h3>Stay in the loop</h3>
-            <p>Monthly newsletter — events, member spotlights, opportunities. No spam.</p>
+            <p>Monthly updates on events, member spotlights and opportunities. No spam.</p>
           </div>
           <form className="footer-form" onSubmit={subscribe}>
             <input
@@ -52,7 +52,7 @@ export default function Footer() {
           <div>
             <div className="footer-brand">{SITE.name}</div>
             <p className="footer-tagline">
-              {SITE.fullName} — uniting Sri Lankan students across Auckland. 🦁
+              {SITE.fullName}. Uniting Sri Lankan students across Auckland. 🦁
             </p>
             <div className="fsocs" style={{ marginTop: '20px' }}>
               <a href={SITE.instagram} className="fsoc" target="_blank" rel="noreferrer" aria-label="Instagram">📸</a>

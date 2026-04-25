@@ -33,14 +33,14 @@ export default function About() {
             <span className="sec-h-accent">From Home</span>
           </h2>
           <p className="about-p">
-            ALSA is a vibrant community for Sri Lankan students studying across Auckland.
-            Whether you've just arrived in New Zealand or have been here for years, ALSA is
-            your hub for cultural connection, support, and friendship.
+            ALSA is a community for Sri Lankan students studying across Auckland. Whether
+            you've recently arrived in New Zealand or have called it home for years, ALSA is
+            your place for cultural connection, support and friendship.
           </p>
           <p className="about-p">
-            We celebrate our rich heritage through events, support our members academically
-            and socially, and build bridges between Sri Lankan students and the wider Auckland
-            community.
+            We celebrate our heritage through cultural events, support our members both
+            academically and socially, and build lasting connections between Sri Lankan
+            students and the wider Auckland community.
           </p>
           <motion.a
             href="#join"

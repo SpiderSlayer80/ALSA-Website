@@ -662,18 +662,21 @@ nav.scrolled {
 /* Gap between ALSA logo text and the rotating word */
 .hero-rotator {
   display: block;
-  height: 1.1em;
+  height: 1.5em;
   overflow: hidden;
   position: relative;
-  margin-top: 22px;
+  margin-top: 36px;
 }
 .hero-h1 .outline {
   -webkit-text-stroke: 2px rgba(255, 255, 255, 0.35);
   color: transparent;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: absolute;
   inset: 0;
   text-align: center;
+  line-height: 1;
 }
 
 .hero-fullname {

@@ -5,7 +5,7 @@ export const SITE = {
   name: 'ALSA',
   fullName: 'Auckland Lankan Students Association',
   description:
-    "Your home away from home — connecting Sri Lankan students across Auckland's universities through culture, community and unforgettable moments.",
+    "A welcoming community for Sri Lankan students across Auckland's universities, bringing together culture, friendship and shared experiences throughout your time in New Zealand.",
   email: 'uoa.alsa2020@gmail.com',
   instagram: 'https://instagram.com/uoa.alsa',
   instagramHandle: '@uoa.alsa',
@@ -37,29 +37,29 @@ export const HERO_STATS = [
   { number: 5, suffix: 'yrs', label: '& Growing' },
 ];
 
-export const HERO_WORDS = ['Connect', 'Celebrate', 'Inspire', 'Belong'];
+export const HERO_WORDS = ['Hello', 'ආයුබෝවන්', 'வணக்கம்'];
 
 // ─── About pillars ───────────────────────────────────────────────────────────
 export const PILLARS = [
   {
     icon: '🎉',
     title: 'Cultural Events',
-    text: 'From Avurudu to cultural nights — we bring Sri Lankan traditions to life right here in Auckland.',
+    text: 'From Avurudu celebrations to cultural showcases, we bring Sri Lankan traditions to life across Auckland.',
   },
   {
     icon: '🤝',
     title: 'Community Support',
-    text: 'Peer networks, mentorship, and a welcoming space for every Lankan student in Auckland.',
+    text: 'Peer networks, mentorship and a welcoming space for every Sri Lankan student in Auckland.',
   },
   {
     icon: '🎓',
     title: 'Academic Network',
-    text: 'Study groups and career connections across UoA, AUT, Massey and beyond.',
+    text: 'Study groups, career connections and academic support across UoA, AUT, Massey and beyond.',
   },
   {
     icon: '🏏',
     title: 'Sport & Social',
-    text: 'Cricket, food fests, movie nights and social gatherings throughout the year.',
+    text: 'Cricket matches, food festivals, movie nights and social gatherings throughout the year.',
   },
 ];
 
@@ -76,7 +76,7 @@ export const EVENTS = [
     title: 'Meet and Greet',
     location: 'University of Auckland',
     tag: 'Social',
-    description: 'A casual evening to meet the ALSA 2026 committee and connect with fellow Sri Lankan students across Auckland.',
+    description: 'A casual evening to meet the ALSA 2026 committee and connect with fellow Sri Lankan students from across Auckland.',
     color: 'blue',
     poster: 'Meet & Greet Event poster 2026.jpg',
     eventbriteUrl: '',
@@ -85,10 +85,10 @@ export const EVENTS = [
     dateISO: '2026-04-14',
     date: '14 APR',
     time: '6:00 PM',
-    title: 'Sinhala & Tamil New Year — Avurudu 2026',
-    location: 'University of Auckland — Fale Pasifika',
+    title: 'Sinhala & Tamil New Year: Avurudu 2026',
+    location: 'University of Auckland, Fale Pasifika',
     tag: 'Flagship',
-    description: 'Traditional games, rabaan drumming, milk rice and a kiribath feast. Celebrating the Sri Lankan New Year together right here in Auckland.',
+    description: 'Traditional games, rabaan drumming and a kiribath feast as we celebrate the Sri Lankan New Year together in Auckland.',
     color: 'gold',
     poster: 'New Years Poster 2026.jpg',
     eventbriteUrl: '',
@@ -100,32 +100,33 @@ export const EVENTS = [
     title: 'South Asian Club Movie Night',
     location: 'University of Auckland',
     tag: 'Collab',
-    description: 'Joining forces with the South Asian Club for a relaxed movie night. Grab your snacks and bring a friend.',
+    description: 'A relaxed movie night hosted alongside the South Asian Club. Bring a friend, grab a seat and unwind with us.',
     color: 'blue',
     poster: '',          // e.g. 'movienight.jpg' inside src/event posters/
-    eventbriteUrl: '',   // paste Eventbrite link here if ticketed
+    eventbriteUrl: '',
+    hidden: false  // paste Eventbrite link here if ticketed
   },
 ];
 
 // ─── Testimonials ─────────────────────────────────────────────────────────────
 export const TESTIMONIALS = [
   {
-    quote: 'ALSA made Auckland feel like home in my first week. The welcome night, the WhatsApp group, the senior mentors — all of it made a huge difference.',
+    quote: 'ALSA made Auckland feel like home in my first week. The welcome night, the group chats and the senior mentors all made a real difference.',
     name: 'Nethmi Perera',
     role: 'Engineering, Year 2 · UoA',
   },
   {
-    quote: 'Avurudu at UoA was unforgettable. It felt like being back home. Grateful for this community.',
+    quote: 'Avurudu at UoA was unforgettable. It honestly felt like being back home, and I\'m so grateful for this community.',
     name: 'Dinesh Rathnayake',
     role: 'Commerce, Year 3 · AUT',
   },
   {
-    quote: 'Best part about ALSA? The cricket days, the food fests, the friends I\'ve made. Worth every cent of the membership.',
+    quote: 'The cricket days, the food festivals, the friendships I\'ve built through ALSA make every cent of the membership worth it.',
     name: 'Tharushi Silva',
     role: 'Med Sci, Year 4 · UoA',
   },
   {
-    quote: 'Joined as a shy first-year and left exec three years later. ALSA genuinely shapes your uni experience.',
+    quote: 'I joined as a shy first year and ended up on the executive committee three years later. ALSA genuinely shapes your university experience.',
     name: 'Ashen Weerasinghe',
     role: 'Alumnus · Massey',
   },
@@ -155,23 +156,23 @@ export const TEAM = [
 export const FAQ = [
   {
     q: 'Who can join ALSA?',
-    a: 'Any student studying in Auckland with a connection to Sri Lanka — or anyone who loves Sri Lankan culture. Current students, alumni, exchange students, postgrads and PhD candidates are all welcome.',
+    a: 'Any student studying in Auckland with a connection to Sri Lanka, or anyone who loves Sri Lankan culture. Current students, alumni, exchange students, postgraduates and PhD candidates are all welcome.',
   },
   {
     q: 'What\'s the difference between Full and Social membership?',
-    a: 'Full members (NZD $10/year) get priority event access, discounts, an ALSA member card, and voting rights at the AGM. Social members get free access to our community channels and social events.',
+    a: 'Full members (NZD $10 per year) receive priority event access, exclusive discounts, an official ALSA member card and voting rights at the AGM. Social members enjoy free access to our community channels and social events.',
   },
   {
     q: 'How many events do you run each year?',
-    a: 'We typically run 10–15 events per year — Avurudu, Cultural Night (Raaga), the ALSA Food Festival, cricket tournaments, welcome nights, study jams, and more.',
+    a: 'We typically run between 10 and 15 events each year, including Avurudu, our Cultural Night (Raaga), the ALSA Food Festival, cricket tournaments, welcome nights and study sessions.',
   },
   {
     q: 'Can businesses sponsor ALSA?',
-    a: 'Absolutely. We partner with local Sri Lankan businesses, restaurants, and brands. Reach out via the contact form for our sponsorship deck.',
+    a: 'Absolutely. We partner with local Sri Lankan businesses, restaurants and brands. Please reach out via the contact form to request our sponsorship deck.',
   },
   {
     q: 'How do I get refunded if I change my mind?',
-    a: 'Membership is refundable within 14 days if you haven\'t attended any members-only events. Email us at info@alsa.org.nz.',
+    a: 'Membership is refundable within 14 days, provided you haven\'t attended any members only events. Please email us at uoa.alsa2020@gmail.com to request a refund.',
   },
 ];
 
@@ -436,7 +437,7 @@ export const FIELDS_OF_STUDY = [
 export const CONTACT_INFO = [
   { icon: 'email',     label: 'Email',     value: 'uoa.alsa2020@gmail.com',                        href: 'mailto:uoa.alsa2020@gmail.com',      external: false },
   { icon: 'instagram', label: 'Instagram', value: '@uoa.alsa',                                     href: 'https://instagram.com/uoa.alsa',     external: true  },
-  { icon: 'facebook',  label: 'Facebook',  value: 'Auckland Lankan Students Association — ALSA',   href: 'https://facebook.com/alsa.uoa',        external: true  },
+  { icon: 'facebook',  label: 'Facebook',  value: 'Auckland Lankan Students Association',          href: 'https://facebook.com/alsa.uoa',        external: true  },
 ];
 
 // ─── Footer navigation ────────────────────────────────────────────────────────
@@ -454,8 +455,8 @@ export const FOOTER_NAV = [
   {
     heading: 'Community',
     links: [
-      { label: 'Full Membership — NZD $10', href: '#join' },
-      { label: 'Social Membership — Free', href: '#join' },
+      { label: 'Full Membership (NZD $10)', href: '#join' },
+      { label: 'Social Membership (Free)', href: '#join' },
       { label: 'Sponsorship', href: '#contact' },
       { label: 'FAQ', href: '#faq' },
     ],
