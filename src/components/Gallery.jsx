@@ -54,7 +54,7 @@ export default function Gallery() {
         whileInView="show"
         viewport={{ once: true, margin: '-50px' }}
       >
-        {GALLERY_EVENTS.map((ev, i) => (
+        {GALLERY_EVENTS.slice(0, 6).map((ev, i) => (
           <motion.a
             key={ev.title + ev.year}
             variants={item}
