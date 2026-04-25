@@ -1,10 +1,12 @@
-// Contact — two-column layout: left shows CONTACT_INFO rows (email, socials, location);
-// right has a name/email/message form. On submit, shows a toast confirmation.
-// Currently uses a simulated delay — wire to a real API/email service when ready.
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { CONTACT_INFO } from '../data/site';
 import { useToast } from '../context/ToastContext';
+import emailIcon     from '../svg icons/gmail.svg';
+import instagramIcon from '../svg icons/instagram.svg';
+import facebookIcon  from '../svg icons/facebook.svg';
+
+const ICONS = { email: emailIcon, instagram: instagramIcon, facebook: facebookIcon };
 
 export default function Contact() {
   const toast = useToast();
@@ -53,7 +55,9 @@ export default function Contact() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: i * 0.06 }}
               >
-                <div className="ci-icon">{item.icon}</div>
+                <div className="ci-icon">
+                  <img src={ICONS[item.icon]} alt={item.label} width="22" height="22" />
+                </div>
                 <div className="ci-b">
                   <strong>{item.label}</strong>
                   {item.href ? (

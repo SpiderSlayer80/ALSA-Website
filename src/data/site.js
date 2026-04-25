@@ -6,9 +6,9 @@ export const SITE = {
   fullName: 'Auckland Lankan Students Association',
   description:
     "Your home away from home — connecting Sri Lankan students across Auckland's universities through culture, community and unforgettable moments.",
-  email: 'info@alsa.org.nz',
-  instagram: 'https://instagram.com/alsa_nz',
-  instagramHandle: '@alsa_nz',
+  email: 'uoa.alsa2020@gmail.com',
+  instagram: 'https://instagram.com/uoa.alsa',
+  instagramHandle: '@uoa.alsa',
   facebook: 'https://facebook.com/alsanz',
   flickr: 'https://flickr.com',
   location: 'Auckland, New Zealand 🇳🇿',
@@ -408,12 +408,11 @@ export const FIELDS_OF_STUDY = [
 ];
 
 // ─── Contact info ─────────────────────────────────────────────────────────────
+// icon: SVG key — 'email' | 'instagram' | 'facebook'
 export const CONTACT_INFO = [
-  { icon: '📧', label: 'Email', value: 'info@alsa.org.nz', href: 'mailto:info@alsa.org.nz', external: false },
-  { icon: '📸', label: 'Instagram', value: '@alsa_nz', href: 'https://instagram.com/alsa_nz', external: true },
-  { icon: '📘', label: 'Facebook', value: 'ALSA Auckland', href: 'https://facebook.com/alsanz', external: true },
-  { icon: '💬', label: 'WhatsApp Group', value: 'Join as member to access', href: '#join', external: false },
-  { icon: '📍', label: 'Location', value: 'Auckland, New Zealand 🇳🇿', href: null },
+  { icon: 'email',     label: 'Email',     value: 'uoa.alsa2020@gmail.com',                        href: 'mailto:uoa.alsa2020@gmail.com',      external: false },
+  { icon: 'instagram', label: 'Instagram', value: '@uoa.alsa',                                     href: 'https://instagram.com/uoa.alsa',     external: true  },
+  { icon: 'facebook',  label: 'Facebook',  value: 'Auckland Lankan Students Association — ALSA',   href: 'https://facebook.com/alsanz',        external: true  },
 ];
 
 // ─── Footer navigation ────────────────────────────────────────────────────────
