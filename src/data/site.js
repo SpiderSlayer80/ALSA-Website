@@ -211,7 +211,7 @@ export const GALLERY_EVENTS = [
     title: 'Waka Ama 2026',
     date: '21ST MARCH 2026',
     year: 2026,
-    photo: 'src/Covers/Waka Ama 2026.JPG',
+    photo: 'src/Covers/Waka ama 2026.JPG',
     albumUrl: '',
   },
   {
