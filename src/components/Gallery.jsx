@@ -2,6 +2,14 @@ import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GALLERY_EVENTS } from '../data/site';
 
+const covers = import.meta.glob('../Covers/*', { eager: true, as: 'url' });
+function getCover(filename) {
+  if (!filename) return null;
+  // Strip any leading path the user may have typed — only the filename matters
+  const name = filename.replace(/^.*[\\/]/, '');
+  return covers[`../Covers/${name}`] ?? null;
+}
+
 const container = {
   hidden: {},
   show: { transition: { staggerChildren: 0.07 } },
@@ -66,8 +74,8 @@ export default function Gallery() {
             whileHover={{ scale: 1.02, y: -4 }}
             transition={{ duration: 0.3 }}
           >
-            {ev.photo ? (
-              <img src={ev.photo} alt={ev.title} loading="lazy" />
+            {getCover(ev.photo) ? (
+              <img src={getCover(ev.photo)} alt={ev.title} loading="lazy" />
             ) : (
               <div className="g-ph">
                 <div className="g-ph-icon">📸</div>
@@ -132,8 +140,8 @@ export default function Gallery() {
                     whileHover={{ y: -4, scale: 1.02 }}
                     transition={{ duration: 0.3 }}
                   >
-                    {ev.photo ? (
-                      <img src={ev.photo} alt={ev.title} loading="lazy" />
+                    {getCover(ev.photo) ? (
+                      <img src={getCover(ev.photo)} alt={ev.title} loading="lazy" />
                     ) : (
                       <div className="g-ph">
                         <div className="g-ph-icon" style={{ fontSize: '1.6rem' }}>📸</div>
