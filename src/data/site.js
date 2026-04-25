@@ -61,49 +61,47 @@ export const PILLARS = [
   },
 ];
 
-// ─── Upcoming events ──────────────────────────────────────────────────────────
-// eventbriteUrl: paste the Eventbrite link when tickets go live — button appears automatically.
-// Leave as '' for free/no-ticket events — only the description will show.
+// ─── Events ───────────────────────────────────────────────────────────────────
+// dateISO:       YYYY-MM-DD — drives the upcoming/past split automatically.
+// poster:        filename of the event poster inside src/event posters/ (square Instagram-post style works best).
+// eventbriteUrl: paste the Eventbrite link if the event is ticketed — hovering the poster reveals a Buy Tickets overlay,
+//                clicking opens Eventbrite. Leave as '' for free/non-ticketed events.
 export const EVENTS = [
   {
+    dateISO: '2026-03-15',
+    date: '15 MAR',
+    time: '6:00 PM',
+    title: 'Meet and Greet',
+    location: 'University of Auckland',
+    tag: 'Social',
+    description: 'A casual evening to meet the ALSA 2026 committee and connect with fellow Sri Lankan students across Auckland.',
+    color: 'blue',
+    poster: '',          // e.g. 'meetgreet.jpg' inside src/event posters/
+    eventbriteUrl: '',
+  },
+  {
+    dateISO: '2026-04-14',
     date: '14 APR',
     time: '6:00 PM',
     title: 'Sinhala & Tamil New Year — Avurudu 2026',
     location: 'University of Auckland — Fale Pasifika',
     tag: 'Flagship',
-    description: 'Traditional games, rabaan drumming, milk rice and a kiribath feast. Bring family and friends.',
+    description: 'Traditional games, rabaan drumming, milk rice and a kiribath feast. Celebrating the Sri Lankan New Year together right here in Auckland.',
     color: 'gold',
+    poster: '',          // e.g. 'avurudu.jpg' inside src/event posters/
     eventbriteUrl: '',
   },
   {
-    date: '08 MAY',
-    time: '7:30 PM',
-    title: 'Cultural Night — Raaga',
-    location: 'AUT City Campus — WZ Theatre',
-    tag: 'Headliner',
-    description: 'A showcase of Lankan dance, music and fashion performed by Auckland students.',
+    dateISO: '2026-05-16',
+    date: '16 MAY',
+    time: '7:00 PM',
+    title: 'South Asian Club Movie Night',
+    location: 'University of Auckland',
+    tag: 'Collab',
+    description: 'Joining forces with the South Asian Club for a relaxed movie night. Grab your snacks and bring a friend.',
     color: 'blue',
-    eventbriteUrl: '',
-  },
-  {
-    date: '22 JUN',
-    time: '11:00 AM',
-    title: 'Winter Cricket Cup',
-    location: 'Albany Fields, North Shore',
-    tag: 'Sport',
-    description: 'Inter-university cricket tournament. Teams of 8, casual day format.',
-    color: 'gold',
-    eventbriteUrl: '',
-  },
-  {
-    date: '19 SEP',
-    time: '6:30 PM',
-    title: 'ALSA Food Festival',
-    location: 'Britomart Square',
-    tag: 'Community',
-    description: 'Kottu, hoppers, string hoppers and more — open to the public, tickets at door.',
-    color: 'blue',
-    eventbriteUrl: '',
+    poster: '',          // e.g. 'movienight.jpg' inside src/event posters/
+    eventbriteUrl: '',   // paste Eventbrite link here if ticketed
   },
 ];
 
