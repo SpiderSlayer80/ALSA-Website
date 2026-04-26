@@ -181,6 +181,7 @@ export default function Join({ onSuccess }) {
         const intentRes = await fetch('/api/create-payment-intent', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: form.email }),
         });
         if (!intentRes.ok) {
           const text = await intentRes.text();

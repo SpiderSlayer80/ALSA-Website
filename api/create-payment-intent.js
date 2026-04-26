@@ -12,10 +12,12 @@ export default async function handler(req, res) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
   try {
+    const { email } = req.body || {};
     const paymentIntent = await stripe.paymentIntents.create({
       amount: 1000, // NZD $10.00 in cents
       currency: 'nzd',
       automatic_payment_methods: { enabled: true },
+      ...(email ? { receipt_email: email } : {}),
     });
 
     res.status(200).json({ clientSecret: paymentIntent.client_secret });
