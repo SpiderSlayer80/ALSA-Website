@@ -100,10 +100,13 @@ export default function Join({ onSuccess }) {
         cardElRefs.current.number = elements.create('cardNumber', { style, showIcon: true });
         cardElRefs.current.expiry = elements.create('cardExpiry', { style });
         cardElRefs.current.cvc    = elements.create('cardCvc',    { style });
-        // Surface validation errors from any of the three fields
-        cardElRefs.current.number.on('change', e => e.error && setCardError(e.error.message));
-        cardElRefs.current.expiry.on('change', e => e.error && setCardError(e.error.message));
-        cardElRefs.current.cvc.on('change',    e => e.error && setCardError(e.error.message));
+        // Surface validation errors from any of the three fields, and clear
+        // them when the field becomes valid — otherwise an "incomplete" error
+        // shown mid-typing persists even after the full number is entered.
+        const onChange = e => setCardError(e.error ? e.error.message : '');
+        cardElRefs.current.number.on('change', onChange);
+        cardElRefs.current.expiry.on('change', onChange);
+        cardElRefs.current.cvc.on('change',    onChange);
 
         // Mount any divs that already exist (rare — only if Stripe was slow)
         for (const key of ['number', 'expiry', 'cvc']) {
