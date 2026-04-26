@@ -2,36 +2,36 @@
 // To edit a section, open the matching file listed next to each import.
 // Data/content for most sections lives in → src/data/site.js
 
-import { useState } from 'react';
+import { useState, lazy, Suspense } from 'react';
 
 // ── Context (global state) ────────────────────────────────────────────────────
-import { ToastProvider } from './context/ToastContext'; // → src/context/ToastContext.jsx  (pop-up notifications)
+import { ToastProvider } from './context/ToastContext';
 
-// ── UI Overlays & Utilities ──────────────────────────────────────────────────
-import Loader         from './components/Loader';        // → src/components/Loader.jsx        (full-screen loading animation)
-import ScrollProgress from './components/ScrollProgress';// → src/components/ScrollProgress.jsx (top progress bar)
-import CustomCursor   from './components/CustomCursor';  // → src/components/CustomCursor.jsx   (custom mouse cursor)
-import ScrollToTop    from './components/ScrollToTop';   // → src/components/ScrollToTop.jsx    (floating ↑ button)
-import Modal          from './components/Modal';         // → src/components/Modal.jsx          (membership success pop-up)
+// ── Above-the-fold (loaded eagerly so first paint is complete) ────────────────
+import Loader         from './components/Loader';
+import ScrollProgress from './components/ScrollProgress';
+import CustomCursor   from './components/CustomCursor';
+import Modal          from './components/Modal';
+import Nav            from './components/Nav';
+import Hero           from './components/Hero';
+import About          from './components/About';
+import Events         from './components/Events';
 
-// ── Navigation ───────────────────────────────────────────────────────────────
-import Nav            from './components/Nav';           // → src/components/Nav.jsx            (top navbar + mobile menu link)
+// ── Below-the-fold (deferred — split into a separate chunk) ───────────────────
+const Gallery      = lazy(() => import('./components/Gallery'));
+const Testimonials = lazy(() => import('./components/Testimonials'));
+const Team         = lazy(() => import('./components/Team'));
+const Sponsors     = lazy(() => import('./components/Sponsors'));
+const FAQ          = lazy(() => import('./components/FAQ'));
+const Join         = lazy(() => import('./components/Join'));
+const Contact      = lazy(() => import('./components/Contact'));
+const Footer       = lazy(() => import('./components/Footer'));
+const ScrollToTop  = lazy(() => import('./components/ScrollToTop'));
 
-// ── Page Sections (top → bottom order) ──────────────────────────────────────
-import Hero           from './components/Hero';          // → src/components/Hero.jsx           (banner / headline)
-import About          from './components/About';         // → src/components/About.jsx          (about ALSA)
-import Events         from './components/Events';        // → src/components/Events.jsx         (upcoming events)
-import Gallery        from './components/Gallery';       // → src/components/Gallery.jsx        (photo grid + lightbox)
-import Testimonials   from './components/Testimonials';  // → src/components/Testimonials.jsx   (member quotes)
-import Team           from './components/Team';          // → src/components/Team.jsx           (committee members)
-import Sponsors       from './components/Sponsors';      // → src/components/Sponsors.jsx       (sponsor logos)
-import FAQ            from './components/FAQ';           // → src/components/FAQ.jsx            (accordion Q&A)
-import Join           from './components/Join';          // → src/components/Join.jsx           (membership sign-up form)
-import Contact        from './components/Contact';       // → src/components/Contact.jsx        (contact form)
-import Footer         from './components/Footer';        // → src/components/Footer.jsx         (bottom footer)
+// Reserves vertical space while a chunk loads so layout doesn't jump.
+const SectionPlaceholder = () => <div style={{ minHeight: '60vh' }} />;
 
 export default function App() {
-  // Modal state is lifted here so Join can trigger it without prop-drilling through siblings.
   const [modal, setModal] = useState({ open: false, email: '', payNote: '' });
 
   function handleSuccess(email, payNote) {
@@ -40,32 +40,32 @@ export default function App() {
 
   return (
     <ToastProvider>
-      {/* Overlays — rendered above everything else */}
       <Loader />
       <ScrollProgress />
       <CustomCursor />
 
-      {/* Navigation bar */}
       <Nav />
 
-      {/* Main page sections — edit their files to change content/layout */}
       <main>
         <Hero />
         <About />
         <Events />
-        <Gallery />
-        <Testimonials />
-        <Team />
-        <Sponsors />
-        <FAQ />
-        <Join onSuccess={handleSuccess} /> {/* triggers Modal on success */}
-        <Contact />
+        <Suspense fallback={<SectionPlaceholder />}>
+          <Gallery />
+          <Testimonials />
+          <Team />
+          <Sponsors />
+          <FAQ />
+          <Join onSuccess={handleSuccess} />
+          <Contact />
+        </Suspense>
       </main>
 
-      <Footer />
-      <ScrollToTop />
+      <Suspense fallback={null}>
+        <Footer />
+        <ScrollToTop />
+      </Suspense>
 
-      {/* Membership confirmation modal — controlled by Join via onSuccess */}
       <Modal
         open={modal.open}
         email={modal.email}

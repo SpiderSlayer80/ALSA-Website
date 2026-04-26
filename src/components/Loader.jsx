@@ -39,7 +39,7 @@ export default function Loader() {
               animate={{ rotate: 360 }}
               transition={{ duration: 1.8, repeat: Infinity, ease: 'linear' }}
             >
-              <img src={lionFace} alt="ALSA" />
+              <img src={lionFace} alt="ALSA" decoding="async" fetchpriority="high" />
             </motion.div>
             <motion.div className="loader-title">ALSA</motion.div>
             <motion.div className="loader-bar">

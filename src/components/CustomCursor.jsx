@@ -20,17 +20,26 @@ export default function CustomCursor() {
     // mx/my are set directly (no spring) so the dot snaps exactly to the pointer.
     // The ring uses sx/sy (spring) for a trailing lag that gives the illusion of weight.
     const move = e => { mx.set(e.clientX); my.set(e.clientY); };
+
+    // Skip the closest() walk if the pointer is still inside the same element.
+    let lastTarget = null;
+    let lastResult = false;
     const over = e => {
       const t = e.target;
+      if (t === lastTarget) return;
+      lastTarget = t;
       const tag = t.tagName;
       const interactive =
         tag === 'A' || tag === 'BUTTON' || tag === 'INPUT' || tag === 'TEXTAREA' ||
         tag === 'SELECT' || tag === 'LABEL' || t.closest('button') || t.closest('a');
-      setHovering(!!interactive);
+      const next = !!interactive;
+      if (next === lastResult) return;
+      lastResult = next;
+      setHovering(next);
     };
 
-    window.addEventListener('mousemove', move);
-    window.addEventListener('mouseover', over);
+    window.addEventListener('mousemove', move, { passive: true });
+    window.addEventListener('mouseover', over, { passive: true });
     return () => {
       window.removeEventListener('mousemove', move);
       window.removeEventListener('mouseover', over);

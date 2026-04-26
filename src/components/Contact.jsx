@@ -40,7 +40,7 @@ export default function Contact() {
       toast.success(
         <>
           Thanks {form.name}! We'll be in touch at {form.email} soon.{' '}
-          <img src={lionFace} alt="" className="inline-lion" />
+          <img src={lionFace} alt="" className="inline-lion" loading="lazy" decoding="async" />
         </>
       );
       setForm({ name: '', email: '', message: '' });

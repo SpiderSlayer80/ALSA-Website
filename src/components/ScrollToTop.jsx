@@ -8,7 +8,7 @@ export default function ScrollToTop() {
 
   useEffect(() => {
     const handler = () => setShow(window.scrollY > 600);
-    window.addEventListener('scroll', handler);
+    window.addEventListener('scroll', handler, { passive: true });
     return () => window.removeEventListener('scroll', handler);
   }, []);
 

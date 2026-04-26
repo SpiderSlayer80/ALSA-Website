@@ -57,7 +57,7 @@ export default function Footer() {
             <div className="footer-brand">{SITE.name}</div>
             <p className="footer-tagline">
               {SITE.fullName}. Uniting Sri Lankan students across Auckland.{' '}
-              <img src={lionFace} alt="" className="inline-lion" />
+              <img src={lionFace} alt="" className="inline-lion" loading="lazy" decoding="async" />
             </p>
             <div className="fsocs" style={{ marginTop: '20px' }}>
               <a href={SITE.instagram} className="fsoc" target="_blank" rel="noreferrer" aria-label="Instagram">

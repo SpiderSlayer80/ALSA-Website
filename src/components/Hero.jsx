@@ -52,9 +52,15 @@ export default function Hero() {
       <div className="hero-canvas">
         {/* Photos are static — no per-photo parallax to keep scroll smooth */}
         <div className="hero-photos">
-          <div className="hero-photo hp1"><img src={photo1} alt="" /></div>
-          <div className="hero-photo hp2"><img src={photo2} alt="" /></div>
-          <div className="hero-photo hp3"><img src={photo3} alt="" /></div>
+          <div className="hero-photo hp1">
+            <img src={photo1} alt="" decoding="async" fetchpriority="high" />
+          </div>
+          <div className="hero-photo hp2">
+            <img src={photo2} alt="" decoding="async" fetchpriority="low" />
+          </div>
+          <div className="hero-photo hp3">
+            <img src={photo3} alt="" decoding="async" fetchpriority="low" />
+          </div>
         </div>
 
         <div className="hero-photo-overlay" />
@@ -94,10 +100,14 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Decorative watermark lion */}
-      <div className="hero-lion-mark">
-        <img src={logoFull} alt="" />
-      </div>
+      {/* Decorative watermark lion — slowly drifts so the page feels alive */}
+      <motion.div
+        className="hero-lion-mark"
+        animate={{ y: [0, -14, 0], rotate: [0, 1.2, 0] }}
+        transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
+      >
+        <img src={logoFull} alt="" decoding="async" />
+      </motion.div>
 
       <motion.div className="hero-content" style={{ y: yContent, opacity: opacityContent }}>
 
@@ -105,6 +115,8 @@ export default function Hero() {
           src={logoFull}
           className="hero-logo-full"
           alt=""
+          decoding="async"
+          fetchpriority="high"
           initial={{ opacity: 0, scale: 0.85, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
@@ -116,7 +128,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.12 }}
         >
-          <img src={logoText} className="hero-logo-text" alt="ALSA" />
+          <img src={logoText} className="hero-logo-text" alt="ALSA" decoding="async" fetchpriority="high" />
           <span className="hero-rotator">
             <AnimatePresence mode="wait">
               <motion.span

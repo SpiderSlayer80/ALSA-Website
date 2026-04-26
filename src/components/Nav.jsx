@@ -13,7 +13,7 @@ export default function Nav() {
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 60);
-    window.addEventListener('scroll', handler);
+    window.addEventListener('scroll', handler, { passive: true });
     return () => window.removeEventListener('scroll', handler);
   }, []);
 
@@ -57,7 +57,7 @@ export default function Nav() {
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       >
         <a href="#home" className="logo" onClick={handleNavClick('#home')}>
-          <img src={logoFace} className="logo-mark" alt="" />
+          <img src={logoFace} className="logo-mark" alt="" decoding="async" width="40" height="40" />
           <span className="logo-text">{SITE.name}</span>
         </a>
 
