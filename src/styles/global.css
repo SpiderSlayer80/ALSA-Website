@@ -2765,9 +2765,20 @@ footer::before {
   text-decoration: none;
   transition: all 0.25s var(--ease);
 }
+.fsoc img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  /* Invert + tweak so the dark icons read as white on the dark footer chip */
+  filter: brightness(0) invert(1);
+  transition: filter 0.25s var(--ease);
+}
 .fsoc:hover {
   background: var(--gold);
   transform: translateY(-3px) rotate(-6deg);
+}
+.fsoc:hover img {
+  filter: brightness(0) invert(0);
 }
 
 /* ═══ MODAL ════════════════════════════════════════════════════════════════ */

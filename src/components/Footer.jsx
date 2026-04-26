@@ -7,6 +7,9 @@ import { motion } from 'framer-motion';
 import { SITE, FOOTER_NAV } from '../data/site';
 import { useToast } from '../context/ToastContext';
 import lionFace from '../Logos/logo lion face.png';
+import instagramIcon from '../svg icons/instagram.svg';
+import facebookIcon  from '../svg icons/facebook.svg';
+import gmailIcon     from '../svg icons/gmail.svg';
 
 export default function Footer() {
   const toast = useToast();
@@ -57,10 +60,15 @@ export default function Footer() {
               <img src={lionFace} alt="" className="inline-lion" />
             </p>
             <div className="fsocs" style={{ marginTop: '20px' }}>
-              <a href={SITE.instagram} className="fsoc" target="_blank" rel="noreferrer" aria-label="Instagram">📸</a>
-              <a href={SITE.facebook} className="fsoc" target="_blank" rel="noreferrer" aria-label="Facebook">📘</a>
-              <a href={SITE.flickr} className="fsoc" target="_blank" rel="noreferrer" aria-label="Flickr">📷</a>
-              <a href={`mailto:${SITE.email}`} className="fsoc" aria-label="Email">✉️</a>
+              <a href={SITE.instagram} className="fsoc" target="_blank" rel="noreferrer" aria-label="Instagram">
+                <img src={instagramIcon} alt="Instagram" />
+              </a>
+              <a href={SITE.facebook} className="fsoc" target="_blank" rel="noreferrer" aria-label="Facebook">
+                <img src={facebookIcon} alt="Facebook" />
+              </a>
+              <a href={`mailto:${SITE.email}`} className="fsoc" aria-label="Email">
+                <img src={gmailIcon} alt="Email" />
+              </a>
             </div>
           </div>
           <div className="footer-nav">
