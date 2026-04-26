@@ -230,7 +230,7 @@ export const GALLERY_EVENTS = [
     date: '9TH OCTOBER 2025',
     year: 2025,
     photo: 'src/Covers/Stein 2025.jpg',
-    albumUrl: '',
+    albumUrl: 'https://www.facebook.com/media/set/?set=a.122105249805051554&type=3&rdid=wcPqqDur6EEsX2hZ&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1CQovLWwGv%2F%3Futm_source%3Dig%26utm_medium%3Dsocial%26utm_content%3Dlink_in_bio#',
   },
   {
     title: 'ALSA vs AUIS Cricket Match 2025',
