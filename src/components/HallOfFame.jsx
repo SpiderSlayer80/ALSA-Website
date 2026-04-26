@@ -98,6 +98,7 @@ const memberVariants = {
 export default function HallOfFame() {
   const [open, setOpen] = useState(false);
   const [activeYear, setActiveYear] = useState(null);
+  const [peek, setPeek] = useState(null); // { src, name }
 
   const years = useMemo(buildYears, []);
   const active = years.find(y => y.year === activeYear) || null;
@@ -119,7 +120,6 @@ export default function HallOfFame() {
       >
         <span className="hof-toggle-icon">🏆</span>
         <span className="hof-toggle-text">
-          <span className="hof-toggle-eyebrow">Past Teams</span>
           <span className="hof-toggle-title">Hall of Fame</span>
         </span>
         <span className="hof-toggle-chev">{open ? '↑' : '↓'}</span>
@@ -168,11 +168,11 @@ export default function HallOfFame() {
                     transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                   >
                     {active.isFounding ? (
-                      <FoundingTeam data={active} />
+                      <FoundingTeam data={active} onPeek={setPeek} />
                     ) : active.mode === 'individual' ? (
-                      <IndividualGrid data={active} />
+                      <IndividualGrid data={active} onPeek={setPeek} />
                     ) : (
-                      <TeamGrid data={active} />
+                      <TeamGrid data={active} onPeek={setPeek} />
                     )}
                   </motion.div>
                 )}
@@ -181,11 +181,37 @@ export default function HallOfFame() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Photo peek popup — shows the full uncropped photo in a floating card */}
+      <AnimatePresence>
+        {peek && (
+          <motion.div
+            className="hof-peek-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={() => setPeek(null)}
+          >
+            <motion.div
+              className="hof-peek-card"
+              initial={{ opacity: 0, scale: 0.88, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.92, y: 10 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              onClick={e => e.stopPropagation()}
+            >
+              <img src={peek.src} alt={peek.name} />
+              {peek.name && <div className="hof-peek-name">{peek.name}</div>}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
 
-function FoundingTeam({ data }) {
+function FoundingTeam({ data, onPeek }) {
   return (
     <div className="hof-founding">
       <div className="hof-founding-deco hof-deco-l">❦</div>
@@ -205,7 +231,12 @@ function FoundingTeam({ data }) {
         variants={{ hidden: {}, show: { transition: { staggerChildren: 0.08 } } }}
       >
         {data.members.map(m => (
-          <motion.div key={m.name} className="hof-founding-card" variants={memberVariants}>
+          <motion.div
+            key={m.name}
+            className="hof-founding-card hof-peekable"
+            variants={memberVariants}
+            onClick={() => onPeek({ src: m.url, name: m.name })}
+          >
             <div className="hof-founding-frame">
               <div className="hof-founding-laurel hof-laurel-l">🌿</div>
               <div className="hof-founding-laurel hof-laurel-r">🌿</div>
@@ -221,7 +252,7 @@ function FoundingTeam({ data }) {
   );
 }
 
-function IndividualGrid({ data }) {
+function IndividualGrid({ data, onPeek }) {
   return (
     <div className="hof-year-block">
       <div className="hof-year-h">{data.year} Committee</div>
@@ -232,7 +263,12 @@ function IndividualGrid({ data }) {
         variants={{ hidden: {}, show: { transition: { staggerChildren: 0.06 } } }}
       >
         {data.members.map(m => (
-          <motion.div key={m.name} className="hof-card" variants={memberVariants}>
+          <motion.div
+            key={m.name}
+            className="hof-card hof-peekable"
+            variants={memberVariants}
+            onClick={() => onPeek({ src: m.url, name: m.name })}
+          >
             <div className="hof-photo">
               <img src={m.url} alt={m.name} />
             </div>
@@ -245,7 +281,7 @@ function IndividualGrid({ data }) {
   );
 }
 
-function TeamGrid({ data }) {
+function TeamGrid({ data, onPeek }) {
   return (
     <div className="hof-year-block">
       <div className="hof-year-h">{data.year} Committee</div>
@@ -256,7 +292,12 @@ function TeamGrid({ data }) {
         variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1 } } }}
       >
         {data.teams.map(t => (
-          <motion.div key={t.team} className="hof-team-card" variants={memberVariants}>
+          <motion.div
+            key={t.team}
+            className="hof-team-card hof-peekable"
+            variants={memberVariants}
+            onClick={() => onPeek({ src: t.url, name: `${data.year} ${t.team}` })}
+          >
             <div className="hof-team-photo">
               <img src={t.url} alt={`${data.year} ${t.team} team`} />
             </div>

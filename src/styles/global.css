@@ -3439,6 +3439,48 @@ footer::before {
   box-shadow: 0 3px 10px rgba(245, 184, 0, 0.4);
 }
 
+.hof-peekable {
+  cursor: zoom-in;
+}
+.hof-peek-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  background: rgba(8, 14, 28, 0.6);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+}
+.hof-peek-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  max-width: min(88vw, 560px);
+  max-height: 88vh;
+  cursor: default;
+  display: flex;
+  flex-direction: column;
+}
+.hof-peek-card img {
+  width: 100%;
+  height: auto;
+  max-height: 78vh;
+  object-fit: contain;
+  display: block;
+}
+.hof-peek-name {
+  text-align: center;
+  padding: 14px 20px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--blue);
+  border-top: 1px solid var(--border);
+}
+
 @media (max-width: 768px) {
   .hof-inner { padding: 36px 18px; }
   .hof-toggle { padding: 14px 22px; gap: 12px; }
