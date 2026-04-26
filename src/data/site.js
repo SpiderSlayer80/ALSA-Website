@@ -208,21 +208,21 @@ export const GALLERY_EVENTS = [
     date: 'APR 24TH 2026',
     year: 2026,
     photo: 'src/Covers/New Years 2026.JPG',
-    albumUrl: '',
+    albumUrl: 'https://drive.google.com/drive/folders/1G5zkrxuQQCXWQ7CB1ELq3iF9ZhjVXq2d?usp=drive_link',
   },
   {
     title: 'Waka Ama 2026',
     date: '21ST MARCH 2026',
     year: 2026,
     photo: 'src/Covers/Waka ama 2026.JPG',
-    albumUrl: '',
+    albumUrl: 'https://drive.google.com/drive/folders/1-wjy8PCuMxG_vYRcMI-x0a7mxz5KMys5?usp=drive_link',
   },
   {
     title: 'Meet and Greet 2026',
     date: '19TH MARCH 2026',
     year: 2026,
     photo: 'src/Covers/Meet & Greet 2026.png',
-    albumUrl: '',
+    albumUrl: 'https://drive.google.com/drive/folders/1KvPq9WpwWGN3aouM9NQvXsYaLqZDhD2L?usp=drive_link',
   },
   // ── 2025 ──────────────────────────────────────────────────────────────────
   {
@@ -237,28 +237,28 @@ export const GALLERY_EVENTS = [
     date: '21ST SEPTEMBER 2025',
     year: 2025,
     photo: 'src/Covers/ALSA vs AUIS Cricket 2025.jpg',
-    albumUrl: '',
+    albumUrl: 'https://drive.google.com/drive/folders/1Y4jBAwib2SpikPqohL4-ERHxTh26FKvE?usp=sharing',
   },
   {
     title: 'Futsal Tournament 2025',
     date: '24TH AUGUST 2025',
     year: 2025,
     photo: 'src/Covers/Futsal Tournament 2025.jpg',
-    albumUrl: '',
+    albumUrl: 'https://drive.google.com/drive/folders/1_XnPlPDwBIuF52OzLH0GfCis8ra3zuRf?usp=sharing',
   },
   {
     title: 'New Year\'s 2025',
     date: '10TH APRIL 2025',
     year: 2025,
     photo: 'src/Covers/New Year\'s 2025.jpg',
-    albumUrl: '',
+    albumUrl: 'https://drive.google.com/drive/folders/1XzYyu85doL_qFkdn-67p_AEu8cSMsTPs?usp=sharing',
   },
   {
     title: 'Meet & Greet 2025',
     date: '13TH MARCH 2025',
     year: 2025,
     photo: 'src/Covers/Meet & Greet 2025.jpg',
-    albumUrl: '',
+    albumUrl: 'https://drive.google.com/drive/folders/1guWuNBB0sAniAPN8iqs9X8eRLHMVQeId?usp=sharing',
   },
   // ── 2024 ──────────────────────────────────────────────────────────────────
   {
@@ -266,14 +266,14 @@ export const GALLERY_EVENTS = [
     date: '10TH OCTOBER 2024',
     year: 2024,
     photo: 'src/Covers/Stein 2024.jpg',
-    albumUrl: '',
+    albumUrl: 'https://drive.google.com/drive/folders/1TSpH-SA_d90ogWobg9iYQtWAD9rPCmNE?usp=sharing',
   },
   {
     title: 'ALSA vs AUIS Cricket Match 2024',
     date: '22ND SEPTEMBER 2024',
     year: 2024,
     photo: 'src/Covers/ALSA vs AUIS 2024.jpg',
-    albumUrl: '',
+    albumUrl: 'https://drive.google.com/drive/folders/1Fi_yw1JHrNOMOi9uNFf1jUlhTNxnBfqz?usp=sharing',
   },
   {
     title: 'Karoke Night 2024',
@@ -287,7 +287,7 @@ export const GALLERY_EVENTS = [
     date: '7TH MAY 2024',
     year: 2024,
     photo: 'src/Covers/New Years 2024.jpg',
-    albumUrl: '',
+    albumUrl: 'https://drive.google.com/drive/folders/1p-y4HxmBtm3cS-Mqv6zF4AGgEsh1opDW?usp=sharing',
   },
   {
     title: 'Meet & Greet 2024',
@@ -302,35 +302,35 @@ export const GALLERY_EVENTS = [
     date: '28TH SEPTEMBER 2023',
     year: 2023,
     photo: 'src/Covers/Stein 2023.jpg',
-    albumUrl: '',
+    albumUrl: 'https://drive.google.com/drive/folders/1F9_FhpONUmC9ZpludoKwCkSQ88XBLXW0?usp=sharing',
   },
   {
     title: 'Netball & Basketball Tournament 2023',
     date: '23RD JULY 2023',
     year: 2023,
     photo: 'src/Covers/Basketball 2023.jpg',
-    albumUrl: '',
+    albumUrl: 'https://drive.google.com/drive/folders/1xkYXo1ccdu_1ki3tsGAlsx3A97i7FoTR?usp=sharing',
   },
   {
     title: 'Baila Party 2023',
     date: '20TH MAY 2023',
     year: 2023,
     photo: 'src/Covers/Baila party 2023.jpg',
-    albumUrl: '',
+    albumUrl: 'https://drive.google.com/drive/folders/1MC6x6JKu5DSX0UcTDdD-WrXwLemo4hPP?usp=sharing',
   },
   {
     title: 'New Year\'s 2023',
     date: '26TH APRIL 2023',
     year: 2023,
     photo: 'src/Covers/New Years 2023.jpg',
-    albumUrl: '',
+    albumUrl: 'https://drive.google.com/drive/folders/1nsC_tpxee731HY82oq9I1AYE6K1ByrQI?usp=sharing',
   },
   {
     title: 'ALSA vs AUIS Cricket Match 2023',
     date: '26TH APRIL 2023',
     year: 2023,
     photo: 'src/Covers/ALSA vs AUIS 2023.jpg',
-    albumUrl: '',
+    albumUrl: 'https://drive.google.com/drive/folders/1BIlKUgbSNVzRW1A3nb1uG0xugKlyxcPo?usp=sharing',
   },
 
   // ── 2022 ──────────────────────────────────────────────────────────────────
@@ -339,28 +339,28 @@ export const GALLERY_EVENTS = [
     date: '16TH SEPTEMBER 2022',
     year: 2022,
     photo: 'src/Covers/Stein 2022.jpg',
-    albumUrl: '',
+    albumUrl: 'https://drive.google.com/drive/folders/1mZ0iBsYftcEgvuyFN3yxpkZGcSyun4Hg?usp=sharing',
   },
   {
     title: 'Basketball & Netball Tournament 2022',
     date: '23RD JULY 2022',
     year: 2022,
     photo: 'src/Covers/Basketball 2022.jpg',
-    albumUrl: '',
+    albumUrl: 'https://drive.google.com/drive/folders/1-5384JLvDJG3sMeyv77CoOPYJmuoFxGd?usp=sharing',
   },
   {
     title: 'New Year\'s 2022',
     date: '18TH MAY 2022',
     year: 2022,
     photo: 'src/Covers/New Years 2022.jpg',
-    albumUrl: '',
+    albumUrl: 'https://drive.google.com/drive/folders/1PbTpopivIIF9avne-X8P-tskbLj65cFw?usp=sharing',
   },
   {
     title: 'ALSA vs AUIS Cricket Match 2022',
     date: '2ND APRIL 2022',
     year: 2022,
     photo: 'src/Covers/ALSA vs AUIS 2022.jpg',
-    albumUrl: '',
+    albumUrl: 'https://drive.google.com/drive/folders/1xr-JQO-FJHr1TPuUoyRhfWGclTj0LIQN?usp=sharing',
   },
   // ── 2021 ──────────────────────────────────────────────────────────────────
   {
@@ -376,7 +376,7 @@ export const GALLERY_EVENTS = [
     date: '5TH AUGUST 2020',
     year: 2020,
     photo: 'src/Covers/Meet & Greet 2020.jpg',
-    albumUrl: '',
+    albumUrl: 'https://drive.google.com/drive/folders/1ZtDQ3m7RFdo-VDd_GQgtzdoOqmMxrCiv?usp=sharing',
   }
 ];
 
