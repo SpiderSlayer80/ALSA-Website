@@ -67,8 +67,8 @@ export const PILLARS = [
 // ─── Events ───────────────────────────────────────────────────────────────────
 // dateISO:       YYYY-MM-DD — drives the upcoming/past split automatically.
 // poster:        filename of the event poster inside src/event posters/ (square Instagram-post style works best).
-// eventbriteUrl: paste the Eventbrite link if the event is ticketed — hovering the poster reveals a Buy Tickets overlay,
-//                clicking opens Eventbrite. Leave as '' for free/non-ticketed events.
+// humanitixUrl: paste the Humanitix event link if the event is ticketed — hovering the poster reveals a Buy Tickets overlay,
+//               clicking opens Humanitix in a new tab. Leave as '' for free/non-ticketed events.
 export const EVENTS = [
   {
     dateISO: '2026-03-19',
@@ -80,7 +80,7 @@ export const EVENTS = [
     description: 'A casual evening to meet the ALSA 2026 committee and connect with fellow Sri Lankan students from across Auckland.',
     color: 'blue',
     poster: 'Meet & Greet Event poster 2026.jpg',
-    eventbriteUrl: '',
+    humanitixUrl: '',
   },
   {
     dateISO: '2026-04-24',
@@ -92,7 +92,7 @@ export const EVENTS = [
     description: 'Traditional games, rabaan drumming and a kiribath feast as we celebrate the Sri Lankan New Year together in Auckland.',
     color: 'gold',
     poster: 'New Years Poster 2026.jpg',
-    eventbriteUrl: '',
+    humanitixUrl: '',
   },
   {
     dateISO: '2026-05-16',
@@ -104,8 +104,8 @@ export const EVENTS = [
     description: 'A relaxed movie night hosted alongside the South Asian Club. Bring a friend, grab a seat and unwind with us.',
     color: 'blue',
     poster: '',          // e.g. 'movienight.jpg' inside src/event posters/
-    eventbriteUrl: 'https://www.eventbrite.co.nz/e/test-event-tickets-1988276104351?aff=oddtdtcreator',
-    hidden: false  // paste Eventbrite link here if ticketed
+    humanitixUrl: '',    // paste Humanitix event URL here when ticketed
+    hidden: false,
   },
 ];
 
