@@ -164,6 +164,19 @@ button, a, input, select, textarea, label {
   margin-bottom: 16px;
   display: inline-block;
 }
+.loader-mark img {
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+  display: block;
+}
+.inline-lion {
+  display: inline-block;
+  vertical-align: -0.22em;
+  width: 1.2em;
+  height: 1.2em;
+  object-fit: contain;
+}
 .loader-title {
   font-family: 'Cormorant Garamond', serif;
   font-size: 2.4rem;
@@ -2791,6 +2804,12 @@ footer::before {
   font-size: 4.5rem;
   margin-bottom: 22px;
   display: inline-block;
+}
+.modal-icon img {
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+  display: block;
 }
 .modal h3 {
   font-family: 'Cormorant Garamond', serif;

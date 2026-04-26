@@ -2,6 +2,7 @@
 // Displays the ALSA lion, name, and an animated progress bar, then fades out.
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import lionFace from '../Logos/logo lion face.png';
 
 export default function Loader() {
   // Only show the splash on the first navigation in a session — otherwise a hash-link
@@ -38,7 +39,7 @@ export default function Loader() {
               animate={{ rotate: 360 }}
               transition={{ duration: 1.8, repeat: Infinity, ease: 'linear' }}
             >
-              🦁
+              <img src={lionFace} alt="ALSA" />
             </motion.div>
             <motion.div className="loader-title">ALSA</motion.div>
             <motion.div className="loader-bar">

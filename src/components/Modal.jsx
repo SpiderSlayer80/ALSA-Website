@@ -2,6 +2,7 @@
 // Displays the member's email and a payment note (paid vs free).
 // Clicking the backdrop or the button closes it.
 import { AnimatePresence, motion } from 'framer-motion';
+import lionFace from '../Logos/logo lion face.png';
 
 export default function Modal({ open, email, payNote, onClose }) {
   return (
@@ -27,7 +28,7 @@ export default function Modal({ open, email, payNote, onClose }) {
               animate={{ rotate: [0, -10, 10, -10, 0], scale: [1, 1.15, 1] }}
               transition={{ duration: 1.4, ease: 'easeInOut' }}
             >
-              🦁
+              <img src={lionFace} alt="ALSA" />
             </motion.span>
             <h3>Welcome to ALSA!</h3>
             <p>

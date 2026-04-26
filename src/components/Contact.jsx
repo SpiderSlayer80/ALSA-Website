@@ -5,6 +5,7 @@ import { useToast } from '../context/ToastContext';
 import emailIcon     from '../svg icons/gmail.svg';
 import instagramIcon from '../svg icons/instagram.svg';
 import facebookIcon  from '../svg icons/facebook.svg';
+import lionFace      from '../Logos/logo lion face.png';
 
 const ICONS = { email: emailIcon, instagram: instagramIcon, facebook: facebookIcon };
 
@@ -24,7 +25,12 @@ export default function Contact() {
     }
     setSending(true);
     setTimeout(() => {
-      toast.success(`Thanks ${form.name}! We'll be in touch at ${form.email} soon. 🦁`);
+      toast.success(
+        <>
+          Thanks {form.name}! We'll be in touch at {form.email} soon.{' '}
+          <img src={lionFace} alt="" className="inline-lion" />
+        </>
+      );
       setForm({ name: '', email: '', message: '' });
       setSending(false);
     }, 700);

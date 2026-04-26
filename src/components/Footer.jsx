@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { SITE, FOOTER_NAV } from '../data/site';
 import { useToast } from '../context/ToastContext';
+import lionFace from '../Logos/logo lion face.png';
 
 export default function Footer() {
   const toast = useToast();
@@ -52,7 +53,8 @@ export default function Footer() {
           <div>
             <div className="footer-brand">{SITE.name}</div>
             <p className="footer-tagline">
-              {SITE.fullName}. Uniting Sri Lankan students across Auckland. 🦁
+              {SITE.fullName}. Uniting Sri Lankan students across Auckland.{' '}
+              <img src={lionFace} alt="" className="inline-lion" />
             </p>
             <div className="fsocs" style={{ marginTop: '20px' }}>
               <a href={SITE.instagram} className="fsoc" target="_blank" rel="noreferrer" aria-label="Instagram">📸</a>
