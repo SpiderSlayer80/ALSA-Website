@@ -3,7 +3,7 @@
 //   Step 2: Choose Full ($10/yr via Stripe) or Social (free) membership
 //   Step 3: Payment (Stripe card element) or free confirmation
 // On submit, data is saved to localStorage and the success Modal is triggered via onSuccess().
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { SITE, MEMBERSHIP_TIERS, UNIVERSITIES, STUDY_YEARS, FIELDS_OF_STUDY } from '../data/site';
 import { useToast } from '../context/ToastContext';
@@ -30,16 +30,43 @@ export default function Join({ onSuccess }) {
     field: '',
     year: '',
     continuing2027: '',  // 'Yes' | 'No'
+    cardholderName: '',  // shown only on step 3
   });
   const [cardError, setCardError] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
   const stripeRef = useRef(null);
-  const cardElRef = useRef(null);
-  const cardDivRef = useRef(null);
-  // Guards against mounting the Stripe card element twice — Stripe throws if you call .mount()
-  // on an already-mounted element, which happens when the user navigates back to step 3.
-  const cardMountedRef = useRef(false);
+  // Three Stripe elements — once you mount cardNumber, expiry/cvc are linked
+  // automatically and confirmCardPayment only needs the cardNumber reference.
+  const cardElRefs = useRef({ number: null, expiry: null, cvc: null });
+  const mountedRefs = useRef({ number: false, expiry: false, cvc: false });
+  const divRefs = useRef({ number: null, expiry: null, cvc: null });
+
+  // Stable callback refs — must NOT be recreated each render, or React will
+  // invoke them with (null) → (newNode) every render, unmounting the Stripe
+  // iframe and losing every keystroke the user typed.
+  const makeMountRef = key => node => {
+    divRefs.current[key] = node;
+    if (!node) {
+      if (mountedRefs.current[key] && cardElRefs.current[key]) {
+        try { cardElRefs.current[key].unmount(); } catch (_) {}
+        mountedRefs.current[key] = false;
+      }
+      return;
+    }
+    if (cardElRefs.current[key] && !mountedRefs.current[key]) {
+      try {
+        cardElRefs.current[key].mount(node);
+        mountedRefs.current[key] = true;
+      } catch (err) {
+        setCardError(`Card mount failed: ${err.message}`);
+      }
+    }
+  };
+
+  const setNumberRef = useCallback(makeMountRef('number'), []);
+  const setExpiryRef = useCallback(makeMountRef('expiry'), []);
+  const setCvcRef = useCallback(makeMountRef('cvc'), []);
 
   // Initialize Stripe once — Stripe.js loads from a <script> tag in index.html,
   // so we poll briefly in case the script hasn't finished loading on first render.
@@ -62,21 +89,30 @@ export default function Join({ onSuccess }) {
         const elements = stripeRef.current.elements({
           fonts: [{ cssSrc: 'https://fonts.googleapis.com/css2?family=Outfit:wght@400' }],
         });
-        cardElRef.current = elements.create('card', {
-          style: {
-            base: {
-              fontFamily: 'Outfit,sans-serif',
-              fontSize: '15px',
-              color: '#0a1628',
-              '::placeholder': { color: '#9aaabb' },
-            },
+        const style = {
+          base: {
+            fontFamily: 'Outfit,sans-serif',
+            fontSize: '15px',
+            color: '#0a1628',
+            '::placeholder': { color: '#9aaabb' },
           },
-        });
-        cardElRef.current.on('change', e => setCardError(e.error ? e.error.message : ''));
-        // If user is already on step 3, mount immediately
-        if (step === 3 && selMem === 'full' && cardDivRef.current && !cardMountedRef.current) {
-          cardElRef.current.mount(cardDivRef.current);
-          cardMountedRef.current = true;
+        };
+        cardElRefs.current.number = elements.create('cardNumber', { style, showIcon: true });
+        cardElRefs.current.expiry = elements.create('cardExpiry', { style });
+        cardElRefs.current.cvc    = elements.create('cardCvc',    { style });
+        // Surface validation errors from any of the three fields
+        cardElRefs.current.number.on('change', e => e.error && setCardError(e.error.message));
+        cardElRefs.current.expiry.on('change', e => e.error && setCardError(e.error.message));
+        cardElRefs.current.cvc.on('change',    e => e.error && setCardError(e.error.message));
+
+        // Mount any divs that already exist (rare — only if Stripe was slow)
+        for (const key of ['number', 'expiry', 'cvc']) {
+          if (divRefs.current[key] && !mountedRefs.current[key]) {
+            try {
+              cardElRefs.current[key].mount(divRefs.current[key]);
+              mountedRefs.current[key] = true;
+            } catch (_) {}
+          }
         }
       } catch (err) {
         setCardError(`Stripe init failed: ${err.message}`);
@@ -85,18 +121,6 @@ export default function Join({ onSuccess }) {
     init();
     return () => { cancelled = true; };
   }, []);
-
-  // Mount card element when step 3 + paid tier
-  useEffect(() => {
-    if (step === 3 && selMem === 'full' && cardElRef.current && cardDivRef.current && !cardMountedRef.current) {
-      try {
-        cardElRef.current.mount(cardDivRef.current);
-        cardMountedRef.current = true;
-      } catch (err) {
-        setCardError(`Card mount failed: ${err.message}`);
-      }
-    }
-  }, [step, selMem]);
 
   function setField(key, value) {
     setForm(f => ({ ...f, [key]: value }));
@@ -146,7 +170,12 @@ export default function Join({ onSuccess }) {
       membership:     selMem === 'full' ? 'Full Member' : 'Social Member',
     };
 
-    if (selMem === 'full' && stripeRef.current && cardElRef.current) {
+    if (selMem === 'full' && stripeRef.current && cardElRefs.current.number) {
+      if (!form.cardholderName.trim()) {
+        setCardError('Please enter the cardholder name.');
+        setSubmitting(false);
+        return;
+      }
       try {
         // Step 1: create a PaymentIntent on the server
         const intentRes = await fetch('/api/create-payment-intent', {
@@ -166,11 +195,12 @@ export default function Join({ onSuccess }) {
           return;
         }
 
-        // Step 2: confirm the card payment — this is what actually charges the card
+        // Step 2: confirm the card payment — this is what actually charges the card.
+        // Passing the cardNumber element automatically pulls expiry + cvc data too.
         const { paymentIntent, error } = await stripeRef.current.confirmCardPayment(clientSecret, {
           payment_method: {
-            card: cardElRef.current,
-            billing_details: { name: `${data.firstName} ${data.lastName}`, email: data.email },
+            card: cardElRefs.current.number,
+            billing_details: { name: form.cardholderName.trim(), email: data.email },
           },
         });
         if (error) {
@@ -211,8 +241,7 @@ export default function Join({ onSuccess }) {
     onSuccess(data.email, payNote);
     setStep(1);
     setSelMem('full');
-    setForm({ firstName: '', lastName: '', email: '', phone: '', atUoA: '', upi: '', universityId: '', university: '', field: '', year: '', continuing2027: '' });
-    cardMountedRef.current = false;
+    setForm({ firstName: '', lastName: '', email: '', phone: '', atUoA: '', upi: '', universityId: '', university: '', field: '', year: '', continuing2027: '', cardholderName: '' });
   }
 
   const isSocial = selMem === 'social';
@@ -420,7 +449,29 @@ export default function Join({ onSuccess }) {
                           <div className="cbrand" style={{ color: '#2e77bc' }}>AMEX</div>
                         </div>
                       </div>
-                      <div ref={cardDivRef} id="card-element" />
+                      <div className="card-fields">
+                        <div className="fg full">
+                          <label>Cardholder Name *</label>
+                          <input
+                            type="text"
+                            placeholder="Name on card"
+                            value={form.cardholderName}
+                            onChange={e => setField('cardholderName', e.target.value)}
+                          />
+                        </div>
+                        <div className="fg full">
+                          <label>Card Number *</label>
+                          <div ref={setNumberRef} className="stripe-field" />
+                        </div>
+                        <div className="fg">
+                          <label>Expiry *</label>
+                          <div ref={setExpiryRef} className="stripe-field" />
+                        </div>
+                        <div className="fg">
+                          <label>CVC *</label>
+                          <div ref={setCvcRef} className="stripe-field" />
+                        </div>
+                      </div>
                       {cardError && <div id="card-errors">{cardError}</div>}
                     </>
                   )}

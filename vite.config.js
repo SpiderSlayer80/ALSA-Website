@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 import fs from 'fs';
 import path from 'path';
+import { pathToFileURL } from 'url';
 
 // Loads .env.local manually so the API handler can read STRIPE_SECRET_KEY in dev
 const envPath = path.resolve(process.cwd(), '.env.local');
@@ -25,8 +26,10 @@ const vercelApiPlugin = () => ({
       if (!fs.existsSync(fnPath)) return next();
 
       try {
-        // Bust the import cache so edits to the API file are picked up without restart
-        const mod = await import(`${fnPath}?t=${Date.now()}`);
+        // Bust the import cache so edits to the API file are picked up without restart.
+        // pathToFileURL is required on Windows — raw paths like C:\... aren't valid ESM URLs.
+        const fnUrl = `${pathToFileURL(fnPath).href}?t=${Date.now()}`;
+        const mod = await import(fnUrl);
         const handler = mod.default;
 
         // Collect request body

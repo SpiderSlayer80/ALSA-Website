@@ -2303,16 +2303,27 @@ nav.scrolled {
   font-size: 0.58rem;
   font-weight: 800;
 }
-#card-element {
+.card-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 4px;
+}
+.card-fields .fg.full { grid-column: span 2; }
+.stripe-field {
   padding: 14px 16px;
   border: 2px solid var(--border);
   border-radius: 11px;
   background: var(--cream);
   min-height: 48px;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
-#card-element.StripeElement--focus {
+.stripe-field.StripeElement--focus {
   border-color: var(--blue-m);
   box-shadow: 0 0 0 4px rgba(26, 64, 153, 0.09);
+}
+.stripe-field.StripeElement--invalid {
+  border-color: #dc2626;
 }
 #card-errors {
   color: #dc2626;
