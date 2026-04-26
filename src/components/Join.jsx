@@ -122,10 +122,24 @@ export default function Join({ onSuccess }) {
 
     if (selMem === 'full' && stripeRef.current && cardElRef.current) {
       try {
-        const { paymentMethod, error } = await stripeRef.current.createPaymentMethod({
-          type: 'card',
-          card: cardElRef.current,
-          billing_details: { name: `${data.firstName} ${data.lastName}`, email: data.email },
+        // Step 1: create a PaymentIntent on the server
+        const intentRes = await fetch('/api/create-payment-intent', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+        });
+        const { clientSecret, error: intentError } = await intentRes.json();
+        if (intentError) {
+          setCardError(intentError);
+          setSubmitting(false);
+          return;
+        }
+
+        // Step 2: confirm the card payment — this is what actually charges the card
+        const { paymentIntent, error } = await stripeRef.current.confirmCardPayment(clientSecret, {
+          payment_method: {
+            card: cardElRef.current,
+            billing_details: { name: `${data.firstName} ${data.lastName}`, email: data.email },
+          },
         });
         if (error) {
           setCardError(error.message);
@@ -133,8 +147,12 @@ export default function Join({ onSuccess }) {
           return;
         }
         data.paymentStatus = 'Paid';
-        data.stripePaymentMethod = paymentMethod.id;
-      } catch (_) {}
+        data.stripePaymentIntentId = paymentIntent.id;
+      } catch (err) {
+        setCardError('Payment failed. Please try again.');
+        setSubmitting(false);
+        return;
+      }
     }
 
     // Send to Google Sheets via Apps Script web app (fire-and-forget, no-cors)

@@ -14,7 +14,7 @@ export const SITE = {
   location: 'Auckland, New Zealand 🇳🇿',
   year: '2026',
   // Replace with your Stripe publishable key from Stripe Dashboard → Developers → API Keys
-  stripeKey: 'pk_test_YOUR_KEY_HERE',
+  stripeKey: 'pk_test_51TQJK7KtECflMRWtFDN5ENA7AaCY6U4nqrNOeumNi0UVtcKCrv30FOkujDmfp4j33qbrq9at1dioXMN0abHrvLMy00lT3HUDlp',
   // Paste your Google Apps Script web app URL here after deploying (see README / setup instructions)
   sheetsUrl: 'https://script.google.com/macros/s/AKfycbwXpUnZtibDR33mnVIuHawHX969zp9aCRLVJm2IjzTIh6lN91rz_dvkG28QeScc4QxJ/exec',
 };
