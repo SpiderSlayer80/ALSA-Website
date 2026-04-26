@@ -60,7 +60,7 @@ export default function Team() {
                   }}
                 >
                   {photoSrc ? (
-                    <img src={photoSrc} alt={m.name} />
+                    <img src={photoSrc} alt={m.name} style={{ objectPosition: m.crop ?? 'center top' }} />
                   ) : (
                     m.name.split(' ').map(w => w[0]).join('').slice(0, 2)
                   )}
