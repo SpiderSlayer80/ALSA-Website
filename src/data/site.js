@@ -26,6 +26,7 @@ export const NAV_LINKS = [
   { label: 'Events', href: '#events' },
   { label: 'Gallery', href: '#gallery' },
   { label: 'Team', href: '#team' },
+  { label: 'Sponsors', href: '#sponsors' },
   { label: 'Contact', href: '#contact' },
 ];
 
@@ -180,15 +181,12 @@ export const FAQ = [
 ];
 
 // ─── Sponsors ─────────────────────────────────────────────────────────────────
+// photo: filename inside src/sponsors/ — leave blank if no image yet
 export const SPONSORS = [
-  { name: 'Ceylon Spice Co.', tier: 'Gold' },
-  { name: 'Sigiriya Café', tier: 'Gold' },
-  { name: 'Lanka Travel NZ', tier: 'Silver' },
-  { name: 'Kandy Kitchen', tier: 'Silver' },
-  { name: 'Colombo Catering', tier: 'Silver' },
-  { name: 'Orient Groceries', tier: 'Bronze' },
-  { name: 'Serendib Sweets', tier: 'Bronze' },
-  { name: 'Tea & Toddy Bar', tier: 'Bronze' },
+  { name: 'Aaraksha',         photo: 'Aaraskha.jpeg' },
+  { name: 'Eco Air & Cargo',  photo: 'Eco Air & cargo.jpg' },
+  { name: 'Sithari Cars',     photo: 'Sithari Cars.jpg' },
+  { name: 'Sri Lanka NZ',     photo: 'SriLankaNZ.png' },
 ];
 
 // ─── Gallery events ───────────────────────────────────────────────────────────

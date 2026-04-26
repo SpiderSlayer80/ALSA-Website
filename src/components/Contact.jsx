@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { CONTACT_INFO } from '../data/site';
+import { CONTACT_INFO, SITE } from '../data/site';
 import { useToast } from '../context/ToastContext';
 import emailIcon     from '../svg icons/gmail.svg';
 import instagramIcon from '../svg icons/instagram.svg';
@@ -18,13 +18,25 @@ export default function Contact() {
     setForm(f => ({ ...f, [key]: value }));
   }
 
-  function sendContact() {
+  async function sendContact() {
     if (!form.name || !form.email || !form.message) {
       toast.error('Please fill in all fields.');
       return;
     }
     setSending(true);
-    setTimeout(() => {
+    try {
+      await fetch(SITE.sheetsUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          formType: 'contact',
+          name: form.name,
+          email: form.email,
+          message: form.message,
+          timestamp: new Date().toLocaleString('en-NZ'),
+        }),
+      });
       toast.success(
         <>
           Thanks {form.name}! We'll be in touch at {form.email} soon.{' '}
@@ -32,8 +44,11 @@ export default function Contact() {
         </>
       );
       setForm({ name: '', email: '', message: '' });
+    } catch (_) {
+      toast.error('Something went wrong. Please email us directly at uoa.alsa2020@gmail.com');
+    } finally {
       setSending(false);
-    }, 700);
+    }
   }
 
   return (

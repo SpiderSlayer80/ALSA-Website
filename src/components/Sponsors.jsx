@@ -1,8 +1,14 @@
-// Sponsors — infinite horizontal scrolling marquee of partner/sponsor chips.
-// Each chip shows the sponsor's tier badge (Gold / Silver / Bronze) and name.
-// To add a sponsor, edit the SPONSORS array in src/data/site.js.
+// Sponsors — infinite horizontal scrolling marquee of partner/sponsor cards.
+// Each card shows the sponsor's photo and name.
+// To add a sponsor, drop a photo in src/sponsors/ and edit SPONSORS in src/data/site.js.
 import { motion } from 'framer-motion';
 import { SPONSORS } from '../data/site';
+
+const sponsorImages = import.meta.glob('../sponsors/*', { eager: true, as: 'url' });
+function getSponsorPhoto(filename) {
+  if (!filename) return null;
+  return sponsorImages[`../sponsors/${filename}`] ?? null;
+}
 
 export default function Sponsors() {
   // Duplicate the list so the CSS marquee can loop seamlessly: when the first copy scrolls
@@ -28,12 +34,21 @@ export default function Sponsors() {
 
       <div className="sponsors-marquee">
         <div className="sponsors-track">
-          {loop.map((s, i) => (
-            <div key={i} className={`sponsor-chip tier-${s.tier.toLowerCase()}`}>
-              <span className="sponsor-tier">{s.tier}</span>
-              <span className="sponsor-name">{s.name}</span>
-            </div>
-          ))}
+          {loop.map((s, i) => {
+            const photo = getSponsorPhoto(s.photo);
+            return (
+              <div key={i} className="sponsor-chip">
+                <div className="sponsor-photo">
+                  {photo ? (
+                    <img src={photo} alt={s.name} loading="lazy" />
+                  ) : (
+                    <div className="sponsor-photo-fallback">{s.name.charAt(0)}</div>
+                  )}
+                </div>
+                <span className="sponsor-name">{s.name}</span>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
