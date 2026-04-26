@@ -390,10 +390,6 @@ export default function Join({ onSuccess }) {
                       </div>
                       <div ref={cardDivRef} id="card-element" />
                       {cardError && <div id="card-errors">{cardError}</div>}
-                      <div className="stripe-note">
-                        <strong style={{ color: '#635bff' }}>⚡ Stripe Setup:</strong> Set{' '}
-                        <code>SITE.stripeKey</code> in <code>src/data/site.js</code> with your publishable key.
-                      </div>
                     </>
                   )}
 
