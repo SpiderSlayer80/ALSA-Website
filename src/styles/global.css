@@ -283,6 +283,14 @@ nav.scrolled {
   transform: scale(1);
   opacity: 1;
 }
+.nav-links a.nav-active:not(.nav-cta) {
+  color: var(--gold);
+  background: rgba(34, 85, 204, 0.35);
+}
+.nav-links a.nav-active:not(.nav-cta)::before {
+  transform: scale(1);
+  opacity: 0;
+}
 
 .nav-cta {
   background: var(--gold) !important;

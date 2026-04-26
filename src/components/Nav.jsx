@@ -9,11 +9,33 @@ import logoFace from '../Logos/logo lion face.png';
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('');
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 60);
     window.addEventListener('scroll', handler);
     return () => window.removeEventListener('scroll', handler);
+  }, []);
+
+  // Track which section the user is scrolling through using IntersectionObserver.
+  // rootMargin shrinks the detection zone to roughly the middle 30% of the viewport
+  // so the active link only flips when the section is clearly the focal point.
+  useEffect(() => {
+    const ids = NAV_LINKS.map(l => l.href.replace('#', ''));
+    const targets = ids.map(id => document.getElementById(id)).filter(Boolean);
+    if (!targets.length) return;
+
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) setActiveSection(entry.target.id);
+        });
+      },
+      { rootMargin: '-35% 0px -60% 0px', threshold: 0 }
+    );
+
+    targets.forEach(el => observer.observe(el));
+    return () => observer.disconnect();
   }, []);
 
   // Programmatic scroll — works inside iframes (e.g. Responsively) where
@@ -40,13 +62,20 @@ export default function Nav() {
         </a>
 
         <ul className="nav-links">
-          {NAV_LINKS.map(link => (
-            <li key={link.href}>
-              <a href={link.href} onClick={handleNavClick(link.href)}>
-                <span>{link.label}</span>
-              </a>
-            </li>
-          ))}
+          {NAV_LINKS.map(link => {
+            const isActive = activeSection === link.href.replace('#', '');
+            return (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  className={isActive ? 'nav-active' : ''}
+                  onClick={handleNavClick(link.href)}
+                >
+                  <span>{link.label}</span>
+                </a>
+              </li>
+            );
+          })}
           <li>
             <a href="#join" className="nav-cta" onClick={handleNavClick('#join')}>
               Join Now <span aria-hidden>→</span>
