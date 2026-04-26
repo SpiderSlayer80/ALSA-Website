@@ -41,25 +41,49 @@ export default function Join({ onSuccess }) {
   // on an already-mounted element, which happens when the user navigates back to step 3.
   const cardMountedRef = useRef(false);
 
-  // Initialize Stripe once — creating elements is expensive, so we do it outside of render.
+  // Initialize Stripe once — Stripe.js loads from a <script> tag in index.html,
+  // so we poll briefly in case the script hasn't finished loading on first render.
   useEffect(() => {
-    try {
-      stripeRef.current = window.Stripe(SITE.stripeKey);
-      const elements = stripeRef.current.elements({
-        fonts: [{ cssSrc: 'https://fonts.googleapis.com/css2?family=Outfit:wght@400' }],
-      });
-      cardElRef.current = elements.create('card', {
-        style: {
-          base: {
-            fontFamily: 'Outfit,sans-serif',
-            fontSize: '15px',
-            color: '#0a1628',
-            '::placeholder': { color: '#9aaabb' },
+    let cancelled = false;
+    let attempts = 0;
+    const init = () => {
+      if (cancelled) return;
+      if (typeof window.Stripe !== 'function') {
+        if (attempts++ < 50) return setTimeout(init, 100);
+        setCardError('Stripe failed to load. Check your internet connection or ad blocker.');
+        return;
+      }
+      try {
+        if (!SITE.stripeKey || SITE.stripeKey.includes('YOUR_KEY')) {
+          setCardError('Stripe publishable key is not configured.');
+          return;
+        }
+        stripeRef.current = window.Stripe(SITE.stripeKey);
+        const elements = stripeRef.current.elements({
+          fonts: [{ cssSrc: 'https://fonts.googleapis.com/css2?family=Outfit:wght@400' }],
+        });
+        cardElRef.current = elements.create('card', {
+          style: {
+            base: {
+              fontFamily: 'Outfit,sans-serif',
+              fontSize: '15px',
+              color: '#0a1628',
+              '::placeholder': { color: '#9aaabb' },
+            },
           },
-        },
-      });
-      cardElRef.current.on('change', e => setCardError(e.error ? e.error.message : ''));
-    } catch (_) {}
+        });
+        cardElRef.current.on('change', e => setCardError(e.error ? e.error.message : ''));
+        // If user is already on step 3, mount immediately
+        if (step === 3 && selMem === 'full' && cardDivRef.current && !cardMountedRef.current) {
+          cardElRef.current.mount(cardDivRef.current);
+          cardMountedRef.current = true;
+        }
+      } catch (err) {
+        setCardError(`Stripe init failed: ${err.message}`);
+      }
+    };
+    init();
+    return () => { cancelled = true; };
   }, []);
 
   // Mount card element when step 3 + paid tier
@@ -68,7 +92,9 @@ export default function Join({ onSuccess }) {
       try {
         cardElRef.current.mount(cardDivRef.current);
         cardMountedRef.current = true;
-      } catch (_) {}
+      } catch (err) {
+        setCardError(`Card mount failed: ${err.message}`);
+      }
     }
   }, [step, selMem]);
 
@@ -127,6 +153,12 @@ export default function Join({ onSuccess }) {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
         });
+        if (!intentRes.ok) {
+          const text = await intentRes.text();
+          setCardError(`Server error: ${intentRes.status} — ${text}`);
+          setSubmitting(false);
+          return;
+        }
         const { clientSecret, error: intentError } = await intentRes.json();
         if (intentError) {
           setCardError(intentError);
@@ -149,7 +181,7 @@ export default function Join({ onSuccess }) {
         data.paymentStatus = 'Paid';
         data.stripePaymentIntentId = paymentIntent.id;
       } catch (err) {
-        setCardError('Payment failed. Please try again.');
+        setCardError(`Payment error: ${err.message}`);
         setSubmitting(false);
         return;
       }

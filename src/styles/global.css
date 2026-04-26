@@ -2308,6 +2308,7 @@ nav.scrolled {
   border: 2px solid var(--border);
   border-radius: 11px;
   background: var(--cream);
+  min-height: 48px;
 }
 #card-element.StripeElement--focus {
   border-color: var(--blue-m);
