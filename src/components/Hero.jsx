@@ -28,8 +28,24 @@ export default function Hero() {
     return () => clearInterval(t);
   }, []);
 
-  // 8 particles instead of 18 — same visual effect, less JS overhead
-  const particles = Array.from({ length: 8 }, (_, i) => i);
+  // Floating glow particles. Pre-compute size / drift / timing so each one is
+  // visually distinct without re-randomising on every render.
+  const particles = Array.from({ length: 26 }, (_, i) => {
+    const sizeBucket = i % 4;
+    const size = [3, 5, 7, 9][sizeBucket];
+    return {
+      id: i,
+      size,
+      left: (i * 13.7) % 100,
+      top:  (i * 21.3) % 100,
+      yRange: 36 + (i % 5) * 14,
+      xDrift: (i % 2 === 0 ? 1 : -1) * (10 + (i % 4) * 9),
+      duration: 6 + (i % 6),
+      delay: (i * 0.27) % 5,
+      peakOpacity: 0.45 + ((i % 5) * 0.11),
+      glow: sizeBucket >= 2 ? 'particle-lg' : 'particle-sm',
+    };
+  });
 
   return (
     <section id="home" ref={ref}>
@@ -51,19 +67,26 @@ export default function Hero() {
         <div className="hero-stripe" />
 
         <div className="hero-particles">
-          {particles.map(i => (
+          {particles.map(p => (
             <motion.span
-              key={i}
-              className="particle"
+              key={p.id}
+              className={`particle ${p.glow}`}
               style={{
-                left: `${(i * 12.5) % 100}%`,
-                top:  `${(i * 23)   % 100}%`,
+                left: `${p.left}%`,
+                top:  `${p.top}%`,
+                width:  `${p.size}px`,
+                height: `${p.size}px`,
               }}
-              animate={{ y: [0, -28, 0], opacity: [0, 0.65, 0] }}
+              animate={{
+                y: [0, -p.yRange, 0],
+                x: [0, p.xDrift, 0],
+                opacity: [0, p.peakOpacity, 0],
+                scale: [0.6, 1.15, 0.6],
+              }}
               transition={{
-                duration: 4 + (i % 3),
+                duration: p.duration,
                 repeat: Infinity,
-                delay: i * 0.5,
+                delay: p.delay,
                 ease: 'easeInOut',
               }}
             />

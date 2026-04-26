@@ -45,22 +45,22 @@ export const PILLARS = [
   {
     icon: '🎉',
     title: 'Cultural Events',
-    text: 'From Avurudu celebrations to cultural showcases, we bring Sri Lankan traditions to life across Auckland.',
+    text: 'Avurudu, Raaga and food festivals that bring Sri Lankan heritage into Auckland student life.',
   },
   {
     icon: '🤝',
     title: 'Community Support',
-    text: 'Peer networks, mentorship and a welcoming space for every Sri Lankan student in Auckland.',
+    text: 'Senior mentorship and peer networks built so no Sri Lankan student feels alone on campus.',
   },
   {
     icon: '🎓',
     title: 'Academic Network',
-    text: 'Study groups, career connections and academic support across UoA, AUT, Massey and beyond.',
+    text: 'Study links and career conversations spanning UoA, AUT, Massey and Unitec.',
   },
   {
     icon: '🏏',
     title: 'Sport & Social',
-    text: 'Cricket matches, food festivals, movie nights and social gatherings throughout the year.',
+    text: 'Cricket, futsal, karaoke and steins that turn classmates into lifelong friends.',
   },
 ];
 
