@@ -45,6 +45,18 @@ export default function MobileMenu({ open, onClose }) {
           </motion.div>
 
           <nav className="mm-nav">
+            <motion.a
+              href="#join"
+              className="mm-cta"
+              onClick={handleClick('#join')}
+              initial={{ opacity: 0, x: -12 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.12, duration: 0.4 }}
+            >
+              <span className="mm-label">Become a Member</span>
+              <span className="mm-arrow">→</span>
+            </motion.a>
+
             {MENU_LINKS.map((l, i) => (
               <motion.a
                 key={l.href}
@@ -52,25 +64,13 @@ export default function MobileMenu({ open, onClose }) {
                 onClick={handleClick(l.href)}
                 initial={{ opacity: 0, x: -12 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.12 + i * 0.06, duration: 0.4 }}
+                transition={{ delay: 0.18 + i * 0.06, duration: 0.4 }}
               >
                 <span className="mm-num">0{i + 1}</span>
                 <span className="mm-label">{l.label}</span>
                 <span className="mm-arrow">→</span>
               </motion.a>
             ))}
-
-            <motion.a
-              href="#join"
-              className="mm-cta"
-              onClick={handleClick('#join')}
-              initial={{ opacity: 0, x: -12 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.12 + MENU_LINKS.length * 0.06, duration: 0.4 }}
-            >
-              <span className="mm-label">Become a Member</span>
-              <span className="mm-arrow">→</span>
-            </motion.a>
           </nav>
         </motion.div>
       )}
