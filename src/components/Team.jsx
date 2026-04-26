@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { TEAM } from '../data/site';
 import TiltCard from './TiltCard';
+import HallOfFame from './HallOfFame';
 
 // Load exec photos as plain URLs — `as: 'url'` prevents Vite from trying to
 // parse image files as JS modules (fixes uppercase .JPG / .HEIC errors).
@@ -125,6 +126,8 @@ export default function Team() {
           </motion.div>
         </div>
       ))}
+
+      <HallOfFame />
 
       <AnimatePresence>
         {active && (
