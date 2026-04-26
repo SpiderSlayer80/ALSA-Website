@@ -37,6 +37,9 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 80px;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
 }
 
 body {
@@ -44,9 +47,18 @@ body {
   background: var(--cream);
   color: var(--ink);
   overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+  position: relative;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+}
+
+#root {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
 }
 
 /* Custom scrollbar */
@@ -303,6 +315,9 @@ nav.scrolled {
   flex-direction: column;
   padding: 56px 28px 40px;
   overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 
 .mm-glow {
@@ -418,7 +433,6 @@ nav.scrolled {
 }
 
 .mm-cta {
-  margin-top: auto;
   display: block;
   width: 100%;
   background: linear-gradient(135deg, #ffd24a 0%, #f5b800 50%, #d99a00 100%);
@@ -436,6 +450,7 @@ nav.scrolled {
     inset 0 1px 0 rgba(255,255,255,0.4);
   position: relative;
   z-index: 1;
+  flex-shrink: 0;
 }
 .mm-cta span { margin-left: 6px; }
 
