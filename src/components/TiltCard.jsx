@@ -4,7 +4,7 @@
 import { useRef } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 
-export default function TiltCard({ children, className = '', intensity = 10, style }) {
+export default function TiltCard({ children, className = '', intensity = 10, style, onClick }) {
   const ref = useRef(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -32,6 +32,7 @@ export default function TiltCard({ children, className = '', intensity = 10, sty
       className={className}
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
+      onClick={onClick}
       style={{
         rotateX: rx,
         rotateY: ry,

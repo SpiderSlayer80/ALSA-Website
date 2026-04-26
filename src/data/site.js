@@ -137,22 +137,22 @@ export const TESTIMONIALS = [
 // the circle. Format is "X% Y%" or named values like "center top".
 // Examples: 'center top' (default), 'center 20%', '30% 10%', 'right top'
 export const TEAM = [
-  { name: 'Binuk',     role: 'Co-President',          photo: 'Binuk.jpg',     accent: '#F5B800', crop: 'center 50%' },
-  { name: 'Hariene',   role: 'Co-President',          photo: 'Hariene.jpg',   accent: '#F5B800', crop: 'center top' },
-  { name: 'Kalishika', role: 'Vice President',        photo: 'Kalshika.JPG',  accent: '#F5B800', crop: 'center top' },
-  { name: 'Thisas',    role: 'Secretary',             photo: 'Thisas.jpg',    accent: '#F5B800', crop: 'center top' },
-  { name: 'Shazana',   role: 'Events Manager',        photo: 'Shazana.jpeg',  accent: '#F5B800', crop: 'center top' },
-  { name: 'Mahimi',    role: 'Events Co-ordinator',   photo: 'Mahimi.JPG',    accent: '#2255cc', crop: 'center top' },
-  { name: 'Ravindu',   role: 'Events Co-ordinator',   photo: 'Ravindu.jpeg',  accent: '#2255cc', crop: 'center top' },
-  { name: 'Lakindu',   role: 'Marketing Manager',     photo: 'Lakindu.jpg',   accent: '#F5B800', crop: '100% 50%' },
-  { name: 'Misha',     role: 'Graphic Designer',      photo: 'Misha.jpg',     accent: '#2255cc', crop: 'center' },
-  { name: 'Sharon',    role: 'Graphic Designer',      photo: 'Sharon.jpeg',   accent: '#2255cc', crop: 'center' },
-  { name: 'Dinith',    role: 'Finance Manager',       photo: 'Dinith.jpeg',   accent: '#F5B800', crop: 'center top' },
-  { name: 'Riveen',    role: 'Treasurer',             photo: 'Riveen.JPG',    accent: '#2255cc', crop: 'center top' },
-  { name: 'Shakeel',   role: 'Treasurer',             photo: 'Shakeel.jpeg',  accent: '#2255cc', crop: '5% top' },
-  { name: 'Shenan',    role: 'Junior Representative', photo: 'Shenan.jpg',    accent: '#2255cc', crop: 'center top' },
-  { name: 'Navik',     role: 'Junior Representative', photo: 'Navik.jpg',     accent: '#2255cc', crop: 'center top' },
-  { name: 'Chethani',  role: 'Junior Representative', photo: 'Chethani.jpg',  accent: '#2255cc', crop: 'center top' },
+  { name: 'Binuk',     role: 'Co-President',          group: 'Leadership', photo: 'Binuk.jpg',     accent: '#F5B800', crop: 'center 50%' },
+  { name: 'Hariene',   role: 'Co-President',          group: 'Leadership', photo: 'Hariene.jpg',   accent: '#F5B800', crop: 'center top' },
+  { name: 'Kalishika', role: 'Vice President',        group: 'Leadership', photo: 'Kalshika.JPG',  accent: '#F5B800', crop: 'center top' },
+  { name: 'Thisas',    role: 'Secretary',             group: 'Leadership', photo: 'Thisas.jpg',    accent: '#F5B800', crop: 'center top' },
+  { name: 'Shazana',   role: 'Events Manager',        group: 'Managers',   photo: 'Shazana.jpeg',  accent: '#F5B800', crop: 'center top' },
+  { name: 'Lakindu',   role: 'Marketing Manager',     group: 'Managers',   photo: 'Lakindu.jpg',   accent: '#F5B800', crop: '100% 50%' },
+  { name: 'Dinith',    role: 'Finance Manager',       group: 'Managers',   photo: 'Dinith.jpeg',   accent: '#F5B800', crop: 'center top' },
+  { name: 'Mahimi',    role: 'Events Co-ordinator',   group: 'Executives', photo: 'Mahimi.JPG',    accent: '#2255cc', crop: 'center top' },
+  { name: 'Ravindu',   role: 'Events Co-ordinator',   group: 'Executives', photo: 'Ravindu.jpeg',  accent: '#2255cc', crop: 'center top' },
+  { name: 'Misha',     role: 'Graphic Designer',      group: 'Executives', photo: 'Misha.jpg',     accent: '#2255cc', crop: 'center' },
+  { name: 'Sharon',    role: 'Graphic Designer',      group: 'Executives', photo: 'Sharon.jpeg',   accent: '#2255cc', crop: 'center' },
+  { name: 'Riveen',    role: 'Treasurer',             group: 'Executives', photo: 'Riveen.JPG',    accent: '#2255cc', crop: 'center top' },
+  { name: 'Shakeel',   role: 'Treasurer',             group: 'Executives', photo: 'Shakeel.jpeg',  accent: '#2255cc', crop: '5% top' },
+  { name: 'Shenan',    role: 'Junior Representative', group: 'Junior Reps', photo: 'Shenan.jpg',   accent: '#2255cc', crop: 'center top' },
+  { name: 'Navik',     role: 'Junior Representative', group: 'Junior Reps', photo: 'Navik.jpg',    accent: '#2255cc', crop: 'center top' },
+  { name: 'Chethani',  role: 'Junior Representative', group: 'Junior Reps', photo: 'Chethani.jpg', accent: '#2255cc', crop: 'center top' },
 ];
 
 // ─── FAQ ──────────────────────────────────────────────────────────────────────
