@@ -104,7 +104,7 @@ export const EVENTS = [
     description: 'A relaxed movie night hosted alongside the South Asian Club. Bring a friend, grab a seat and unwind with us.',
     color: 'blue',
     poster: '',          // e.g. 'movienight.jpg' inside src/event posters/
-    eventbriteUrl: '',
+    eventbriteUrl: 'https://www.eventbrite.co.nz/e/test-event-tickets-1988276104351?aff=oddtdtcreator',
     hidden: false  // paste Eventbrite link here if ticketed
   },
 ];

@@ -1,12 +1,21 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { EVENTS } from '../data/site';
+import { useToast } from '../context/ToastContext';
 
 // Load any image dropped into src/event posters/ as a static URL at build time.
 const posters = import.meta.glob('../event posters/*', { eager: true, as: 'url' });
 function getPoster(filename) {
   if (!filename) return null;
   return posters[`../event posters/${filename}`] ?? null;
+}
+
+// Pull the numeric Eventbrite event ID out of any standard share URL.
+// Eventbrite IDs are 9+ digit runs and always trail the URL slug.
+function getEventbriteId(url) {
+  if (!url) return null;
+  const m = url.match(/(\d{9,})/);
+  return m ? m[1] : null;
 }
 
 function todayStartISO() {
@@ -104,13 +113,60 @@ export default function Events() {
 }
 
 function UpcomingFeature({ event }) {
+  const toast = useToast();
   const poster = getPoster(event.poster);
   const ticketed = !!event.eventbriteUrl;
+  const eventbriteId = ticketed ? getEventbriteId(event.eventbriteUrl) : null;
+  const triggerId = eventbriteId ? `eb-trigger-${eventbriteId}` : null;
   const [open, setOpen] = useState(false);
+  const widgetBoundRef = useRef(false);
+
+  // Bind the Eventbrite Embedded Checkout to the trigger button. The widget
+  // script is loaded (deferred) from index.html, and the button must exist in
+  // the DOM before createWidget is called — otherwise the bind fails silently.
+  useEffect(() => {
+    if (!eventbriteId || !triggerId) return;
+    let cancelled = false;
+    let attempts = 0;
+    const init = () => {
+      if (cancelled) return;
+      const trigger = document.getElementById(triggerId);
+      if (!trigger || !window.EBWidgets) {
+        if (attempts++ < 40) return setTimeout(init, 200);
+        return; // gave up — onClick fallback opens eventbrite.com
+      }
+      try {
+        window.EBWidgets.createWidget({
+          widgetType: 'checkout',
+          eventId: eventbriteId,
+          modal: true,
+          modalTriggerElementId: triggerId,
+          onOrderComplete: () => {
+            toast.success('Tickets confirmed! Check your email for the receipt.');
+          },
+        });
+        widgetBoundRef.current = true;
+      } catch (_) {
+        // Network or widget error — onClick fallback runs.
+      }
+    };
+    init();
+    return () => { cancelled = true; };
+  }, [eventbriteId, triggerId, toast]);
+
+  const openTickets = () => {
+    if (widgetBoundRef.current && triggerId) {
+      // Widget is bound — its click listener handles opening the modal.
+      // Calling .click() programmatically also fires that listener.
+      document.getElementById(triggerId)?.click();
+    } else {
+      window.open(event.eventbriteUrl, '_blank', 'noopener,noreferrer');
+    }
+  };
 
   const onPosterClick = () => {
     if (ticketed) {
-      window.open(event.eventbriteUrl, '_blank', 'noopener,noreferrer');
+      openTickets();
     } else {
       setOpen(v => !v);
     }
@@ -195,14 +251,22 @@ function UpcomingFeature({ event }) {
 
           <div className="fe-cta-row">
             {ticketed ? (
-              <a
-                href={event.eventbriteUrl}
+              <button
+                id={triggerId}
+                type="button"
                 className="fe-cta fe-cta-primary"
-                target="_blank"
-                rel="noreferrer"
+                onClick={(e) => {
+                  // If the widget bound, EBWidgets has its own click listener
+                  // and will open the modal. If it didn't bind, fall back to
+                  // opening eventbrite.com in a new tab.
+                  if (!widgetBoundRef.current) {
+                    e.preventDefault();
+                    window.open(event.eventbriteUrl, '_blank', 'noopener,noreferrer');
+                  }
+                }}
               >
                 🎟 Buy Tickets
-              </a>
+              </button>
             ) : (
               <button
                 type="button"
