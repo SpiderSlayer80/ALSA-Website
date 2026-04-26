@@ -70,11 +70,11 @@ export const PILLARS = [
 //                clicking opens Eventbrite. Leave as '' for free/non-ticketed events.
 export const EVENTS = [
   {
-    dateISO: '2026-03-15',
-    date: '15 MAR',
+    dateISO: '2026-03-19',
+    date: '19 MAR',
     time: '6:00 PM',
     title: 'Meet and Greet',
-    location: 'University of Auckland',
+    location: 'Albert Park, Mt Eden',
     tag: 'Social',
     description: 'A casual evening to meet the ALSA 2026 committee and connect with fellow Sri Lankan students from across Auckland.',
     color: 'blue',
@@ -82,11 +82,11 @@ export const EVENTS = [
     eventbriteUrl: '',
   },
   {
-    dateISO: '2026-04-14',
-    date: '14 APR',
+    dateISO: '2026-04-24',
+    date: '24 APR',
     time: '6:00 PM',
     title: 'Sinhala & Tamil New Year: Avurudu 2026',
-    location: 'University of Auckland, Fale Pasifika',
+    location: 'B201 Atrium (Arts Building), UoA',
     tag: 'Flagship',
     description: 'Traditional games, rabaan drumming and a kiribath feast as we celebrate the Sri Lankan New Year together in Auckland.',
     color: 'gold',
