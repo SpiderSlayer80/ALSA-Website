@@ -25,8 +25,81 @@ const miniItem = {
   show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] } },
 };
 
+function GalleryCard({ ev, variants, style, mini = false, activeCard, setActiveCard }) {
+  const key = ev.title + ev.year;
+  const isActive = activeCard === key;
+  const cover = getCover(ev.photo);
+
+  return (
+    <motion.div
+      variants={variants}
+      className={`${mini ? 'g-mini-card' : 'g-card'} ${isActive ? 'g-card-active' : ''}`}
+      style={style}
+      onClick={() => setActiveCard(isActive ? null : key)}
+      whileHover={!isActive ? { scale: 1.02, y: -4 } : {}}
+      transition={{ duration: 0.3 }}
+    >
+      {cover ? (
+        <img src={cover} alt={ev.title} loading="lazy" />
+      ) : (
+        <div className="g-ph">
+          <div className="g-ph-icon" style={mini ? { fontSize: '1.6rem' } : {}}>📸</div>
+          <div className="g-ph-text">{mini ? 'Coming soon' : 'Photo coming soon'}</div>
+        </div>
+      )}
+
+      {/* Always-visible bottom info overlay */}
+      <div className="g-overlay">
+        <div className="g-tag">{ev.date}</div>
+        <div className="g-cap" style={mini ? { fontSize: '0.88rem' } : {}}>{ev.title}</div>
+      </div>
+
+      {/* Blue hue + "View Photos" button shown on click */}
+      <AnimatePresence>
+        {isActive && (
+          <motion.div
+            className="g-reveal"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            onClick={e => e.stopPropagation()}
+          >
+            {ev.albumUrl ? (
+              <motion.a
+                href={ev.albumUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="g-view-btn"
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                transition={{ duration: 0.25, delay: 0.05 }}
+                onClick={e => e.stopPropagation()}
+              >
+                View Photos →
+              </motion.a>
+            ) : (
+              <motion.span
+                className="g-view-btn g-view-btn-disabled"
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                transition={{ duration: 0.25, delay: 0.05 }}
+              >
+                No album yet
+              </motion.span>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+}
+
 export default function Gallery() {
   const [activeYear, setActiveYear] = useState(null);
+  const [activeCard, setActiveCard] = useState(null);
 
   const years = useMemo(
     () => [...new Set(GALLERY_EVENTS.map(e => e.year))].sort((a, b) => b - a),
@@ -38,16 +111,20 @@ export default function Gallery() {
     [activeYear]
   );
 
-  const handleYear = y => setActiveYear(prev => (prev === y ? null : y));
+  const handleYear = y => {
+    setActiveYear(prev => (prev === y ? null : y));
+    setActiveCard(null);
+  };
 
   return (
-    <section id="gallery">
+    <section id="gallery" onClick={() => setActiveCard(null)}>
       <motion.div
         className="section-head"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-100px' }}
         transition={{ duration: 0.7 }}
+        onClick={e => e.stopPropagation()}
       >
         <div className="sec-eyebrow" style={{ justifyContent: 'center' }}>Captured Moments</div>
         <h2 className="sec-h" style={{ color: 'var(--blue)' }}>Our Events Gallery</h2>
@@ -61,33 +138,17 @@ export default function Gallery() {
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, margin: '-50px' }}
+        onClick={e => e.stopPropagation()}
       >
         {GALLERY_EVENTS.slice(0, 6).map((ev, i) => (
-          <motion.a
+          <GalleryCard
             key={ev.title + ev.year}
+            ev={ev}
             variants={item}
-            className="g-card"
-            href={ev.albumUrl || undefined}
-            target={ev.albumUrl ? '_blank' : undefined}
-            rel="noreferrer"
             style={i === 0 ? { gridColumn: 'span 2', gridRow: 'span 2' } : undefined}
-            whileHover={{ scale: 1.02, y: -4 }}
-            transition={{ duration: 0.3 }}
-          >
-            {getCover(ev.photo) ? (
-              <img src={getCover(ev.photo)} alt={ev.title} loading="lazy" />
-            ) : (
-              <div className="g-ph">
-                <div className="g-ph-icon">📸</div>
-                <div className="g-ph-text">Photo coming soon</div>
-              </div>
-            )}
-            <div className="g-overlay">
-              <div className="g-tag">{ev.date}</div>
-              <div className="g-cap">{ev.title}</div>
-              {ev.albumUrl && <div className="g-zoom">→</div>}
-            </div>
-          </motion.a>
+            activeCard={activeCard}
+            setActiveCard={setActiveCard}
+          />
         ))}
       </motion.div>
 
@@ -127,33 +188,18 @@ export default function Gallery() {
               initial="hidden"
               animate="show"
               exit={{ opacity: 0, y: -10, transition: { duration: 0.25 } }}
+              onClick={e => e.stopPropagation()}
             >
               {yearEvents.length > 0 ? (
                 yearEvents.map(ev => (
-                  <motion.a
+                  <GalleryCard
                     key={ev.title}
+                    ev={ev}
                     variants={miniItem}
-                    className="g-mini-card"
-                    href={ev.albumUrl || undefined}
-                    target={ev.albumUrl ? '_blank' : undefined}
-                    rel="noreferrer"
-                    whileHover={{ y: -4, scale: 1.02 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {getCover(ev.photo) ? (
-                      <img src={getCover(ev.photo)} alt={ev.title} loading="lazy" />
-                    ) : (
-                      <div className="g-ph">
-                        <div className="g-ph-icon" style={{ fontSize: '1.6rem' }}>📸</div>
-                        <div className="g-ph-text">Coming soon</div>
-                      </div>
-                    )}
-                    <div className="g-overlay">
-                      <div className="g-tag">{ev.date}</div>
-                      <div className="g-cap" style={{ fontSize: '0.88rem' }}>{ev.title}</div>
-                      {ev.albumUrl && <div className="g-zoom" style={{ width: 30, height: 30, fontSize: '0.9rem' }}>→</div>}
-                    </div>
-                  </motion.a>
+                    mini
+                    activeCard={activeCard}
+                    setActiveCard={setActiveCard}
+                  />
                 ))
               ) : (
                 <p className="g-empty">No events recorded for {activeYear} yet.</p>
