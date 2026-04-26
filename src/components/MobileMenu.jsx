@@ -59,18 +59,19 @@ export default function MobileMenu({ open, onClose }) {
                 <span className="mm-arrow">→</span>
               </motion.a>
             ))}
-          </nav>
 
-          <motion.a
-            href="#join"
-            className="mm-cta"
-            onClick={handleClick('#join')}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.45 }}
-          >
-            Become a Member <span aria-hidden>→</span>
-          </motion.a>
+            <motion.a
+              href="#join"
+              className="mm-cta"
+              onClick={handleClick('#join')}
+              initial={{ opacity: 0, x: -12 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.12 + MENU_LINKS.length * 0.06, duration: 0.4 }}
+            >
+              <span className="mm-label">Become a Member</span>
+              <span className="mm-arrow">→</span>
+            </motion.a>
+          </nav>
         </motion.div>
       )}
     </AnimatePresence>
