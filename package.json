@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "notify": "node scripts/notify.js"
   },
   "dependencies": {
     "framer-motion": "^11.11.0",

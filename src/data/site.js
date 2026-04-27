@@ -65,12 +65,21 @@ export const PILLARS = [
 ];
 
 // ─── Events ───────────────────────────────────────────────────────────────────
+// id:            unique stable string (e.g. 'meet-greet-2026'). Used to dedupe email blasts —
+//               never reuse an id, never change it after a blast has been sent.
 // dateISO:       YYYY-MM-DD — drives the upcoming/past split automatically.
 // poster:        filename of the event poster inside src/event posters/ (square Instagram-post style works best).
-// humanitixUrl: paste the Humanitix event link if the event is ticketed — hovering the poster reveals a Buy Tickets overlay,
-//               clicking opens Humanitix in a new tab. Leave as '' for free/non-ticketed events.
+// eventbriteUrl: paste the Eventbrite event link if the event is ticketed — hovering the poster reveals a Buy Tickets overlay,
+//               clicking opens Eventbrite in a new tab. Leave as '' for free/non-ticketed events.
+// tickets:      optional array of ticket tiers shown directly on the event card, e.g.
+//                 [{ name: 'ALSA Member', price: 15 }, { name: 'Non-member', price: 20 }]
+//               Use `note` instead of `price` for non-numeric tiers (e.g. { name: 'Door sales', note: 'Cash only' }).
+//               Leave undefined or [] to hide the price list. Buying still happens on Eventbrite.
+// notifyMembers: set to true and run `npm run notify` to email all opted-in members about this event.
+//               Apps Script dedupes by id, so re-running notify after a blast is sent is a no-op.
 export const EVENTS = [
   {
+    id: 'meet-greet-2026',
     dateISO: '2026-03-19',
     date: '19 MAR',
     time: '6:00 PM',
@@ -80,9 +89,11 @@ export const EVENTS = [
     description: 'A casual evening to meet the ALSA 2026 committee and connect with fellow Sri Lankan students from across Auckland.',
     color: 'blue',
     poster: 'Meet & Greet Event poster 2026.jpg',
-    humanitixUrl: '',
+    eventbriteUrl: '',
+    notifyMembers: false,
   },
   {
+    id: 'avurudu-2026',
     dateISO: '2026-04-24',
     date: '24 APR',
     time: '6:00 PM',
@@ -92,9 +103,11 @@ export const EVENTS = [
     description: 'Traditional games, rabaan drumming and a kiribath feast as we celebrate the Sri Lankan New Year together in Auckland.',
     color: 'gold',
     poster: 'New Years Poster 2026.jpg',
-    humanitixUrl: '',
+    eventbriteUrl: '',
+    notifyMembers: false,
   },
   {
+    id: 'sac-movie-night-2026',
     dateISO: '2026-05-16',
     date: '16 MAY',
     time: '7:00 PM',
@@ -104,8 +117,13 @@ export const EVENTS = [
     description: 'A relaxed movie night hosted alongside the South Asian Club. Bring a friend, grab a seat and unwind with us.',
     color: 'blue',
     poster: '',          // e.g. 'movienight.jpg' inside src/event posters/
-    humanitixUrl: '',    // paste Humanitix event URL here when ticketed
-    hidden: false,
+    eventbriteUrl: '',    // paste Eventbrite event URL here when ticketed
+    tickets: [
+      { name: 'ALSA Member', price: 10 },
+      { name: 'Non-member', price: 15 },
+    ],
+    notifyMembers: false,
+    hidden: true,
   },
 ];
 

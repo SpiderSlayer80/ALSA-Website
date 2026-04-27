@@ -31,6 +31,7 @@ export default function Join({ onSuccess }) {
     year: '',
     continuing2027: '',  // 'Yes' | 'No'
     cardholderName: '',  // shown only on step 3
+    promoOptIn: false,   // opt-in to event announcement emails
   });
   const [cardError, setCardError] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -171,6 +172,7 @@ export default function Join({ onSuccess }) {
       // Extra
       phone:          form.phone,
       membership:     selMem === 'full' ? 'Full Member' : 'Social Member',
+      promoOptIn:     form.promoOptIn ? 'Yes' : 'No',
     };
 
     if (selMem === 'full' && stripeRef.current && cardElRefs.current.number) {
@@ -245,7 +247,7 @@ export default function Join({ onSuccess }) {
     onSuccess(data.email, payNote);
     setStep(1);
     setSelMem('full');
-    setForm({ firstName: '', lastName: '', email: '', phone: '', atUoA: '', upi: '', universityId: '', university: '', field: '', year: '', continuing2027: '', cardholderName: '' });
+    setForm({ firstName: '', lastName: '', email: '', phone: '', atUoA: '', upi: '', universityId: '', university: '', field: '', year: '', continuing2027: '', cardholderName: '', promoOptIn: false });
   }
 
   const isSocial = selMem === 'social';
@@ -369,6 +371,25 @@ export default function Join({ onSuccess }) {
                         </div>
                       )}
                     </>}
+
+                    <div className="fg full">
+                      <label className="promo-optin">
+                        <input
+                          type="checkbox"
+                          checked={form.promoOptIn}
+                          onChange={e => setField('promoOptIn', e.target.checked)}
+                        />
+                        <span className="promo-optin-box" aria-hidden="true">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="20 6 9 17 4 12" />
+                          </svg>
+                        </span>
+                        <span className="promo-optin-copy">
+                          <span className="promo-optin-title">Email me about upcoming ALSA events</span>
+                          <span className="promo-optin-sub">Optional. We'll only email when something new is on — unsubscribe anytime by replying.</span>
+                        </span>
+                      </label>
+                    </div>
                   </div>
                   <div className="form-nav">
                     <div className="step-dots">

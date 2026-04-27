@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { EVENTS } from '../data/site';
+import { EVENTS, SITE } from '../data/site';
 
 // Load any image dropped into src/event posters/ as a static URL at build time.
 const posters = import.meta.glob('../event posters/*', { eager: true, as: 'url' });
@@ -60,16 +60,7 @@ export default function Events() {
       {upcoming ? (
         <UpcomingFeature event={upcoming} />
       ) : (
-        <motion.div
-          className="no-upcoming"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <span className="no-upcoming-icon">📅</span>
-          <p>No upcoming events just yet. Check back soon.</p>
-        </motion.div>
+        <NoUpcomingCard />
       )}
 
       {past.length > 0 && (
@@ -103,13 +94,86 @@ export default function Events() {
   );
 }
 
+function NoUpcomingCard() {
+  return (
+    <motion.div
+      className="no-upcoming-card"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-80px' }}
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <div className="nu-glow nu-glow-blue" aria-hidden="true" />
+      <div className="nu-glow nu-glow-gold" aria-hidden="true" />
+      <div className="nu-dot nu-dot-1" aria-hidden="true" />
+      <div className="nu-dot nu-dot-2" aria-hidden="true" />
+      <div className="nu-dot nu-dot-3" aria-hidden="true" />
+      <div className="nu-dot nu-dot-4" aria-hidden="true" />
+
+      <div className="nu-eyebrow">
+        <span className="nu-eyebrow-pulse" aria-hidden="true" />
+        <span>Between events</span>
+      </div>
+
+      <div className="nu-icon-wrap" aria-hidden="true">
+        <span className="nu-ring nu-ring-1" />
+        <span className="nu-ring nu-ring-2" />
+        <span className="nu-icon">📅</span>
+      </div>
+
+      <h3 className="nu-title">The next one's in the works</h3>
+      <p className="nu-sub">
+        Our {SITE.year} committee is busy planning the next ALSA gathering.
+        Follow along and you'll be first in line when it drops.
+      </p>
+
+      <div className="nu-cta-row">
+        <a
+          href={SITE.instagram}
+          target="_blank"
+          rel="noreferrer"
+          className="nu-cta nu-cta-primary"
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+          </svg>
+          Follow {SITE.instagramHandle}
+        </a>
+        <a href="#contact" className="nu-cta nu-cta-ghost">
+          Get in touch <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </motion.div>
+  );
+}
+
+const ticketPriceFormatter = new Intl.NumberFormat('en-NZ', {
+  style: 'currency',
+  currency: 'NZD',
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 2,
+});
+
 function UpcomingFeature({ event }) {
   const poster = getPoster(event.poster);
-  const ticketed = !!event.humanitixUrl;
+  const ticketed = !!event.eventbriteUrl;
+  const tiers = Array.isArray(event.tickets) ? event.tickets : [];
   const [open, setOpen] = useState(false);
 
   const openTickets = () => {
-    window.open(event.humanitixUrl, '_blank', 'noopener,noreferrer');
+    window.open(event.eventbriteUrl, '_blank', 'noopener,noreferrer');
   };
 
   const onPosterClick = () => {
@@ -154,7 +218,7 @@ function UpcomingFeature({ event }) {
               <div className="fe-hover-inner">
                 <span className="fe-hover-icon">🎟</span>
                 <span className="fe-hover-text">Buy Tickets</span>
-                <span className="fe-hover-sub">Opens Humanitix</span>
+                <span className="fe-hover-sub">Opens Eventbrite</span>
               </div>
             </div>
           )}
@@ -178,7 +242,7 @@ function UpcomingFeature({ event }) {
             <li><span className="fe-meta-icon">📍</span><span>{event.location}</span></li>
             <li>
               <span className="fe-meta-icon">🎟</span>
-              <span>{ticketed ? 'Ticketed via Humanitix' : 'Free entry, no tickets required'}</span>
+              <span>{ticketed ? 'Ticketed via Eventbrite' : 'Free entry, no tickets required'}</span>
             </li>
           </ul>
 
@@ -197,10 +261,29 @@ function UpcomingFeature({ event }) {
             )}
           </AnimatePresence>
 
+          {tiers.length > 0 && (
+            <div className="fe-tickets" role="list" aria-label="Ticket options">
+              <div className="fe-tickets-head">Ticket options</div>
+              <ul className="fe-tickets-list">
+                {tiers.map((tier, i) => (
+                  <li key={`${tier.name}-${i}`} className="fe-ticket" role="listitem">
+                    <span className="fe-ticket-name">{tier.name}</span>
+                    <span className="fe-ticket-price">
+                      {typeof tier.price === 'number'
+                        ? ticketPriceFormatter.format(tier.price)
+                        : tier.note || ''}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              <p className="fe-tickets-foot">Secure checkout via Eventbrite.</p>
+            </div>
+          )}
+
           <div className="fe-cta-row">
             {ticketed ? (
               <a
-                href={event.humanitixUrl}
+                href={event.eventbriteUrl}
                 className="fe-cta fe-cta-primary"
                 target="_blank"
                 rel="noreferrer"
