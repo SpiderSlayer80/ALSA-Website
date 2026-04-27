@@ -90,9 +90,6 @@ export default function Footer() {
         <hr className="footer-hr" />
         <div className="footer-bottom">
           <p className="footer-copy">© {SITE.year} {SITE.fullName}. All rights reserved.</p>
-          <p className="footer-credit">
-            Made with <span style={{ color: 'var(--gold)' }}>♥</span> in Auckland
-          </p>
         </div>
       </div>
     </footer>
