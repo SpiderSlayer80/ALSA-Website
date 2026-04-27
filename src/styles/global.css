@@ -2024,7 +2024,6 @@ nav.scrolled {
 }
 @media (max-width: 600px) {
   .g-view-btn { padding: 8px 16px; font-size: 0.75rem; }
-  .g-grid .g-card:nth-child(6) { display: none; }
 }
 .g-view-btn-disabled {
   background: rgba(255, 255, 255, 0.3);
@@ -3512,7 +3511,7 @@ footer::before {
 
   .g-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 160px; }
   .g-card:nth-child(1) { grid-column: span 2; grid-row: span 2; }
-  .g-card:nth-child(n+6) { display: none; }
+  .g-grid > *:nth-child(n+6) { display: none; }
   .past-events-grid { grid-template-columns: 1fr; gap: 18px; max-width: 480px; margin-left: auto; margin-right: auto; }
   .g-browse { margin-top: 56px; }
   .g-browse-label { font-size: 1.2rem; }
