@@ -23,7 +23,7 @@ function getIntro(photoFilename) {
   return intros[key] ?? null;
 }
 
-const GROUP_ORDER = ['Leadership', 'Managers', 'Executives', 'Junior Reps'];
+const GROUP_ORDER = ['Executive Committee', 'Managers', 'Committee', 'Junior Reps'];
 
 const container = {
   hidden: {},
