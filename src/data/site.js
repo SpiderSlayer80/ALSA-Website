@@ -10,7 +10,6 @@ export const SITE = {
   instagram: 'https://instagram.com/uoa.alsa',
   instagramHandle: '@uoa.alsa',
   facebook: 'https://facebook.com/alsanz',
-  flickr: 'https://flickr.com',
   location: 'Auckland, New Zealand 🇳🇿',
   year: '2026',
   // Replace with your Stripe publishable key from Stripe Dashboard → Developers → API Keys

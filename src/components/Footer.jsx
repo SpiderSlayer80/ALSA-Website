@@ -10,6 +10,8 @@ import lionFace from '../Logos/logo lion face.png';
 import instagramIcon from '../svg icons/instagram.svg';
 import facebookIcon  from '../svg icons/facebook.svg';
 import gmailIcon     from '../svg icons/gmail.svg';
+import nzFlag        from '../flags/New Zealand flag.svg';
+import lkFlag        from '../flags/Sri Lankan flag.svg';
 
 export default function Footer() {
   const toast = useToast();
@@ -59,6 +61,10 @@ export default function Footer() {
               {SITE.fullName}. Uniting Sri Lankan students across Auckland.{' '}
               <img src={lionFace} alt="" className="inline-lion" loading="lazy" decoding="async" />
             </p>
+            <div className="footer-flags" aria-hidden="true">
+              <img src={lkFlag} alt="" className="footer-flag" loading="lazy" decoding="async" />
+              <img src={nzFlag} alt="" className="footer-flag" loading="lazy" decoding="async" />
+            </div>
             <div className="fsocs" style={{ marginTop: '20px' }}>
               <a href={SITE.instagram} className="fsoc" target="_blank" rel="noreferrer" aria-label="Instagram">
                 <img src={instagramIcon} alt="Instagram" />

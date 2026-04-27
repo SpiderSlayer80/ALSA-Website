@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
 import { PILLARS } from '../data/site';
+import nzFlag from '../flags/New Zealand flag.svg';
+import lkFlag from '../flags/Sri Lankan flag.svg';
 
 const container = {
   hidden: {},
@@ -30,6 +32,12 @@ export default function About() {
           Sri Lankan students.<br />
           <span className="sec-h-accent">One Auckland network.</span>
         </h2>
+        <div className="about-flag-divider" aria-hidden="true">
+          <span className="afd-line" />
+          <img src={lkFlag} alt="" className="afd-flag" loading="lazy" decoding="async" />
+          <img src={nzFlag} alt="" className="afd-flag" loading="lazy" decoding="async" />
+          <span className="afd-line" />
+        </div>
         <p className="about-lead">
           ALSA is a student run association connecting Sri Lankan undergraduates,
           postgraduates and alumni across every major Auckland university. Five years
