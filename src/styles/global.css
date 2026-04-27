@@ -3277,7 +3277,7 @@ footer::before {
   width: 40px;
   height: 40px;
   border-radius: 11px;
-  background: rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3286,19 +3286,17 @@ footer::before {
   transition: all 0.25s var(--ease);
 }
 .fsoc img {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   object-fit: contain;
-  /* Invert + tweak so the dark icons read as white on the dark footer chip */
-  filter: brightness(0) invert(1);
-  transition: filter 0.25s var(--ease);
+  transition: transform 0.25s var(--ease);
 }
 .fsoc:hover {
-  background: var(--gold);
+  background: rgba(255, 255, 255, 0.2);
   transform: translateY(-3px) rotate(-6deg);
 }
 .fsoc:hover img {
-  filter: brightness(0) invert(0);
+  transform: scale(1.1);
 }
 
 /* ═══ MODAL ════════════════════════════════════════════════════════════════ */
