@@ -71,6 +71,7 @@ function GalleryCard({ ev, variants, style, mini = false, activeCard, setActiveC
                 target="_blank"
                 rel="noreferrer"
                 className="g-view-btn"
+                style={mini ? { padding: '8px 16px', fontSize: '0.75rem' } : undefined}
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.8, opacity: 0 }}
@@ -82,6 +83,7 @@ function GalleryCard({ ev, variants, style, mini = false, activeCard, setActiveC
             ) : (
               <motion.span
                 className="g-view-btn g-view-btn-disabled"
+                style={mini ? { padding: '8px 16px', fontSize: '0.75rem' } : undefined}
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.8, opacity: 0 }}
