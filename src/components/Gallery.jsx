@@ -148,6 +148,7 @@ export default function Gallery() {
             ev={ev}
             variants={item}
             style={i === 0 ? { gridColumn: 'span 2', gridRow: 'span 2' } : undefined}
+            mini={i > 0}
             activeCard={activeCard}
             setActiveCard={setActiveCard}
           />
