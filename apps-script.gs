@@ -1,41 +1,26 @@
 /**
- * ALSA Website — Apps Script: event email notifications
+ * ALSA Website — Apps Script (complete handler)
  *
- * This file is *additional code* for your existing Apps Script project. It does
- * NOT replace your signup logic. To install:
+ * Handles two kinds of POST requests from the website:
+ *   1. Membership sign-ups  → appends a row to the Members sheet + sends a
+ *      confirmation email to the new member.
+ *   2. Event notify blasts  → emails all opted-in members about a new event.
  *
- * 1) Open script.google.com → open the project bound to your Members sheet.
+ * SETUP (one-time)
+ * ────────────────
+ * 1. script.google.com → open the project bound to your Members sheet.
+ * 2. Replace ALL code in Code.gs with this file.
+ * 3. Deploy → New deployment → Web app
+ *      Execute as: Me
+ *      Who has access: Anyone
+ *    Copy the /exec URL and paste it into SITE.sheetsUrl in src/data/site.js.
+ * 4. Run `setupOnce` from the Apps Script editor to grant OAuth permissions.
  *
- * 2) Add a column titled exactly `promoOptIn` to the Members sheet (the same
- *    sheet your join form posts to). New signups send "Yes" / "No" into it.
- *
- * 3) Paste every function in this file into your project (e.g. into Code.gs
- *    after your existing functions).
- *
- * 4) In your existing `doPost(e)`, add the routing block at the very top so
- *    notify requests are handled separately from signups:
- *
- *       function doPost(e) {
- *         try {
- *           var body = JSON.parse(e.postData.contents);
- *           if (body.action === 'notify') {
- *             return jsonOut(handleNotify(body.event));
- *           }
- *           // ↓ your existing signup code stays exactly as it is ↓
- *           ...
- *         } catch (err) { ... }
- *       }
- *
- * 5) Deploy → Manage deployments → Edit (pencil) → New version → Deploy.
- *    The webhook URL in SITE.sheetsUrl stays the same.
- *
- * 6) Run the function `setupOnce` from the editor once to grant Mail + Trigger
- *    permissions (it does nothing else). Approve the OAuth prompts.
- *
- * Free Gmail caps MailApp at 100 sends/day. If a blast exceeds that, the rest
- * are queued and a one-time trigger sends them the next morning automatically.
- * Re-running notify for the same event id is a no-op (deduped via the
- * `Notifications` sheet, which this script auto-creates).
+ * Sheet layout (auto-created if missing, or add columns manually):
+ *   Timestamp | First Name | Last Name | Email | At UoA | UPI | Student ID (UoA) |
+ *   Field (UoA) | Year (UoA) | Continuing 2027 | Paid (UoA) |
+ *   University (Other) | Student ID (Other) | Field (Other) | Year (Other) | Paid (Other) |
+ *   Phone | Membership | Promo Opt-In | Payment Status | Stripe PI
  */
 
 // ── Configuration ────────────────────────────────────────────────────────────
@@ -47,6 +32,15 @@ var SITE_URL              = 'https://uoaalsa.com';   // used in email "View on w
 var QUOTA_HEADROOM        = 5;                    // leave this many MailApp sends free for non-blast use
 var NEXT_DAY_HOUR_NZ      = 9;                    // hour of day to resume sends (24h, script runs in script timezone)
 
+// Sheet column order — must match the header row in MEMBERS_SHEET_NAME.
+// If your sheet already has different headers, reorder this array to match.
+var SIGNUP_COLUMNS = [
+  'Timestamp', 'First Name', 'Last Name', 'Email', 'At UoA',
+  'UPI', 'Student ID (UoA)', 'Field (UoA)', 'Year (UoA)', 'Continuing 2027', 'Paid (UoA)',
+  'University (Other)', 'Student ID (Other)', 'Field (Other)', 'Year (Other)', 'Paid (Other)',
+  'Phone', 'Membership', 'Promo Opt-In', 'Payment Status', 'Stripe PI',
+];
+
 
 // ── One-time setup helper (run from editor once to grant permissions) ────────
 function setupOnce() {
@@ -55,6 +49,245 @@ function setupOnce() {
   ScriptApp.getProjectTriggers();
   SpreadsheetApp.getActive();
   Logger.log('Permissions granted.');
+}
+
+
+// ── Main entry point ─────────────────────────────────────────────────────────
+function doPost(e) {
+  try {
+    var body = JSON.parse(e.postData.contents);
+
+    // Route event-blast notify requests separately.
+    if (body.action === 'notify') {
+      return jsonOut(handleNotify(body.event));
+    }
+
+    // ── Membership sign-up ──────────────────────────────────────────────────
+    var sheet = getOrCreateMembersSheet();
+
+    var row = [
+      body.timestamp        || new Date().toLocaleString('en-NZ'),
+      body.firstName        || '',
+      body.lastName         || '',
+      body.email            || '',
+      body.atUoA            || '',
+      body.upi              || '',
+      body.universityId     || '',   // UoA student ID (also reused for Other)
+      body.fieldUoA         || '',
+      body.yearUoA          || '',
+      body.continuing2027   || '',
+      body.paidUoA          || '',
+      body.universityOther  || '',
+      body.universityIdOther || '',
+      body.fieldOther       || '',
+      body.yearOther        || '',
+      body.paidOther        || '',
+      body.phone            || '',
+      body.membership       || '',
+      body.promoOptIn       || 'No',
+      body.paymentStatus    || '',
+      body.stripePaymentIntentId || '',
+    ];
+
+    sheet.appendRow(row);
+
+    // Send confirmation email to the new member.
+    if (body.email) {
+      try {
+        sendConfirmationEmail(body);
+      } catch (mailErr) {
+        Logger.log('Confirmation email failed: ' + mailErr);
+      }
+    }
+
+    return jsonOut({ ok: true });
+  } catch (err) {
+    Logger.log('doPost error: ' + err);
+    return jsonOut({ ok: false, error: String(err) });
+  }
+}
+
+// Also handle GET so a browser visit to the URL shows something helpful.
+function doGet() {
+  return ContentService.createTextOutput('ALSA Apps Script is running.');
+}
+
+
+// ── Members sheet ─────────────────────────────────────────────────────────────
+function getOrCreateMembersSheet() {
+  var ss = SpreadsheetApp.getActive();
+  var sheet = ss.getSheetByName(MEMBERS_SHEET_NAME);
+  if (!sheet) {
+    sheet = ss.insertSheet(MEMBERS_SHEET_NAME);
+    sheet.getRange(1, 1, 1, SIGNUP_COLUMNS.length).setValues([SIGNUP_COLUMNS]);
+    sheet.setFrozenRows(1);
+    sheet.getRange(1, 1, 1, SIGNUP_COLUMNS.length).setFontWeight('bold');
+  }
+  return sheet;
+}
+
+
+// ── Confirmation email ────────────────────────────────────────────────────────
+function sendConfirmationEmail(data) {
+  var firstName = data.firstName || 'there';
+  var isFull    = (data.membership || '').toLowerCase().indexOf('full') >= 0;
+  var subject   = "You're in, " + firstName + "! Welcome to ALSA \uD83E\uDD81";
+
+  MailApp.sendEmail({
+    to:       data.email,
+    subject:  subject,
+    htmlBody: renderConfirmationHtml(data, firstName, isFull),
+    body:     renderConfirmationPlain(data, firstName, isFull),
+    name:     FROM_NAME,
+    replyTo:  REPLY_TO,
+  });
+}
+
+function renderConfirmationHtml(data, firstName, isFull) {
+  var fullName      = escapeHtml((data.firstName || '') + ' ' + (data.lastName || ''));
+  var logoUrl       = SITE_URL + '/logo-lion.png';
+  var memberBadge   = isFull
+    ? '<span style="display:inline-block;padding:4px 14px;background:linear-gradient(135deg,#ffd24a,#d99a00);color:#0d2660;border-radius:20px;font-size:12px;font-weight:800;letter-spacing:0.5px;text-transform:uppercase">Full Member</span>'
+    : '<span style="display:inline-block;padding:4px 14px;background:#e8edf8;color:#0d2660;border-radius:20px;font-size:12px;font-weight:800;letter-spacing:0.5px;text-transform:uppercase">Social Member</span>';
+
+  var paymentBlock = isFull
+    ? '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin:28px 0">' +
+      '<tr><td style="background:#fffbea;border:1px solid #f5d800;border-radius:12px;padding:18px 22px">' +
+      '<p style="margin:0 0 4px;font-size:13px;font-weight:700;color:#8a6a00;text-transform:uppercase;letter-spacing:0.5px">Payment received</p>' +
+      '<p style="margin:0;font-size:15px;color:#5a4500">Your NZD $10 membership fee has been processed through Stripe. A receipt from Stripe will arrive in your inbox separately.</p>' +
+      '</td></tr></table>'
+    : '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin:28px 0">' +
+      '<tr><td style="background:#f0f4ff;border:1px solid #c7d4f5;border-radius:12px;padding:18px 22px">' +
+      '<p style="margin:0 0 4px;font-size:13px;font-weight:700;color:#2a45a0;text-transform:uppercase;letter-spacing:0.5px">All good, no payment needed</p>' +
+      '<p style="margin:0;font-size:15px;color:#2a45a0">Social Membership is completely free. You are officially part of the community.</p>' +
+      '</td></tr></table>';
+
+  return '<!DOCTYPE html>' +
+    '<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">' +
+    '<meta name="color-scheme" content="light"><meta name="supported-color-schemes" content="light">' +
+    '<title>Welcome to ALSA</title></head>' +
+    '<body style="margin:0;padding:0;background:#edf0f8;font-family:Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased">' +
+
+    // Outer wrapper
+    '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" bgcolor="#edf0f8">' +
+    '<tr><td align="center" style="padding:40px 16px 48px">' +
+
+    // Email card
+    '<table role="presentation" width="600" cellspacing="0" cellpadding="0" style="max-width:600px;width:100%">' +
+
+    // ── Logo strip (navy) ──────────────────────────────────────────────────
+    '<tr><td align="center" style="background:#0d2660;padding:28px 40px;border-radius:16px 16px 0 0">' +
+    '<table role="presentation" cellspacing="0" cellpadding="0"><tr>' +
+    '<td valign="middle" style="padding-right:14px">' +
+    '<img src="' + logoUrl + '" width="44" height="44" alt="ALSA Lion" style="display:block;border:0;width:44px;height:44px;object-fit:contain" />' +
+    '</td>' +
+    '<td valign="middle">' +
+    '<div style="font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#f5b800;line-height:1">ALSA Auckland</div>' +
+    '<div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-top:3px">Auckland Lankan Students Association</div>' +
+    '</td>' +
+    '</tr></table>' +
+    '</td></tr>' +
+
+    // ── Gold divider line ──────────────────────────────────────────────────
+    '<tr><td style="background:linear-gradient(90deg,#f5b800 0%,#ffd24a 50%,#f5b800 100%);height:3px;font-size:0;line-height:0">&nbsp;</td></tr>' +
+
+    // ── Hero section ───────────────────────────────────────────────────────
+    '<tr><td style="background:linear-gradient(160deg,#0d2660 0%,#0f3080 60%,#1a4099 100%);padding:44px 40px 40px">' +
+    '<p style="margin:0 0 10px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(245,184,0,0.75)">Membership Confirmed</p>' +
+    '<h1 style="margin:0;font-family:Georgia,\'Times New Roman\',serif;font-size:34px;font-weight:700;line-height:1.2;color:#ffffff">You\'re officially part<br>of the family, ' + escapeHtml(firstName) + '.</h1>' +
+    '</td></tr>' +
+
+    // ── White body ─────────────────────────────────────────────────────────
+    '<tr><td style="background:#ffffff;padding:40px 40px 8px">' +
+
+    '<p style="margin:0 0 20px;font-size:16px;line-height:1.7;color:#1a2540">Hey ' + escapeHtml(firstName) + ',</p>' +
+    '<p style="margin:0 0 20px;font-size:16px;line-height:1.7;color:#1a2540">Your membership is confirmed and we are genuinely stoked to have you with us. ALSA has been bringing Auckland\'s Sri Lankan students together since 2020 and this year is shaping up to be the best one yet. Glad you made it.</p>' +
+
+    // Membership detail card
+    '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin:32px 0 0;border:1.5px solid #e2e8f0;border-radius:14px;overflow:hidden">' +
+    '<tr><td style="background:#f8f9fc;padding:14px 20px;border-bottom:1.5px solid #e2e8f0">' +
+    '<p style="margin:0;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#8898aa">Your membership details</p>' +
+    '</td></tr>' +
+    '<tr><td style="padding:0 20px">' +
+    '<table role="presentation" width="100%" cellspacing="0" cellpadding="0">' +
+
+    '<tr><td style="padding:16px 0;border-bottom:1px solid #f0f2f8;width:110px;font-size:13px;font-weight:700;color:#8898aa;text-transform:uppercase;letter-spacing:0.5px;vertical-align:top">Name</td>' +
+    '<td style="padding:16px 0;border-bottom:1px solid #f0f2f8;font-size:15px;color:#1a2540;font-weight:600">' + fullName + '</td></tr>' +
+
+    '<tr><td style="padding:16px 0;border-bottom:1px solid #f0f2f8;font-size:13px;font-weight:700;color:#8898aa;text-transform:uppercase;letter-spacing:0.5px;vertical-align:top">Email</td>' +
+    '<td style="padding:16px 0;border-bottom:1px solid #f0f2f8;font-size:15px;color:#1a2540">' + escapeHtml(data.email || '') + '</td></tr>' +
+
+    '<tr><td style="padding:16px 0;font-size:13px;font-weight:700;color:#8898aa;text-transform:uppercase;letter-spacing:0.5px;vertical-align:middle">Tier</td>' +
+    '<td style="padding:16px 0;vertical-align:middle">' + memberBadge + '</td></tr>' +
+
+    '</table></td></tr></table>' +
+
+    paymentBlock +
+
+    '<p style="margin:0 0 32px;font-size:16px;line-height:1.7;color:#1a2540">We have got a packed calendar this year with cultural events, sport, social nights and everything in between. Keep an eye on your inbox and on our Instagram for what is coming up next.</p>' +
+
+    // CTA button
+    '<table role="presentation" cellspacing="0" cellpadding="0" style="margin:0 auto 40px">' +
+    '<tr><td align="center" style="border-radius:12px;background:linear-gradient(135deg,#ffd24a 0%,#f5b800 55%,#d99a00 100%)">' +
+    '<a href="' + escapeHtml(SITE_URL) + '" style="display:inline-block;padding:16px 36px;font-family:Helvetica,Arial,sans-serif;font-size:15px;font-weight:800;color:#0d2660;text-decoration:none;letter-spacing:0.3px;border-radius:12px">See what\'s coming up \u2192</a>' +
+    '</td></tr></table>' +
+
+    '</td></tr>' +
+
+    // ── Footer ─────────────────────────────────────────────────────────────
+    '<tr><td style="background:#f8f9fc;padding:28px 40px 32px;border-top:1.5px solid #e2e8f0;border-radius:0 0 16px 16px">' +
+    '<table role="presentation" width="100%" cellspacing="0" cellpadding="0"><tr>' +
+    '<td style="font-size:13px;color:#8898aa;line-height:1.65">' +
+    '<p style="margin:0 0 6px">Any questions at all, just hit reply. We actually read them.</p>' +
+    '<p style="margin:0 0 16px">See you at the next event!</p>' +
+    '<p style="margin:0;font-weight:700;color:#4a5568">The ALSA Team</p>' +
+    '</td>' +
+    '<td align="right" valign="top">' +
+    '<img src="' + logoUrl + '" width="36" height="36" alt="ALSA" style="display:block;border:0;opacity:0.35" />' +
+    '</td>' +
+    '</tr></table>' +
+    '<p style="margin:20px 0 0;font-size:11px;color:#b0bcd0;line-height:1.6">' +
+    'You received this because you signed up through <a href="' + escapeHtml(SITE_URL) + '" style="color:#b0bcd0">' + SITE_URL + '</a>. ' +
+    'To unsubscribe from future event emails, just reply with "unsubscribe" and we\'ll sort it.' +
+    '</p>' +
+    '</td></tr>' +
+
+    '</table>' + // email card
+    '</td></tr></table>' + // outer wrapper
+    '</body></html>';
+}
+
+function renderConfirmationPlain(data, firstName, isFull) {
+  var fullName = (data.firstName || '') + ' ' + (data.lastName || '');
+  var lines = [
+    "You're in, " + firstName + "! Welcome to ALSA.",
+    '',
+    'Hey ' + firstName + ',',
+    '',
+    'Your membership is confirmed and we are genuinely stoked to have you with us. ALSA has been bringing Auckland\'s Sri Lankan students together since 2020 and this year is shaping up to be the best one yet.',
+    '',
+    'YOUR MEMBERSHIP DETAILS',
+    'Name:       ' + fullName,
+    'Email:      ' + (data.email || ''),
+    'Membership: ' + (isFull ? 'Full Member (NZD $10/year)' : 'Social Member (Free)'),
+    '',
+    isFull
+      ? 'Your NZD $10 membership fee has been processed through Stripe. A receipt from Stripe will arrive in your inbox separately.'
+      : 'Social Membership is completely free. You are officially part of the community.',
+    '',
+    'We have got a packed calendar this year with cultural events, sport, social nights and everything in between. Keep an eye on your inbox.',
+    '',
+    'See what\'s coming up: ' + SITE_URL,
+    '',
+    'Any questions, just hit reply. We actually read them.',
+    'See you at the next event!',
+    '',
+    'The ALSA Team',
+    SITE_URL,
+    '',
+    'You received this because you signed up at ' + SITE_URL + '. Reply with "unsubscribe" to opt out of future event emails.',
+  ];
+  return lines.join('\n');
 }
 
 
