@@ -15,7 +15,7 @@ export const SITE = {
   // Replace with your Stripe publishable key from Stripe Dashboard → Developers → API Keys
   stripeKey: 'pk_test_51TQJK7KtECflMRWtFDN5ENA7AaCY6U4nqrNOeumNi0UVtcKCrv30FOkujDmfp4j33qbrq9at1dioXMN0abHrvLMy00lT3HUDlp',
   // Paste your Google Apps Script web app URL here after deploying (see README / setup instructions)
-  sheetsUrl: 'https://script.google.com/macros/s/AKfycbwXpUnZtibDR33mnVIuHawHX969zp9aCRLVJm2IjzTIh6lN91rz_dvkG28QeScc4QxJ/exec',
+  sheetsUrl: 'https://script.google.com/macros/s/AKfycbxKThZaBCGeq5E6BxbIqo5DotExV4JqXub_TW2Nqgn52vGF6hZb4LpYXwWVGt_Ewp6s/exec',
 };
 
 // ─── Navigation ──────────────────────────────────────────────────────────────
