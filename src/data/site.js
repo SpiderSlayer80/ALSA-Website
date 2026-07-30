@@ -155,8 +155,7 @@ export const TESTIMONIALS = [
 // the circle. Format is "X% Y%" or named values like "center top".
 // Examples: 'center top' (default), 'center 20%', '30% 10%', 'right top'
 export const TEAM = [
-  { name: 'Binuk',     role: 'Co-President',          group: 'Executive Committee', photo: 'Binuk.jpg',     accent: '#F5B800', crop: 'center 50%' },
-  { name: 'Hariene',   role: 'Co-President',          group: 'Executive Committee', photo: 'Hariene.jpg',   accent: '#F5B800', crop: 'center top' },
+  { name: 'Binuk',     role: 'President',             group: 'Executive Committee', photo: 'Binuk.jpg',     accent: '#F5B800', crop: 'center 50%' },
   { name: 'Kalishika', role: 'Vice President',        group: 'Executive Committee', photo: 'Kalshika.JPG',  accent: '#F5B800', crop: 'center top' },
   { name: 'Thisas',    role: 'Secretary',             group: 'Executive Committee', photo: 'Thisas.jpg',    accent: '#F5B800', crop: 'center top' },
   { name: 'Lakindu',   role: 'Marketing Manager',     group: 'Managers',   photo: 'Lakindu.jpg',   accent: '#F5B800', crop: '100% 50%' },
