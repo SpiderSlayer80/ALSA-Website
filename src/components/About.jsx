@@ -39,10 +39,10 @@ export default function About() {
           <span className="afd-line" />
         </div>
         <p className="about-lead">
-          ALSA is a student run association connecting Sri Lankan undergraduates,
-          postgraduates and alumni across every major Auckland university. Five years
-          in, we have grown into the largest Sri Lankan student collective in
-          New Zealand, built and maintained entirely by the people in it.
+          ALSA started in 2020 so Sri Lankan students in Auckland could find each
+          other. Five years on, we're the largest Sri Lankan student collective in
+          New Zealand — undergrads, postgrads and alumni across every major
+          university, still run entirely by students, for students.
         </p>
       </motion.div>
 

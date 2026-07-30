@@ -37,7 +37,7 @@ export default function Events() {
     const sorted = [...EVENTS].sort((a, b) => a.dateISO.localeCompare(b.dateISO));
     return {
       upcoming: sorted.find(e => e.dateISO >= today && !e.hidden) || null,
-      past: sorted.filter(e => e.dateISO < today).reverse(),
+      past: sorted.filter(e => e.dateISO < today && !e.hidden).reverse(),
     };
   }, [today]);
 

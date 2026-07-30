@@ -32,8 +32,8 @@ export default function Modal({ open, email, payNote, onClose }) {
             </motion.span>
             <h3>Welcome to ALSA!</h3>
             <p>
-              Your membership application has been received. We'll send confirmation to{' '}
-              <strong style={{ color: 'var(--blue)' }}>{email}</strong> shortly.
+              You're officially one of us. A confirmation is on its way to{' '}
+              <strong style={{ color: 'var(--blue)' }}>{email}</strong>.
               <br /><br />
               {payNote}
             </p>

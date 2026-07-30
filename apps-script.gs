@@ -15,6 +15,11 @@
  *      Who has access: Anyone
  *    Copy the /exec URL and paste it into SITE.sheetsUrl in src/data/site.js.
  * 4. Run `setupOnce` from the Apps Script editor to grant OAuth permissions.
+ * 5. SECURITY — protect the notify route: Project Settings → Script Properties →
+ *    add property NOTIFY_TOKEN with a long random value (e.g. 40+ chars).
+ *    Put the same value in alsa-react/.env.local as NOTIFY_TOKEN=... so
+ *    `npm run notify` can authenticate. Without this property set, all notify
+ *    requests are rejected — sign-ups still work normally.
  *
  * Sheet layout (auto-created if missing, or add columns manually):
  *   Timestamp | First Name | Last Name | Email | At UoA | UPI | Student ID (UoA) |
@@ -58,41 +63,51 @@ function doPost(e) {
     var body = JSON.parse(e.postData.contents);
 
     // Route event-blast notify requests separately.
+    // The web app URL is public (it ships inside the website bundle), so the
+    // blast route MUST be authenticated — otherwise anyone could email every
+    // opted-in member. Token lives in Script Properties, never in the repo.
     if (body.action === 'notify') {
+      var expected = PropertiesService.getScriptProperties().getProperty('NOTIFY_TOKEN');
+      if (!expected || body.token !== expected) {
+        Logger.log('Rejected notify request (bad or missing token).');
+        return jsonOut({ ok: false, error: 'Unauthorized.' });
+      }
       return jsonOut(handleNotify(body.event));
     }
 
     // ── Membership sign-up ──────────────────────────────────────────────────
-    var sheet = getOrCreateMembersSheet();
-
+    // clean(): coerce to string + cap length so a hostile client can't dump
+    // megabytes of junk (or non-string types) into the sheet.
     var row = [
-      body.timestamp        || new Date().toLocaleString('en-NZ'),
-      body.firstName        || '',
-      body.lastName         || '',
-      body.email            || '',
-      body.atUoA            || '',
-      body.upi              || '',
-      body.universityId     || '',   // UoA student ID (also reused for Other)
-      body.fieldUoA         || '',
-      body.yearUoA          || '',
-      body.continuing2027   || '',
-      body.paidUoA          || '',
-      body.universityOther  || '',
-      body.universityIdOther || '',
-      body.fieldOther       || '',
-      body.yearOther        || '',
-      body.paidOther        || '',
-      body.phone            || '',
-      body.membership       || '',
-      body.promoOptIn       || 'No',
-      body.paymentStatus    || '',
-      body.stripePaymentIntentId || '',
+      clean(body.timestamp, 40) || new Date().toLocaleString('en-NZ'),
+      clean(body.firstName, 100),
+      clean(body.lastName, 100),
+      clean(body.email, 254),
+      clean(body.atUoA, 10),
+      clean(body.upi, 30),
+      clean(body.universityId, 30),   // UoA student ID (also reused for Other)
+      clean(body.fieldUoA, 80),
+      clean(body.yearUoA, 30),
+      clean(body.continuing2027, 10),
+      clean(body.paidUoA, 40),
+      clean(body.universityOther, 100),
+      clean(body.universityIdOther, 30),
+      clean(body.fieldOther, 80),
+      clean(body.yearOther, 30),
+      clean(body.paidOther, 40),
+      clean(body.phone, 30),
+      clean(body.membership, 40),
+      clean(body.promoOptIn, 5) || 'No',
+      clean(body.paymentStatus, 20),
+      clean(body.stripePaymentIntentId, 60),
     ];
 
+    var sheet = getOrCreateMembersSheet();
     sheet.appendRow(row);
 
-    // Send confirmation email to the new member.
-    if (body.email) {
+    // Send confirmation email to the new member (only to a sane-looking address).
+    var email = clean(body.email, 254);
+    if (email && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
       try {
         sendConfirmationEmail(body);
       } catch (mailErr) {
@@ -102,9 +117,16 @@ function doPost(e) {
 
     return jsonOut({ ok: true });
   } catch (err) {
+    // Log the detail here; never echo internals back to the caller.
     Logger.log('doPost error: ' + err);
-    return jsonOut({ ok: false, error: String(err) });
+    return jsonOut({ ok: false, error: 'Something went wrong.' });
   }
+}
+
+// Coerce any incoming value to a trimmed, length-capped string.
+function clean(value, maxLen) {
+  if (value === null || value === undefined) return '';
+  return String(value).trim().slice(0, maxLen);
 }
 
 // Also handle GET so a browser visit to the URL shows something helpful.

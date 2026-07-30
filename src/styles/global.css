@@ -54,6 +54,15 @@ html {
   overflow-x: hidden;
   width: 100%;
   max-width: 100%;
+  scrollbar-color: var(--blue-m) var(--cream); /* Firefox */
+}
+
+/* Keyboard navigation — a clear gold ring on anything focusable, without
+   affecting mouse/touch users (their :focus never matches :focus-visible). */
+:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
 body {
@@ -104,15 +113,6 @@ button, a, input, select, textarea, label {
   touch-action: manipulation;
 }
 
-/* Respect reduced-motion preferences — disable all transitions and animations */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
 /* ═══ SCROLL PROGRESS BAR ═══════════════════════════════════════════════ */
 .scroll-progress {
   position: fixed;
@@ -120,7 +120,8 @@ button, a, input, select, textarea, label {
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--gold), var(--gold-l), var(--gold));
+  /* A nod to the Sri Lankan flag: maroon → orange → green → gold */
+  background: linear-gradient(90deg, #8D153A 0%, #EB7400 32%, #00534E 62%, var(--gold) 100%);
   transform-origin: 0 50%;
   z-index: 999;
   box-shadow: 0 0 20px rgba(245, 184, 0, 0.6);
@@ -770,7 +771,7 @@ nav.scrolled {
   margin-top: 36px;
 }
 .hero-h1 .outline {
-  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.35);
+  -webkit-text-stroke: 2px rgba(255, 236, 180, 0.55);
   color: transparent;
   display: flex;
   align-items: center;
@@ -1038,6 +1039,7 @@ nav.scrolled {
   line-height: 1.02;
   margin-bottom: 22px;
   letter-spacing: -1px;
+  text-wrap: balance;
 }
 .sec-h-accent {
   background: linear-gradient(135deg, var(--gold), var(--gold-d));

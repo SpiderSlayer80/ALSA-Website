@@ -1,18 +1,18 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-06-13T04:22:31.635Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-30T14:07:46.181Z
 > Files: 42 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
 - `.gitignore` — Git ignore rules (~61 tok)
-- `apps-script.gs` — ALSA Website — Apps Script (complete handler) (~7450 tok)
+- `apps-script.gs` — ALSA Website — Apps Script (complete handler) (~7825 tok)
 - `CLAUDE.md` — OpenWolf (~57 tok)
 - `index.html` — ALSA — Auckland Lankan Students Association (~266 tok)
 - `package-lock.json` — npm lock file (~22724 tok)
 - `package.json` — Node.js package manifest (~142 tok)
 - `README.md` — Project documentation (~6931 tok)
-- `vercel.json` (~26 tok)
+- `vercel.json` (~362 tok)
 - `vite.config.js` — Vite build configuration (~724 tok)
 
 ## .claude/
@@ -25,11 +25,11 @@
 
 ## api/
 
-- `create-payment-intent.js` — Declares handler (~229 tok)
+- `create-payment-intent.js` — Membership price is fixed server-side — the client can never influence the (~546 tok)
 
 ## scripts/
 
-- `notify.js` — notify.js — push event announcements to opted-in members via Apps Script. (~786 tok)
+- `notify.js` — notify.js — push event announcements to opted-in members via Apps Script. (~1024 tok)
 
 ## src/
 
@@ -38,21 +38,21 @@
 
 ## src/components/
 
-- `About.jsx` — container (~915 tok)
+- `About.jsx` — container (~912 tok)
 - `AnimatedNumber.jsx` — AnimatedNumber — counts from 0 up to `to` using requestAnimationFrame once the element (~297 tok)
-- `Contact.jsx` — ICONS — uses useState (~1336 tok)
+- `Contact.jsx` — ICONS (~1345 tok)
 - `CustomCursor.jsx` — CustomCursor — replaces the default OS cursor on desktop with a dot + lagging ring. (~657 tok)
-- `Events.jsx` — Load any image dropped into src/event posters/ as a static URL at build time. (~3201 tok)
+- `Events.jsx` — Load any image dropped into src/event posters/ as a static URL at build time. (~3204 tok)
 - `FAQ.jsx` — FAQ — accordion of frequently asked questions. Only one item is open at a time. (~689 tok)
 - `Footer.jsx` — Footer — site footer with three areas: (~1129 tok)
 - `Gallery.jsx` — covers — uses useState, useMemo (~2037 tok)
 - `HallOfFame.jsx` — /*', { eager: true, as: 'url' }); (~3079 tok)
 - `Hero.jsx` — Hero — uses useRef, useState, useEffect (~2119 tok)
-- `Join.jsx` — Join — 3-step membership registration form. (~6940 tok)
+- `Join.jsx` — Join — 3-step membership registration form. (~7148 tok)
 - `Lightbox.jsx` — Lightbox — full-screen image viewer for the Gallery section. (~661 tok)
 - `Loader.jsx` — Loader — full-screen branded splash screen shown for 1.4 seconds on first page load. (~612 tok)
 - `MobileMenu.jsx` — MENU_LINKS (~780 tok)
-- `Modal.jsx` — Modal — success overlay shown after a membership form submission. (~539 tok)
+- `Modal.jsx` — Modal — success overlay shown after a membership form submission. (~533 tok)
 - `Nav.jsx` — Nav — sticky top navigation bar. Starts transparent over the Hero, switches to a (~984 tok)
 - `ScrollProgress.jsx` — ScrollProgress — thin gold/blue bar pinned to the top of the viewport that fills (~137 tok)
 - `ScrollToTop.jsx` — ScrollToTop — floating arrow button that appears after the user scrolls 600px down. (~373 tok)
@@ -67,7 +67,7 @@
 
 ## src/data/
 
-- `site.js` — ─── Site-wide config ──────────────────────────────────────────────────────── (~5790 tok)
+- `site.js` — ─── Site-wide config ──────────────────────────────────────────────────────── (~5858 tok)
 
 ## src/event posters/
 
@@ -79,4 +79,4 @@
 
 ## src/styles/
 
-- `global.css` — Styles: 49 rules, 22 vars, 3 media queries (~27496 tok)
+- `global.css` — Styles: 48 rules, 22 vars (~27533 tok)

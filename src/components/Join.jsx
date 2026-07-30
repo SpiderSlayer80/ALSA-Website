@@ -134,11 +134,15 @@ export default function Join({ onSuccess }) {
     if (n > 1) {
       const isUoA = form.atUoA === 'Yes';
       const missing =
-        !form.firstName || !form.lastName || !form.email || !form.atUoA ||
-        (isUoA && !form.upi) ||
+        !form.firstName.trim() || !form.lastName.trim() || !form.email.trim() || !form.atUoA ||
+        (isUoA && !form.upi.trim()) ||
         (!isUoA && !form.university);
       if (missing) {
         toast.error('Please fill in all required fields (*) before continuing.');
+        return;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(form.email.trim())) {
+        toast.error('That email address doesn\'t look right — please double-check it.');
         return;
       }
     }
@@ -152,9 +156,9 @@ export default function Join({ onSuccess }) {
     const data = {
       // ── Sheet columns (match "Form responses 1" exactly) ──────────────────
       timestamp:      new Date().toLocaleString('en-NZ'),
-      firstName:      form.firstName,
-      lastName:       form.lastName,
-      email:          form.email,
+      firstName:      form.firstName.trim(),
+      lastName:       form.lastName.trim(),
+      email:          form.email.trim(),
       atUoA:          form.atUoA,
       // UoA-specific columns (cols 6-11)
       upi:            isUoA ? form.upi           : '',
@@ -188,18 +192,16 @@ export default function Join({ onSuccess }) {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: form.email }),
         });
-        if (!intentRes.ok) {
-          const text = await intentRes.text();
-          setCardError(`Server error: ${intentRes.status} — ${text}`);
+        // Never render the raw response body — surface a friendly message and
+        // let the server logs hold the details.
+        let intentBody = null;
+        try { intentBody = await intentRes.json(); } catch (_) {}
+        if (!intentRes.ok || !intentBody?.clientSecret) {
+          setCardError(intentBody?.error || 'We couldn\'t start the payment. Please try again in a moment.');
           setSubmitting(false);
           return;
         }
-        const { clientSecret, error: intentError } = await intentRes.json();
-        if (intentError) {
-          setCardError(intentError);
-          setSubmitting(false);
-          return;
-        }
+        const { clientSecret } = intentBody;
 
         // Step 2: confirm the card payment — this is what actually charges the card.
         // Passing the cardNumber element automatically pulls expiry + cvc data too.
@@ -235,15 +237,23 @@ export default function Join({ onSuccess }) {
       } catch (_) {}
     }
 
-    // Keep localStorage as a local backup
-    const members = JSON.parse(localStorage.getItem('alsaMembers2026') || '[]');
-    members.push(data);
-    localStorage.setItem('alsaMembers2026', JSON.stringify(members));
+    // Keep a minimal local receipt only — no phone numbers or student IDs in
+    // localStorage, especially on shared university computers.
+    try {
+      const receipts = JSON.parse(localStorage.getItem('alsaReceipts') || '[]');
+      receipts.push({
+        timestamp: data.timestamp,
+        email: data.email,
+        membership: data.membership,
+        paymentRef: data.stripePaymentIntentId || '',
+      });
+      localStorage.setItem('alsaReceipts', JSON.stringify(receipts));
+    } catch (_) {}
 
     setSubmitting(false);
     const payNote = selMem === 'full'
-      ? 'Your NZD $10 payment is being processed via Stripe. A receipt will be emailed to you.'
-      : 'Social Membership is free. Welcome aboard!';
+      ? `Your NZD $10 payment went through securely via Stripe${data.stripePaymentIntentId ? ` (ref ${data.stripePaymentIntentId})` : ''}. A receipt is on its way to your inbox.`
+      : 'Social Membership is free — you\'re all set. Welcome aboard!';
     onSuccess(data.email, payNote);
     setStep(1);
     setSelMem('full');
@@ -270,7 +280,7 @@ export default function Join({ onSuccess }) {
             Become a Member
           </div>
           <h2 className="sec-h">Join the ALSA Family</h2>
-          <p>Sign up in three quick steps to access all events, exclusive member discounts and the wider ALSA community.</p>
+          <p>Three quick steps and you're in — every event, every member discount, and a few hundred new mates across Auckland.</p>
         </motion.div>
 
         <motion.div
@@ -293,7 +303,7 @@ export default function Join({ onSuccess }) {
               {step === 1 && (
                 <motion.div key="s1" variants={stepVariants} initial="enter" animate="center" exit="exit">
                   <div className="step-label">Step 1 of 3</div>
-                  <div className="step-title">Sign-Up Now!</div>
+                  <div className="step-title">First, a bit about you</div>
                   <div className="fgrid">
                     <div className="fg">
                       <label>First Name *</label>

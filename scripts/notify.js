@@ -8,12 +8,33 @@
 //
 // Requires Node 18+ (uses native fetch + top-level await).
 
+import { readFileSync } from 'node:fs';
 import { EVENTS, SITE } from '../src/data/site.js';
 
 const ENDPOINT = SITE.sheetsUrl;
 if (!ENDPOINT) {
   console.error('SITE.sheetsUrl is empty in src/data/site.js — nothing to call.');
   process.exit(1);
+}
+
+// The Apps Script notify route is token-protected (NOTIFY_TOKEN script property).
+// Read the matching token from the environment or .env.local — never commit it.
+const TOKEN = process.env.NOTIFY_TOKEN || readEnvLocal('NOTIFY_TOKEN');
+if (!TOKEN) {
+  console.error('NOTIFY_TOKEN is not set. Add NOTIFY_TOKEN=... to .env.local (same value');
+  console.error('as the NOTIFY_TOKEN script property in the Apps Script project).');
+  process.exit(1);
+}
+
+function readEnvLocal(key) {
+  try {
+    const lines = readFileSync(new URL('../.env.local', import.meta.url), 'utf8').split('\n');
+    for (const line of lines) {
+      const m = line.match(/^\s*([\w.-]+)\s*=\s*(.*)\s*$/);
+      if (m && m[1] === key) return m[2].replace(/^["']|["']$/g, '');
+    }
+  } catch {}
+  return '';
 }
 
 const targets = EVENTS.filter(e => e.notifyMembers === true);
@@ -43,7 +64,7 @@ for (const ev of targets) {
       method: 'POST',
       redirect: 'follow',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'notify', event: pickEventFields(ev) }),
+      body: JSON.stringify({ action: 'notify', token: TOKEN, event: pickEventFields(ev) }),
     });
     const text = await res.text();
     let data;

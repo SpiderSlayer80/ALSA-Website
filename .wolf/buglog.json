@@ -1,4 +1,185 @@
 {
   "version": 1,
-  "bugs": []
+  "bugs": [
+    {
+      "id": "bug-001",
+      "timestamp": "2026-07-30T14:02:32.170Z",
+      "error_message": "Significant refactor of ",
+      "file": "src/components/Join.jsx",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 14→18 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "jsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-30T14:02:32.170Z"
+    },
+    {
+      "id": "bug-002",
+      "timestamp": "2026-07-30T14:02:37.576Z",
+      "error_message": "CSS fix: firstName, lastName, email",
+      "file": "src/components/Join.jsx",
+      "root_cause": "firstName: form.firstName, → form.firstName.trim(),; lastName: form.lastName, → form.lastName.trim(),; email: form.email, → form.email.trim(),",
+      "fix": "Changed firstName: form.firstName, → form.firstName.trim(),; lastName: form.lastName, → form.lastName.trim(),; email: form.email, → form.email.trim(),",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "jsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-30T14:02:37.576Z"
+    },
+    {
+      "id": "bug-003",
+      "timestamp": "2026-07-30T14:02:44.148Z",
+      "error_message": "Missing error handling in unknown",
+      "file": "src/components/Join.jsx",
+      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
+      "fix": "Added try/catch block | Also: // Keep a minimal local receipt only — no phone numbers or s; // localStorage, especially on shared university computers.",
+      "tags": [
+        "auto-detected",
+        "error-handling",
+        "jsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-30T14:02:51.900Z"
+    },
+    {
+      "id": "bug-004",
+      "timestamp": "2026-07-30T14:03:26.028Z",
+      "error_message": "Missing guard clause",
+      "file": "apps-script.gs",
+      "root_cause": "No early return/throw for edge case: body.action === 'notify'",
+      "fix": "Added guard clause: if (body.action === 'notify')",
+      "tags": [
+        "auto-detected",
+        "guard-clause",
+        "gs"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-30T14:03:26.028Z"
+    },
+    {
+      "id": "bug-005",
+      "timestamp": "2026-07-30T14:03:36.594Z",
+      "error_message": "Missing error handling in readEnvLocal",
+      "file": "scripts/notify.js",
+      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
+      "fix": "Added try/catch block",
+      "tags": [
+        "auto-detected",
+        "error-handling",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-30T14:03:36.594Z"
+    },
+    {
+      "id": "bug-006",
+      "timestamp": "2026-07-31T00:00:00.000Z",
+      "error_message": "SECURITY: Apps Script notify route had no authentication — anyone with the public /exec URL (shipped in the JS bundle) could email arbitrary content to all opted-in members",
+      "file": "apps-script.gs",
+      "root_cause": "doPost routed action:'notify' straight to handleNotify without any credential check; the web app is deployed with access 'Anyone'",
+      "fix": "Added NOTIFY_TOKEN check (Script Properties) in doPost; scripts/notify.js now sends the token read from .env.local/env. Requires redeploying Apps Script + setting the NOTIFY_TOKEN script property. Also: server-side field sanitization (clean()), email regex gate before confirmation email, generic error responses (no String(err) echo), payment API no longer leaks err.message, CSP + security headers in vercel.json, PII removed from localStorage backup.",
+      "tags": [
+        "security",
+        "apps-script",
+        "email",
+        "payments",
+        "csp"
+      ],
+      "related_bugs": [
+        "bug-004"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-07-31T00:00:00.000Z"
+    },
+    {
+      "id": "bug-007",
+      "timestamp": "2026-07-30T14:04:30.571Z",
+      "error_message": "Incorrect value in code",
+      "file": "src/data/site.js",
+      "root_cause": "Had \"A welcoming community for Sri Lankan students acr",
+      "fix": "Changed to \"The home away from home for Sri Lankan students i",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 4,
+      "last_seen": "2026-07-30T14:04:47.993Z"
+    },
+    {
+      "id": "bug-008",
+      "timestamp": "2026-07-30T14:05:17.433Z",
+      "error_message": "Incorrect value in code",
+      "file": "index.html",
+      "root_cause": "Had \"Auckland Lankan Students Association — connecting",
+      "fix": "Changed to \"ALSA is the home away from home for Sri Lankan st",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "html"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-30T14:05:17.433Z"
+    },
+    {
+      "id": "bug-009",
+      "timestamp": "2026-07-30T14:06:55.839Z",
+      "error_message": "Wrong reference: reverse should be e",
+      "file": "src/components/Events.jsx",
+      "root_cause": "Used \"reverse\" instead of \"e\"",
+      "fix": "Changed reverse → e",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "jsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-30T14:06:55.839Z"
+    },
+    {
+      "id": "bug-010",
+      "timestamp": "2026-07-30T14:07:30.735Z",
+      "error_message": "CSS fix: background",
+      "file": "src/styles/global.css",
+      "root_cause": "background: linear-gradient(90deg, var(--gold), var(--gold-l), var(--gold)) → linear-gradient(90deg, #8D153A 0%, #EB7400 32%, #00534E 62%, var(--gold) 100%)",
+      "fix": "Changed background: linear-gradient(90deg, var(--gold), var(--gold-l), var(--gold)) → linear-gradient(90deg, #8D153A 0%, #EB7400 32%, #00534E 62%, var(--gold) 100%)",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "css"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-07-30T14:07:32.555Z"
+    },
+    {
+      "id": "bug-011",
+      "timestamp": "2026-07-30T14:07:46.200Z",
+      "error_message": "Significant refactor of ",
+      "file": "src/styles/global.css",
+      "root_cause": "6 lines replaced/restructured",
+      "fix": "Rewrote 14→5 lines (6 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "css"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-30T14:07:46.200Z"
+    }
+  ]
 }

@@ -63,8 +63,8 @@ export default function Contact() {
           <div className="sec-eyebrow">Get In Touch</div>
           <h2 className="sec-h">Contact ALSA</h2>
           <p className="ci-desc">
-            Questions about membership, events, or interested in partnering with us?
-            We'd love to hear from you.
+            Membership question, event idea, sponsorship pitch — whatever it is,
+            send it through. A real committee member reads every message.
           </p>
           <div className="ci-list">
             {CONTACT_INFO.map((item, i) => (

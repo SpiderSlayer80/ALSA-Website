@@ -5,7 +5,7 @@ export const SITE = {
   name: 'ALSA',
   fullName: 'Auckland Lankan Students Association',
   description:
-    "A welcoming community for Sri Lankan students across Auckland's universities, bringing together culture, friendship and shared experiences throughout your time in New Zealand.",
+    "The home away from home for Sri Lankan students in Auckland. Five universities, one big family, and a calendar that never stays quiet for long.",
   email: 'uoa.alsa2020@gmail.com',
   instagram: 'https://instagram.com/uoa.alsa',
   instagramHandle: '@uoa.alsa',
@@ -44,22 +44,22 @@ export const PILLARS = [
   {
     icon: '🎉',
     title: 'Cultural Events',
-    text: 'Avurudu, Raaga and food festivals that bring Sri Lankan heritage into Auckland student life.',
+    text: 'Avurudu games, Raaga on stage, kiribath at midday. The traditions we grew up with, kept alive right here in Auckland.',
   },
   {
     icon: '🤝',
     title: 'Community Support',
-    text: 'Senior mentorship and peer networks built so no Sri Lankan student feels alone on campus.',
+    text: 'Seniors who remember their own first week look out for the ones just arriving. Nobody should navigate uni in a new country alone.',
   },
   {
     icon: '🎓',
     title: 'Academic Network',
-    text: 'Study links and career conversations spanning UoA, AUT, Massey and Unitec.',
+    text: 'Study groups, course advice and career leads that reach across UoA, AUT, Massey and Unitec.',
   },
   {
     icon: '🏏',
     title: 'Sport & Social',
-    text: 'Cricket, futsal, karaoke and steins that turn classmates into lifelong friends.',
+    text: 'Cricket rivalries, futsal, karaoke you might regret and steins you definitely won\'t. Where classmates become lifelong friends.',
   },
 ];
 
@@ -85,7 +85,7 @@ export const EVENTS = [
     title: 'Meet and Greet',
     location: 'Albert Park, Mt Eden',
     tag: 'Social',
-    description: 'A casual evening to meet the ALSA 2026 committee and connect with fellow Sri Lankan students from across Auckland.',
+    description: 'The first hangout of the year. Come meet the 2026 committee, put faces to names and leave with a few new friends before lectures ramp up.',
     color: 'blue',
     poster: 'Meet & Greet Event poster 2026.jpg',
     eventbriteUrl: '',
@@ -99,7 +99,7 @@ export const EVENTS = [
     title: 'Sinhala & Tamil New Year: Avurudu 2026',
     location: 'B201 Atrium (Arts Building), UoA',
     tag: 'Flagship',
-    description: 'Traditional games, rabaan drumming and a kiribath feast as we celebrate the Sri Lankan New Year together in Auckland.',
+    description: 'Kiribath, rabaan drumming and a full afternoon of aluth avurudu games. Wherever in Sri Lanka you call home, this one will feel like it.',
     color: 'gold',
     poster: 'New Years Poster 2026.jpg',
     eventbriteUrl: '',
@@ -113,7 +113,7 @@ export const EVENTS = [
     title: 'South Asian Club Movie Night',
     location: 'University of Auckland',
     tag: 'Collab',
-    description: 'A relaxed movie night hosted alongside the South Asian Club. Bring a friend, grab a seat and unwind with us.',
+    description: 'Snacks, a big screen and good company, hosted with the South Asian Club. Come solo or bring a mate; either way you won\'t be sitting alone for long.',
     color: 'blue',
     poster: '',          // e.g. 'movienight.jpg' inside src/event posters/
     eventbriteUrl: '',    // paste Eventbrite event URL here when ticketed
@@ -176,23 +176,23 @@ export const TEAM = [
 export const FAQ = [
   {
     q: 'Who can join ALSA?',
-    a: 'Any student studying in Auckland with a connection to Sri Lanka, or anyone who loves Sri Lankan culture. Current students, alumni, exchange students, postgraduates and PhD candidates are all welcome.',
+    a: 'If you study in Auckland and have any connection to Sri Lanka, you\'re in. And if you don\'t but you love the culture anyway, you\'re in too. Undergrads, postgrads, PhD students, exchange students and alumni are all welcome.',
   },
   {
     q: 'What\'s the difference between Full and Social membership?',
-    a: 'Full members (NZD $10 per year) receive priority event access, exclusive discounts, an official ALSA member card and voting rights at the AGM. Social members enjoy free access to our community channels and social events.',
+    a: 'Full membership costs NZD $10 for the year and gets you into everything: priority spots at events, member discounts, an official ALSA card and a vote at the AGM. Social membership is free and covers our community channels and social events. Plenty of people start Social and upgrade once they\'ve been to their first event.',
   },
   {
     q: 'How many events do you run each year?',
-    a: 'We typically run between 10 and 15 events each year, including Avurudu, our Cultural Night (Raaga), the ALSA Food Festival, cricket tournaments, welcome nights and study sessions.',
+    a: 'Usually somewhere between 10 and 15. The big ones are Avurudu, Raaga (our cultural night) and the food festival, and around them we fit cricket, welcome nights, study sessions and whatever else the year throws up.',
   },
   {
     q: 'Can businesses sponsor ALSA?',
-    a: 'Absolutely. We partner with local Sri Lankan businesses, restaurants and brands. Please reach out via the contact form to request our sponsorship deck.',
+    a: 'Yes, and we\'d love to chat. We work with Sri Lankan businesses, restaurants and brands around Auckland. Send us a message through the contact form and we\'ll get our sponsorship deck to you.',
   },
   {
     q: 'How do I get refunded if I change my mind?',
-    a: 'Membership is refundable within 14 days, provided you haven\'t attended any members only events. Please email us at uoa.alsa2020@gmail.com to request a refund.',
+    a: 'No hard feelings. Email uoa.alsa2020@gmail.com within 14 days of paying and, as long as you haven\'t been to a members-only event yet, we\'ll refund your $10 in full.',
   },
 ];
 
