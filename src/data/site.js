@@ -41,23 +41,24 @@ export const HERO_WORDS = ['Hello', 'ආයුබෝවන්', 'வணக்க
 
 // ─── About pillars ───────────────────────────────────────────────────────────
 export const PILLARS = [
+// icon: key into the PILLAR_ICONS map in About.jsx (custom SVG line icons)
   {
-    icon: '🎉',
+    icon: 'lamp',
     title: 'Cultural Events',
     text: 'Avurudu games, Raaga on stage, kiribath at midday. The traditions we grew up with, kept alive right here in Auckland.',
   },
   {
-    icon: '🤝',
+    icon: 'people',
     title: 'Community Support',
     text: 'Seniors who remember their own first week look out for the ones just arriving. Nobody should navigate uni in a new country alone.',
   },
   {
-    icon: '🎓',
+    icon: 'cap',
     title: 'Academic Network',
     text: 'Study groups, course advice and career leads that reach across UoA, AUT, Massey and Unitec.',
   },
   {
-    icon: '🏏',
+    icon: 'cricket',
     title: 'Sport & Social',
     text: 'Cricket rivalries, futsal, karaoke you might regret and steins you definitely won\'t. Where classmates become lifelong friends.',
   },

@@ -28,22 +28,22 @@ export default function Hero() {
     return () => clearInterval(t);
   }, []);
 
-  // Floating glow particles. Pre-compute size / drift / timing so each one is
-  // visually distinct without re-randomising on every render.
-  const particles = Array.from({ length: 26 }, (_, i) => {
-    const sizeBucket = i % 4;
-    const size = [3, 5, 7, 9][sizeBucket];
+  // A few slow ember drifts — kept sparse and faint so the photos and lion
+  // carry the hero rather than a cloud of glitter.
+  const particles = Array.from({ length: 9 }, (_, i) => {
+    const sizeBucket = i % 3;
+    const size = [3, 5, 7][sizeBucket];
     return {
       id: i,
       size,
-      left: (i * 13.7) % 100,
-      top:  (i * 21.3) % 100,
+      left: (i * 31.7) % 100,
+      top:  (i * 23.3) % 100,
       yRange: 36 + (i % 5) * 14,
       xDrift: (i % 2 === 0 ? 1 : -1) * (10 + (i % 4) * 9),
-      duration: 6 + (i % 6),
-      delay: (i * 0.27) % 5,
-      peakOpacity: 0.45 + ((i % 5) * 0.11),
-      glow: sizeBucket >= 2 ? 'particle-lg' : 'particle-sm',
+      duration: 8 + (i % 6),
+      delay: (i * 0.9) % 6,
+      peakOpacity: 0.22 + ((i % 4) * 0.08),
+      glow: sizeBucket === 2 ? 'particle-lg' : 'particle-sm',
     };
   });
 

@@ -1,22 +1,21 @@
-// Testimonials — auto-rotating carousel of member quotes on a dark background.
-// Rotates every 5.2s; pauses while the user hovers. Dot buttons allow manual navigation.
-import { useState, useEffect } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+// Testimonials — a staggered "wall of voices" on a dark background.
+// All quotes are visible at once (no carousel): each card sits at a slightly
+// different vertical offset, like photos pinned to a board.
+import { motion } from 'framer-motion';
 import { TESTIMONIALS } from '../data/site';
+import { Ornament } from './icons';
+
+const wall = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.12, delayChildren: 0.1 } },
+};
+
+const card = {
+  hidden: { opacity: 0, y: 34 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+};
 
 export default function Testimonials() {
-  const [i, setI] = useState(0);
-  const [paused, setPaused] = useState(false);
-
-  // Pause auto-rotation on hover so users can read long quotes without being interrupted.
-  useEffect(() => {
-    if (paused) return;
-    const t = setInterval(() => setI(x => (x + 1) % TESTIMONIALS.length), 5200);
-    return () => clearInterval(t);
-  }, [paused]);
-
-  const t = TESTIMONIALS[i];
-
   return (
     <section id="testimonials">
       <div className="testi-bg-orb one" />
@@ -32,43 +31,28 @@ export default function Testimonials() {
         <div className="sec-eyebrow" style={{ color: 'rgba(245,184,0,.7)', justifyContent: 'center' }}>
           Member Voices
         </div>
-        <h2 className="sec-h" style={{ color: 'white' }}>What Our Members Say</h2>
+        <h2 className="sec-h" style={{ color: 'white' }}>Straight from the family</h2>
+        <Ornament width={150} className="testi-ornament" />
       </motion.div>
 
-      <div
-        className="testi-stage"
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
+      <motion.div
+        className="testi-wall"
+        variants={wall}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: '-60px' }}
       >
-        <div className="testi-quote-mark">"</div>
-        <AnimatePresence mode="wait">
-          <motion.blockquote
-            key={i}
-            className="testi-quote"
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -24 }}
-            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-          >
+        {TESTIMONIALS.map((t, idx) => (
+          <motion.blockquote key={t.name} className={`testi-card tc-${idx % 4}`} variants={card}>
             <p>{t.quote}</p>
             <footer>
+              <span className="testi-rule" aria-hidden="true" />
               <strong>{t.name}</strong>
-              <span>{t.role}</span>
+              <span className="testi-role">{t.role}</span>
             </footer>
           </motion.blockquote>
-        </AnimatePresence>
-
-        <div className="testi-dots">
-          {TESTIMONIALS.map((_, idx) => (
-            <button
-              key={idx}
-              className={`testi-dot ${idx === i ? 'active' : ''}`}
-              onClick={() => setI(idx)}
-              aria-label={`Testimonial ${idx + 1}`}
-            />
-          ))}
-        </div>
-      </div>
+        ))}
+      </motion.div>
     </section>
   );
 }

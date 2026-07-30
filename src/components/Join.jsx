@@ -7,6 +7,8 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { SITE, MEMBERSHIP_TIERS, UNIVERSITIES, STUDY_YEARS, FIELDS_OF_STUDY } from '../data/site';
 import { useToast } from '../context/ToastContext';
+import { LockIcon } from './icons';
+import lionFace from '../Logos/logo lion face.png';
 
 // Maps step number → progress bar width so the animated bar grows as steps advance.
 const PROG = { 1: '33%', 2: '66%', 3: '100%' };
@@ -457,10 +459,12 @@ export default function Join({ onSuccess }) {
                   {isSocial ? (
                     <div style={{ textAlign: 'center', padding: '36px 0' }}>
                       <motion.div
-                        style={{ fontSize: '4rem', marginBottom: '18px' }}
-                        animate={{ scale: [1, 1.15, 1], rotate: [0, 8, -8, 0] }}
-                        transition={{ duration: 1.6, repeat: Infinity }}
-                      >🎉</motion.div>
+                        style={{ marginBottom: '18px', display: 'inline-block' }}
+                        animate={{ y: [0, -8, 0], rotate: [0, 4, -4, 0] }}
+                        transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
+                      >
+                        <img src={lionFace} alt="" style={{ width: '76px', height: '76px', objectFit: 'contain' }} />
+                      </motion.div>
                       <p style={{ color: 'var(--muted)', lineHeight: 1.75, maxWidth: '380px', margin: '0 auto' }}>
                         Social Membership is completely free! Click confirm to join the ALSA community.
                       </p>
@@ -476,7 +480,7 @@ export default function Join({ onSuccess }) {
                       </div>
                       <div className="stripe-row">
                         <div className="stripe-secure">
-                          🔒 Secured by <span className="stripe-badge">stripe</span>
+                          <LockIcon size={14} /> Secured by <span className="stripe-badge">stripe</span>
                         </div>
                         <div className="card-brands" style={{ marginLeft: 'auto' }}>
                           <div className="cbrand" style={{ color: '#1a1f71' }}>VISA</div>

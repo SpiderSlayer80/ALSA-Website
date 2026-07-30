@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { EVENTS, SITE } from '../data/site';
+import { CalendarIcon, PinIcon, TicketIcon, InfoIcon } from './icons';
 
 // Load any image dropped into src/event posters/ as a static URL at build time.
 const posters = import.meta.glob('../event posters/*', { eager: true, as: 'url' });
@@ -118,7 +119,7 @@ function NoUpcomingCard() {
       <div className="nu-icon-wrap" aria-hidden="true">
         <span className="nu-ring nu-ring-1" />
         <span className="nu-ring nu-ring-2" />
-        <span className="nu-icon">📅</span>
+        <span className="nu-icon"><CalendarIcon size={34} /></span>
       </div>
 
       <h3 className="nu-title">The next one's in the works</h3>
@@ -216,7 +217,7 @@ function UpcomingFeature({ event }) {
           {ticketed && (
             <div className="fe-hover-overlay">
               <div className="fe-hover-inner">
-                <span className="fe-hover-icon">🎟</span>
+                <span className="fe-hover-icon"><TicketIcon size={36} /></span>
                 <span className="fe-hover-text">Buy Tickets</span>
                 <span className="fe-hover-sub">Opens Eventbrite</span>
               </div>
@@ -226,7 +227,7 @@ function UpcomingFeature({ event }) {
           {!ticketed && (
             <div className="fe-hover-overlay fe-hover-info">
               <div className="fe-hover-inner">
-                <span className="fe-hover-icon">ⓘ</span>
+                <span className="fe-hover-icon"><InfoIcon size={32} /></span>
                 <span className="fe-hover-text">{open ? 'Hide details' : 'View details'}</span>
               </div>
             </div>
@@ -238,10 +239,10 @@ function UpcomingFeature({ event }) {
           <h3 className="fe-title">{event.title}</h3>
 
           <ul className="fe-meta">
-            <li><span className="fe-meta-icon">📅</span><span>{event.date} · {event.time}</span></li>
-            <li><span className="fe-meta-icon">📍</span><span>{event.location}</span></li>
+            <li><span className="fe-meta-icon"><CalendarIcon size={15} /></span><span>{event.date} · {event.time}</span></li>
+            <li><span className="fe-meta-icon"><PinIcon size={15} /></span><span>{event.location}</span></li>
             <li>
-              <span className="fe-meta-icon">🎟</span>
+              <span className="fe-meta-icon"><TicketIcon size={15} /></span>
               <span>{ticketed ? 'Ticketed via Eventbrite' : 'Free entry, no tickets required'}</span>
             </li>
           </ul>
@@ -288,7 +289,7 @@ function UpcomingFeature({ event }) {
                 target="_blank"
                 rel="noreferrer"
               >
-                🎟 Buy Tickets
+                <TicketIcon size={16} /> Buy Tickets
               </a>
             ) : (
               <button
@@ -328,8 +329,8 @@ function PastEventCard({ event }) {
         <span className="past-tag">{event.tag}</span>
         <h4 className="past-title">{event.title}</h4>
         <div className="past-meta">
-          <span>📅 {event.date}</span>
-          <span>📍 {event.location}</span>
+          <span><CalendarIcon size={13} /> {event.date}</span>
+          <span><PinIcon size={13} /> {event.location}</span>
         </div>
       </div>
     </motion.div>

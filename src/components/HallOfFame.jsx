@@ -9,6 +9,8 @@
 // laurel badges and a more ceremonial layout — to honour the founders.
 import { useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { TrophyIcon } from './icons';
+import lionFace from '../Logos/logo lion face.png';
 
 const allPhotos = import.meta.glob('../past execs/**/*', { eager: true, as: 'url' });
 
@@ -118,7 +120,7 @@ export default function HallOfFame() {
         whileHover={{ y: -2 }}
         whileTap={{ scale: 0.98 }}
       >
-        <span className="hof-toggle-icon">🏆</span>
+        <span className="hof-toggle-icon"><TrophyIcon size={20} /></span>
         <span className="hof-toggle-text">
           <span className="hof-toggle-title">Hall of Fame</span>
         </span>
@@ -217,7 +219,9 @@ function FoundingTeam({ data, onPeek }) {
       <div className="hof-founding-deco hof-deco-l">❦</div>
       <div className="hof-founding-deco hof-deco-r">❦</div>
       <div className="hof-founding-head">
-        <div className="hof-founding-crown">👑</div>
+        <div className="hof-founding-crown">
+          <img src={lionFace} alt="" style={{ width: '42px', height: '42px', objectFit: 'contain' }} />
+        </div>
         <div className="hof-founding-eyebrow">Est. 2020</div>
         <h4 className="hof-founding-h">The Founding Committee</h4>
         <p className="hof-founding-p">
@@ -238,8 +242,8 @@ function FoundingTeam({ data, onPeek }) {
             onClick={() => onPeek({ src: m.url, name: m.name })}
           >
             <div className="hof-founding-frame">
-              <div className="hof-founding-laurel hof-laurel-l">🌿</div>
-              <div className="hof-founding-laurel hof-laurel-r">🌿</div>
+              <div className="hof-founding-laurel hof-laurel-l">❧</div>
+              <div className="hof-founding-laurel hof-laurel-r">❧</div>
               <img src={m.url} alt={m.name} />
             </div>
             <div className="hof-founding-name">{m.name}</div>

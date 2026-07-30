@@ -1,7 +1,15 @@
 import { motion } from 'framer-motion';
 import { PILLARS } from '../data/site';
+import { LampIcon, PeopleIcon, CapIcon, CricketIcon } from './icons';
 import nzFlag from '../flags/New Zealand flag.svg';
 import lkFlag from '../flags/Sri Lankan flag.svg';
+
+const PILLAR_ICONS = {
+  lamp:    <LampIcon size={26} />,
+  people:  <PeopleIcon size={26} />,
+  cap:     <CapIcon size={26} />,
+  cricket: <CricketIcon size={26} />,
+};
 
 const container = {
   hidden: {},
@@ -56,7 +64,7 @@ export default function About() {
         {PILLARS.map((pillar, idx) => (
           <motion.article key={pillar.title} className="pillar-v2" variants={item}>
             <div className="pillar-num">{String(idx + 1).padStart(2, '0')}</div>
-            <div className="pillar-icon">{pillar.icon}</div>
+            <div className="pillar-icon">{PILLAR_ICONS[pillar.icon] || pillar.icon}</div>
             <h3 className="pillar-title">{pillar.title}</h3>
             <p className="pillar-desc">{pillar.text}</p>
             <div className="pillar-shine" />

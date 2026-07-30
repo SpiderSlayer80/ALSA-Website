@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GALLERY_EVENTS } from '../data/site';
+import { CameraIcon } from './icons';
 
 const covers = import.meta.glob('../Covers/*', { eager: true, as: 'url' });
 function getCover(filename) {
@@ -43,7 +44,7 @@ function GalleryCard({ ev, variants, style, mini = false, activeCard, setActiveC
         <img src={cover} alt={ev.title} loading="lazy" />
       ) : (
         <div className="g-ph">
-          <div className="g-ph-icon" style={mini ? { fontSize: '1.6rem' } : {}}>📸</div>
+          <div className="g-ph-icon"><CameraIcon size={mini ? 26 : 40} /></div>
           <div className="g-ph-text">{mini ? 'Coming soon' : 'Photo coming soon'}</div>
         </div>
       )}

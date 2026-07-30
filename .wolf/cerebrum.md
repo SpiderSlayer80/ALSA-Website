@@ -17,6 +17,8 @@
 - **Event `hidden: true` flag** must be honoured in BOTH the upcoming and past filters in Events.jsx.
 - **CSP lives in vercel.json headers** — any new third-party script/font/API domain must be added there or it will be blocked in production (but not in `vite dev`, which serves no CSP).
 - **Copy voice:** warm, specific, student-run tone; avoid generic "vibrant community" phrasing. Testimonials are attributed quotes — never rewrite them.
+- **Icons (2026-07-31):** never use emoji as UI icons — use the custom line-icon set in `src/components/icons.jsx` (24px grid, 2px rounded strokes, currentColor). Includes a liya-vela `Ornament` flourish for section headings. Pillar icons are keyed via `PILLAR_ICONS` in About.jsx.
+- **Gotcha:** global.css styles the bare `footer` element (site footer). Any `<footer>` inside a component (e.g. blockquote footers) inherits its dark background — override or use a div.
 
 ## Do-Not-Repeat
 

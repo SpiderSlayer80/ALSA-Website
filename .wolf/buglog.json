@@ -38,8 +38,8 @@
       "timestamp": "2026-07-30T14:02:44.148Z",
       "error_message": "Missing error handling in unknown",
       "file": "src/components/Join.jsx",
-      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
-      "fix": "Added try/catch block | Also: // Keep a minimal local receipt only — no phone numbers or s; // localStorage, especially on shared university computers.",
+      "root_cause": "Code path had no error handling â€” exceptions would propagate uncaught",
+      "fix": "Added try/catch block | Also: // Keep a minimal local receipt only â€” no phone numbers or s; // localStorage, especially on shared university computers.",
       "tags": [
         "auto-detected",
         "error-handling",
@@ -70,7 +70,7 @@
       "timestamp": "2026-07-30T14:03:36.594Z",
       "error_message": "Missing error handling in readEnvLocal",
       "file": "scripts/notify.js",
-      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
+      "root_cause": "Code path had no error handling â€” exceptions would propagate uncaught",
       "fix": "Added try/catch block",
       "tags": [
         "auto-detected",
@@ -84,7 +84,7 @@
     {
       "id": "bug-006",
       "timestamp": "2026-07-31T00:00:00.000Z",
-      "error_message": "SECURITY: Apps Script notify route had no authentication — anyone with the public /exec URL (shipped in the JS bundle) could email arbitrary content to all opted-in members",
+      "error_message": "SECURITY: Apps Script notify route had no authentication â€” anyone with the public /exec URL (shipped in the JS bundle) could email arbitrary content to all opted-in members",
       "file": "apps-script.gs",
       "root_cause": "doPost routed action:'notify' straight to handleNotify without any credential check; the web app is deployed with access 'Anyone'",
       "fix": "Added NOTIFY_TOKEN check (Script Properties) in doPost; scripts/notify.js now sends the token read from .env.local/env. Requires redeploying Apps Script + setting the NOTIFY_TOKEN script property. Also: server-side field sanitization (clean()), email regex gate before confirmation email, generic error responses (no String(err) echo), payment API no longer leaks err.message, CSP + security headers in vercel.json, PII removed from localStorage backup.",
@@ -122,7 +122,7 @@
       "timestamp": "2026-07-30T14:05:17.433Z",
       "error_message": "Incorrect value in code",
       "file": "index.html",
-      "root_cause": "Had \"Auckland Lankan Students Association — connecting",
+      "root_cause": "Had \"Auckland Lankan Students Association â€” connecting",
       "fix": "Changed to \"ALSA is the home away from home for Sri Lankan st",
       "tags": [
         "auto-detected",
@@ -180,6 +180,151 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-07-30T14:07:46.200Z"
+    },
+    {
+      "id": "bug-012",
+      "timestamp": "2026-07-30T14:15:52.653Z",
+      "error_message": "Incorrect value in code",
+      "file": "src/data/site.js",
+      "root_cause": "Had 'ðŸ¤'",
+      "fix": "Changed to 'people'",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "js"
+      ],
+      "related_bugs": [],
+      "occurrences": 3,
+      "last_seen": "2026-07-30T14:15:55.313Z"
+    },
+    {
+      "id": "bug-013",
+      "timestamp": "2026-07-30T14:16:21.286Z",
+      "error_message": "Wrong reference: span should be CalendarIcon",
+      "file": "src/components/Events.jsx",
+      "root_cause": "Used \"span\" instead of \"CalendarIcon\"",
+      "fix": "Changed span → CalendarIcon",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "jsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 3,
+      "last_seen": "2026-07-30T14:16:24.595Z"
+    },
+    {
+      "id": "bug-014",
+      "timestamp": "2026-07-30T14:16:30.976Z",
+      "error_message": "Significant refactor of ",
+      "file": "src/components/Events.jsx",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 4→4 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "jsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-30T14:16:30.976Z"
+    },
+    {
+      "id": "bug-015",
+      "timestamp": "2026-07-30T14:16:47.249Z",
+      "error_message": "Wrong reference: span should be TrophyIcon",
+      "file": "src/components/HallOfFame.jsx",
+      "root_cause": "Used \"span\" instead of \"TrophyIcon\"",
+      "fix": "Changed span → TrophyIcon",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "jsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-30T14:16:47.249Z"
+    },
+    {
+      "id": "bug-016",
+      "timestamp": "2026-07-30T14:16:58.793Z",
+      "error_message": "CSS fix: duration",
+      "file": "src/components/Join.jsx",
+      "root_cause": "duration: 1.6, repeat: Infinity → 2.2, repeat: Infinity, ease: 'easeInOut'",
+      "fix": "Changed duration: 1.6, repeat: Infinity → 2.2, repeat: Infinity, ease: 'easeInOut'",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "jsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-30T14:16:58.793Z"
+    },
+    {
+      "id": "bug-017",
+      "timestamp": "2026-07-30T14:17:38.894Z",
+      "error_message": "Significant refactor of ",
+      "file": "src/styles/global.css",
+      "root_cause": "43 lines replaced/restructured",
+      "fix": "Rewrote 71→83 lines (43 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "css"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-30T14:17:38.894Z"
+    },
+    {
+      "id": "bug-018",
+      "timestamp": "2026-07-30T14:18:03.214Z",
+      "error_message": "CSS fix: display, gap",
+      "file": "src/styles/global.css",
+      "root_cause": "display: flex → inline-flex; gap: 12px → 5px",
+      "fix": "Changed display: flex → inline-flex; gap: 12px → 5px",
+      "tags": [
+        "auto-detected",
+        "style-fix",
+        "css"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-30T14:18:03.214Z"
+    },
+    {
+      "id": "bug-019",
+      "timestamp": "2026-07-30T14:24:11.439Z",
+      "error_message": "Wrong reference: div should be img",
+      "file": "src/components/HallOfFame.jsx",
+      "root_cause": "Used \"div\" instead of \"img\"",
+      "fix": "Changed div → img",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "jsx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-30T14:24:11.439Z"
+    },
+    {
+      "id": "bug-020",
+      "timestamp": "2026-07-31T00:30:00.000Z",
+      "error_message": "Testimonial card footers rendered as dark boxes with gold top border",
+      "file": "src/styles/global.css",
+      "root_cause": "global.css styles the bare footer element selector for the site footer; footer inside .testi-card blockquotes inherited its background/padding/::before",
+      "fix": "Added .testi-card footer overrides (background:none, padding:0, ::before disabled). Gotcha noted in cerebrum.",
+      "tags": [
+        "css",
+        "specificity",
+        "element-selector",
+        "testimonials"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-31T00:30:00.000Z"
     }
   ]
 }
