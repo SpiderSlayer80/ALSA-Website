@@ -110,3 +110,24 @@
 | 02:24 | Edited src/components/HallOfFame.jsx | added 1 import(s) | ~26 |
 | session | De-genericize pass: custom SVG icon set (icons.jsx incl. pahana lamp + liya-vela ornament) replaces all emoji icons; Testimonials rebuilt carousel -> staggered quote wall; hero particles 26->9 subtler; HoF crown emoji -> lion logo; fixed footer-element CSS bleed into testi cards (bug-020) | icons.jsx, About, Events, Gallery, Join, HallOfFame, Testimonials, Hero, global.css | build OK, screenshots verified | ~large |
 | 02:27 | Session end: 64 writes across 18 files (create-payment-intent.js, vercel.json, Join.jsx, apps-script.gs, notify.js) | 20 reads | ~72720 tok |
+| 02:29 | Edited src/data/site.js | 6→8 lines | ~114 |
+| 02:29 | Edited src/components/Hero.jsx | CSS: display | ~202 |
+| 02:30 | Edited src/styles/global.css | modified media() | ~426 |
+| 02:30 | Edited src/styles/global.css | 2→1 lines | ~15 |
+| 02:30 | Edited src/styles/global.css | 5→4 lines | ~50 |
+| 02:30 | Edited ../../../../AppData/Local/Temp/claude/C--Users-Spide-Downloads-Dont-wanna-delete-ahh-ALSA-Website-alsa-react/87e06b76-af7f-4465-8f1d-861967f1c1bb/scratchpad/shot-testi.mjs | 3→4 lines | ~67 |
+| 02:35 | Edited ../../../../AppData/Local/Temp/claude/C--Users-Spide-Downloads-Dont-wanna-delete-ahh-ALSA-Website-alsa-react/87e06b76-af7f-4465-8f1d-861967f1c1bb/scratchpad/shot-testi.mjs | 2→5 lines | ~86 |
+| 02:39 | Edited src/components/Hero.jsx | 3→3 lines | ~46 |
+| 02:39 | Edited src/components/Hero.jsx | map() → split() | ~426 |
+| 02:39 | Edited src/components/Hero.jsx | modified Hero() | ~99 |
+| 02:39 | Edited src/data/site.js | removed 11 lines | ~17 |
+| 02:39 | Edited src/styles/global.css | modified media() | ~608 |
+| 02:39 | Edited src/styles/global.css | 4→1 lines | ~30 |
+| session | Hero redesign: removed HERO_STATS glass grid (user: AI-template filler), replaced with next-event ticket-stub card (auto from EVENTS, IG fallback); cleaned .hst/.hero-stats + factline CSS | Hero.jsx, site.js, global.css | build OK, screenshot verified | ~medium |
+| 15:40 | Session end: 77 writes across 18 files (create-payment-intent.js, vercel.json, Join.jsx, apps-script.gs, notify.js) | 24 reads | ~75214 tok |
+| 15:42 | Created ../../../../AppData/Local/Temp/claude/C--Users-Spide-Downloads-Dont-wanna-delete-ahh-ALSA-Website-alsa-react/87e06b76-af7f-4465-8f1d-861967f1c1bb/scratchpad/shot-mobile.mjs | — | ~873 |
+| 17:05 | Created ../../../../AppData/Local/Temp/claude/C--Users-Spide-Downloads-Dont-wanna-delete-ahh-ALSA-Website-alsa-react/87e06b76-af7f-4465-8f1d-861967f1c1bb/scratchpad/shot-footer.mjs | — | ~327 |
+| 17:07 | Edited src/styles/global.css | CSS: padding-bottom | ~90 |
+| 17:07 | Edited src/styles/global.css | removed 5 lines | ~12 |
+| session | Mobile audit at 390px: all 11 sections + hamburger menu screenshot-verified, no horizontal overflow (scrollW==390); fixed scroll-top button covering footer copyright (footer padding-bottom 96px on mobile); removed dead testi-quote mobile CSS; installed svgo (build now exit 0) | global.css, package.json | verified via screenshots | ~medium |
+| 17:15 | Session end: 81 writes across 20 files (create-payment-intent.js, vercel.json, Join.jsx, apps-script.gs, notify.js) | 38 reads | ~77176 tok |

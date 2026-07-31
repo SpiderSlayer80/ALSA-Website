@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { SITE, HERO_STATS, HERO_WORDS } from '../data/site';
-import AnimatedNumber from './AnimatedNumber';
+import { SITE, EVENTS, HERO_WORDS } from '../data/site';
+import lionFace from '../Logos/logo lion face.png';
 import logoFull from '../Logos/logo full lion.png';
 import logoText from '../Logos/logo text.png';
 import photo1 from '../Photos/20250313_131748.jpg';
@@ -10,6 +10,12 @@ import photo3 from '../Photos/Post.jpg';
 
 export default function Hero() {
   const ref = useRef(null);
+
+  // Next visible event on or after today (site.js keeps dates as YYYY-MM-DD).
+  const today = new Date().toISOString().slice(0, 10);
+  const nextEvent = [...EVENTS]
+    .filter(e => !e.hidden && e.dateISO >= today)
+    .sort((a, b) => a.dateISO.localeCompare(b.dateISO))[0] || null;
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start start', 'end start'],
@@ -177,21 +183,38 @@ export default function Hero() {
           </motion.a>
         </motion.div>
 
-        <motion.div
-          className="hero-stats"
+        {/* Ticket stub — the next event, torn straight off the events calendar.
+            Falls back to an Instagram nudge when nothing is scheduled. */}
+        <motion.a
+          href={nextEvent ? '#events' : SITE.instagram}
+          {...(nextEvent ? {} : { target: '_blank', rel: 'noreferrer' })}
+          className="hero-ticket"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.58 }}
         >
-          {HERO_STATS.map(stat => (
-            <div key={stat.label} className="hst">
-              <span className="hst-n">
-                <AnimatedNumber to={stat.number} suffix={stat.suffix} />
-              </span>
-              <span className="hst-l">{stat.label}</span>
-            </div>
-          ))}
-        </motion.div>
+          {nextEvent ? (
+            <span className="ht-date">
+              <span className="ht-day">{nextEvent.date.split(' ')[0]}</span>
+              <span className="ht-month">{nextEvent.date.split(' ')[1]}</span>
+            </span>
+          ) : (
+            <span className="ht-date ht-date-lion">
+              <img src={lionFace} alt="" />
+            </span>
+          )}
+          <span className="ht-divider" aria-hidden="true" />
+          <span className="ht-body">
+            <span className="ht-eyebrow">{nextEvent ? 'Up next' : 'Between events'}</span>
+            <span className="ht-title">{nextEvent ? nextEvent.title : "The next one's in the works"}</span>
+            <span className="ht-meta">
+              {nextEvent
+                ? `${nextEvent.time} · ${nextEvent.location}`
+                : `Follow ${SITE.instagramHandle} to be first in line`}
+            </span>
+          </span>
+          <span className="ht-arrow" aria-hidden="true">→</span>
+        </motion.a>
       </motion.div>
 
       <motion.div

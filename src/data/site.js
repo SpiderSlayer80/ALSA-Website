@@ -29,14 +29,6 @@ export const NAV_LINKS = [
   { label: 'Contact', href: '#contact' },
 ];
 
-// ─── Hero stats ──────────────────────────────────────────────────────────────
-export const HERO_STATS = [
-  { number: 183, suffix: '', label: 'Members 2026' },
-  { number: 10, suffix: '+', label: 'Events/Year' },
-  { number: 5, suffix: '+', label: 'Universities' },
-  { number: 5, suffix: 'yrs', label: '& Growing' },
-];
-
 export const HERO_WORDS = ['Hello', 'ආයුබෝවන්', 'வணக்கம்'];
 
 // ─── About pillars ───────────────────────────────────────────────────────────

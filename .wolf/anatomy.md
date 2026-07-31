@@ -1,11 +1,13 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-30T14:24:14.811Z
-> Files: 44 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-07-31T05:07:14.491Z
+> Files: 46 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../../AppData/Local/Temp/claude/C--Users-Spide-Downloads-Dont-wanna-delete-ahh-ALSA-Website-alsa-react/87e06b76-af7f-4465-8f1d-861967f1c1bb/scratchpad/
 
-- `shot-testi.mjs` — Screenshot the #testimonials section using openwolf's puppeteer-core install. (~390 tok)
+- `shot-footer.mjs` — Declares candidates (~327 tok)
+- `shot-mobile.mjs` — Mobile audit — screenshots each section at iPhone-ish size (390x844). (~873 tok)
+- `shot-testi.mjs` — Screenshot the #testimonials section using openwolf's puppeteer-core install. (~445 tok)
 
 ## ./
 
@@ -51,7 +53,7 @@
 - `Footer.jsx` — Footer — site footer with three areas: (~1129 tok)
 - `Gallery.jsx` — covers (~2046 tok)
 - `HallOfFame.jsx` — /*', { eager: true, as: 'url' }); (~3142 tok)
-- `Hero.jsx` — Hero (~2114 tok)
+- `Hero.jsx` — Hero (~2468 tok)
 - `icons.jsx` — Hand-tuned line icons drawn for ALSA — replaces generic emoji so every glyph (~1264 tok)
 - `Join.jsx` — Join — 3-step membership registration form. (~7225 tok)
 - `Lightbox.jsx` — Lightbox — full-screen image viewer for the Gallery section. (~661 tok)
@@ -72,7 +74,7 @@
 
 ## src/data/
 
-- `site.js` — ─── Site-wide config ──────────────────────────────────────────────────────── (~5884 tok)
+- `site.js` — ─── Site-wide config ──────────────────────────────────────────────────────── (~5791 tok)
 
 ## src/event posters/
 
@@ -84,4 +86,4 @@
 
 ## src/styles/
 
-- `global.css` — Styles: 48 rules, 22 vars (~27859 tok)
+- `global.css` — Styles: 48 rules, 22 vars (~28106 tok)

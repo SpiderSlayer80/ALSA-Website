@@ -19,6 +19,7 @@
 - **Copy voice:** warm, specific, student-run tone; avoid generic "vibrant community" phrasing. Testimonials are attributed quotes — never rewrite them.
 - **Icons (2026-07-31):** never use emoji as UI icons — use the custom line-icon set in `src/components/icons.jsx` (24px grid, 2px rounded strokes, currentColor). Includes a liya-vela `Ornament` flourish for section headings. Pillar icons are keyed via `PILLAR_ICONS` in About.jsx.
 - **Gotcha:** global.css styles the bare `footer` element (site footer). Any `<footer>` inside a component (e.g. blockquote footers) inherits its dark background — override or use a div.
+- **Hero (2026-07-31):** user explicitly rejected the stats bar ("183 members / 10+ events / 5 universities") as unnecessary AI-template filler — HERO_STATS was deleted from site.js. The hero now shows a ticket-stub card with the next upcoming event from EVENTS (falls back to an Instagram nudge when none). Do NOT reintroduce stat grids/counters.
 
 ## Do-Not-Repeat
 
